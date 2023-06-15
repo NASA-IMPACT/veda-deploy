@@ -1,0 +1,3 @@
+[submodule "ghgc-auth"]
+	path = ghgc-auth
+	url = https://github.com/NASA-IMPACT/ghgc-auth
