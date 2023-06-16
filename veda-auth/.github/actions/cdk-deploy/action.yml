@@ -1,11 +1,14 @@
 name: Deploy
-inputs:
-  env_aws_secret_name:
-    required: true
-    type: string
+on:
+  workflow_call:
+    inputs:
+      env_aws_secret_name:
+        required: true
+        type: string
 
-runs:
-  using: "composite"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
   steps:
     - name: Get relevant environment configuration from aws secrets
       env:
