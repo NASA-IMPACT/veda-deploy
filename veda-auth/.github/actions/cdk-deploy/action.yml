@@ -15,8 +15,8 @@ runs:
       run: >-
         for s in $(aws secretsmanager get-secret-value --secret-id $SECRET_SSM_NAME --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]'); do
           export "${s%=*}=${s#*=}"
-        done
-        echo $STAGE
+        done;
+        echo "$STAGE"
     - name: Deploy
       shell: bash
-      run: echo ${STAGE}
+      run: echo "$STAGE"
