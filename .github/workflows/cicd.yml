@@ -63,8 +63,8 @@ jobs:
       - name: switch to correct branch
         shell: bash
         run: |
-          ls -al
           cd ghgc-auth 
+          git fetch
           git checkout support-mono-repo-deploy
           git pull origin support-mono-repo-deploy
       - name: Run deployment
