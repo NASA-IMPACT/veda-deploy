@@ -65,8 +65,8 @@ jobs:
         run: |
           ls -al
           cd ghgc-auth 
-          git checkout dev
-          git pull origin dev
+          git checkout support-mono-repo-deploy
+          git pull origin support-mono-repo-deploy
       - name: Run deployment
         uses: "./ghgc-auth/.github/actions/cdk-deploy"
         with:
