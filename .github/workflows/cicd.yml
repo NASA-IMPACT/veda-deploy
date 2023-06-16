@@ -64,4 +64,5 @@ jobs:
       - name: Run deployment
         uses: "./ghgc-auth/.github/actions/cdk-deploy"
         with:
+          dir: ghgc-auth
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
