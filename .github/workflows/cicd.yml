@@ -60,13 +60,6 @@ jobs:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
           aws-region: "us-west-2"
-      - name: switch to correct branch
-        shell: bash
-        run: |
-          cd ghgc-auth 
-          git fetch
-          git checkout support-mono-repo-deploy
-          git pull origin support-mono-repo-deploy
       - name: Run deployment
         uses: "./ghgc-auth/.github/actions/cdk-deploy"
         with:
