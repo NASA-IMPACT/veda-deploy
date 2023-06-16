@@ -3,17 +3,19 @@ inputs:
   env_aws_secret_name:
     required: true
     type: string
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+
+runs:
+  using: "composite"
   steps:
     - name: Get relevant environment configuration from aws secrets
+      shell: bash
       env:
+        SECRET_SSM_NAME: ${{ inputs.env_aws_secret_name }}
         AWS_DEFAULT_REGION: us-west-2
       run: |
-        echo The username is ${{ inputs.env_aws_secret_name }}
-        for s in $(aws secretsmanager get-secret-value --secret-id ${{ inputs.env_aws_secret_name }} --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]'); do
-          export "${s%=*}=${s#*=}"
+        for s in $(aws secretsmanager get-secret-value --secret-id $SECRET_SSM_NAME --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]'); do \
+          export "${s%=*}=${s#*=}" \
         done
     - name: Deploy
-      run: echo $STAGE
+      shell: bash
+      run: echo ${STAGE}
