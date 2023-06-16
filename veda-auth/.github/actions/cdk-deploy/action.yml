@@ -13,11 +13,14 @@ runs:
         SECRET_SSM_NAME: ${{ inputs.env_aws_secret_name }}
         AWS_DEFAULT_REGION: us-west-2
       run: >-
-        for s in $(aws secretsmanager get-secret-value --secret-id $SECRET_SSM_NAME --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]'); do
-          export "${s%=*}=${s#*=}"
-        done;
+        aws secretsmanager get-secret-value --secret-id $SECRET_SSM_NAME --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
+        cat .env
+        source .env
         echo "$STAGE"
     - name: Deploy
       shell: bash
       run: >-
+        ls -al
+        cat .env
+        source .env
         echo "$STAGE"
