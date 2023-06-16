@@ -64,4 +64,4 @@ jobs:
       - name: Run deployment
         uses: "./veda-auth/.github/actions/cdk-deploy"
         with:
-          env_aws_secret_name: ${{ vars.AUTH_ENV_SECRET_NAME }}
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
