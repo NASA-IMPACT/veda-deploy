@@ -62,6 +62,6 @@ jobs:
           aws-region: "us-west-2"
 
       - name: Run deployment
-        uses: "./veda-auth/.github/actions/cdk-deploy"
+        uses: "./ghgc-auth/.github/actions/cdk-deploy"
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}

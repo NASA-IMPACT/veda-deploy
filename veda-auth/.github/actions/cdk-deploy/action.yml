@@ -14,9 +14,7 @@ runs:
         AWS_DEFAULT_REGION: us-west-2
       run: |
         aws secretsmanager get-secret-value --secret-id $SECRET_SSM_NAME --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > .env
-        cat .env
-        source .env
-        echo "$STAGE"
+
     - name: Deploy
       shell: bash
       run: |
