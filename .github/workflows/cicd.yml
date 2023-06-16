@@ -66,3 +66,8 @@ jobs:
         with:
           dir: ghgc-auth
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+        run: |
+          ls -al
+          cd ghgc-auth 
+          git checkout dev
+          git pull origin dev
