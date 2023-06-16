@@ -19,4 +19,5 @@ runs:
         echo "$STAGE"
     - name: Deploy
       shell: bash
-      run: echo "$STAGE"
+      run: >-
+        echo "$STAGE"
