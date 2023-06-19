@@ -42,7 +42,7 @@ jobs:
     name: Deploy VEDA auth 🔐
     runs-on: ubuntu-latest
     env:
-      DIRECTORY: veda-auth
+      DIRECTORY: ghgc-auth
     needs: define-environment
     environment: ${{ needs.define-environment.outputs.env_name }}
     concurrency: ${{ needs.define-environment.outputs.env_name }}
