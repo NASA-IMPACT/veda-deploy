@@ -61,13 +61,36 @@ jobs:
           role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
           aws-region: "us-west-2"
       - name: Run auth deployment
-        uses: "./ghgc-auth/.github/actions/cdk-deploy"
+        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
         with:
-          dir: ghgc-auth
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-      - name: Run backend deployment
-        uses: "./ghgc-backend/.github/actions/cdk-deploy"
-        with:
-          dir: ghgc-backend
+          dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
+  deploy-ghgc-backend:
+    name: Deploy GHGC backend 🔙
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: ghgc-backend
+    needs: [define-environment, deploy-ghgc-auth]
+    environment: ${{ needs.define-environment.outputs.env_name }}
+    concurrency: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
