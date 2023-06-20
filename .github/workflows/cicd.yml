@@ -66,12 +66,12 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
-  deploy-ghgc-backend:
+  deploy-veda-backend:
     name: Deploy GHGC backend 🔙
     runs-on: ubuntu-latest
     env:
       DIRECTORY: ghgc-backend
-    needs: [define-environment, deploy-ghgc-auth]
+    needs: [define-environment, deploy-veda-auth]
     environment: ${{ needs.define-environment.outputs.env_name }}
     concurrency: ${{ needs.define-environment.outputs.env_name }}
 
