@@ -61,7 +61,7 @@ jobs:
           role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
           aws-region: "us-west-2"
       - name: Run auth deployment
-        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
+        uses: "./ghgc-auth/.github/actions/cdk-deploy"
         with:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
@@ -90,7 +90,7 @@ jobs:
           aws-region: "us-west-2"
 
       - name: Run deployment
-        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
+        uses: "./ghgc-backend/.github/actions/cdk-deploy"
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
