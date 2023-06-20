@@ -67,7 +67,7 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
   deploy-veda-backend:
-    name: Deploy GHGC backend 🔙
+    name: Deploy VEDA backend 🔙
     runs-on: ubuntu-latest
     env:
       DIRECTORY: ghgc-backend
