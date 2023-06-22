@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DIRECTORY: ghgc-backend
-    needs: [define-environment, deploy-veda-auth]
+    needs: [define-environment] #[define-environment, deploy-veda-auth]
     environment: ${{ needs.define-environment.outputs.env_name }}
     concurrency: ${{ needs.define-environment.outputs.env_name }}
 
