@@ -38,40 +38,12 @@ jobs:
     outputs:
       env_name: ${{ steps.define_environment.outputs.env_name }}
 
-  deploy-veda-auth:
-    name: Deploy VEDA auth 🔐
-    runs-on: ubuntu-latest
-    env:
-      DIRECTORY: ghgc-auth
-    needs: define-environment
-    environment: ${{ needs.define-environment.outputs.env_name }}
-    concurrency: ${{ needs.define-environment.outputs.env_name }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: "true"
-          submodules: "recursive"
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
-          aws-region: "us-west-2"
-      - name: Run auth deployment
-        uses: "./ghgc-auth/.github/actions/cdk-deploy"
-        with:
-          dir: "${{ env.DIRECTORY }}"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-
-#  deploy-veda-backend:
-#    name: Deploy VEDA backend ⚙️
+#  deploy-veda-auth:
+#    name: Deploy VEDA auth 🔐
 #    runs-on: ubuntu-latest
 #    env:
-#      DIRECTORY: ghgc-backend
-#    needs: [define-environment, deploy-veda-auth]
+#      DIRECTORY: ghgc-auth
+#    needs: define-environment
 #    environment: ${{ needs.define-environment.outputs.env_name }}
 #    concurrency: ${{ needs.define-environment.outputs.env_name }}
 #
@@ -88,9 +60,37 @@ jobs:
 #          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
 #          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
 #          aws-region: "us-west-2"
-#
-#      - name: Run deployment
-#        uses: "./ghgc-backend/.github/actions/cdk-deploy"
+#      - name: Run auth deployment
+#        uses: "./ghgc-auth/.github/actions/cdk-deploy"
 #        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
 #          dir: "${{ env.DIRECTORY }}"
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+
+  deploy-veda-backend:
+    name: Deploy VEDA backend ⚙️
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: ghgc-backend
+    needs: [define-environment, deploy-veda-auth]
+    environment: ${{ needs.define-environment.outputs.env_name }}
+    concurrency: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./ghgc-backend/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
