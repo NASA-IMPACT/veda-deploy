@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-backend-stack
-    needs: [define-environment, deploy-veda-auth]
+    needs: [define-environment]
     environment: ${{ needs.define-environment.outputs.env_name }}
     concurrency: ${{ needs.define-environment.outputs.env_name }}
 
@@ -94,33 +94,33 @@ jobs:
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
-#  deploy-veda-stac-ingestor-sans-airflow-integration:
-#    name: deploy VEDA stac ingestor 🍽️ (without airflow integration)
-#    runs-on: ubuntu-latest
-#    env:
-#      DIRECTORY: veda-stac-ingestor
-#      AWS_REGION: "us-west-2"
-#    needs: [deploy-veda-backend, deploy-veda-auth, define-environment]
-#    environment: ${{ needs.define-environment.outputs.env_name }}
-#    concurrency: ${{ needs.define-environment.outputs.env_name }}
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          lfs: "true"
-#          submodules: "recursive"
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
-#          aws-region: "${{ env.AWS_REGION }}"
-#
-#      - name: Run deployment
-#        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
-#        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          dir: "${{ env.DIRECTORY }}"
-#          script_dir: "${{ github.workspace }}/scripts"
+  deploy-veda-stac-ingestor-sans-airflow-integration:
+    name: deploy VEDA stac ingestor 🍽️ (without airflow integration)
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-ingest-stack
+      AWS_REGION: "us-west-2"
+    needs: [deploy-veda-backend, deploy-veda-auth, define-environment]
+    environment: ${{ needs.define-environment.outputs.env_name }}
+    concurrency: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: Run deployment
+        uses: "./veda-ingest-stack/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
