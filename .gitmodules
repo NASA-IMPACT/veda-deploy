@@ -1,9 +1,9 @@
-[submodule "ghgc-auth"]
-	path = ghgc-auth
+[submodule "veda-auth"]
+	path = veda-auth
 	url = https://github.com/NASA-IMPACT/ghgc-auth
 
-[submodule "ghgc-backend"]
-	path = ghgc-backend
+[submodule "veda-backend"]
+	path = veda-backend
 	url = https://github.com/NASA-IMPACT/ghgc-backend
 [submodule "veda-stac-ingestor"]
 	path = veda-stac-ingestor
