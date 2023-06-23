@@ -125,3 +125,4 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          backend_stack_name: "ghgc-backend-development"
