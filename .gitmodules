@@ -5,3 +5,6 @@
 [submodule "ghgc-backend"]
 	path = ghgc-backend
 	url = https://github.com/NASA-IMPACT/ghgc-backend
+[submodule "veda-stac-ingestor"]
+	path = veda-stac-ingestor
+	url = https://github.com/NASA-IMPACT/ghgc-stac-ingestor
