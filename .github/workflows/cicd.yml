@@ -61,7 +61,7 @@ jobs:
           role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
           aws-region: "us-west-2"
       - name: Run auth deployment
-        uses: "./veda-auth/.github/actions/cdk-deploy"
+        uses: "${{ github.workspace }}/veda-auth/.github/actions/cdk-deploy"
         with:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
