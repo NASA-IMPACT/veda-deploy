@@ -56,6 +56,5 @@ if __name__ == "__main__":
         args.secret_id,
         args.stack_name
     )
-    #generate_env_file(stack_name=stack_name, secret_id=secret_id, out_file=".myenv")
-    print(secret_id, stack_name)
+    generate_env_file(stack_name=stack_name, secret_id=secret_id, out_file=".env")
 
