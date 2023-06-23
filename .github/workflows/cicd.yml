@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-backend-stack
-    needs: [define-environment]
+    needs: define-environment
     environment: ${{ needs.define-environment.outputs.env_name }}
     concurrency: ${{ needs.define-environment.outputs.env_name }}
 
