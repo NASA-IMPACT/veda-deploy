@@ -7,3 +7,6 @@
 [submodule "veda-ingest-stack"]
 	path = veda-ingest-stack
 	url = https://github.com/NASA-IMPACT/ghgc-stac-ingestor
+[submodule "veda-data-airflow"]
+	path = veda-data-airflow
+	url = https://github.com/NASA-IMPACT/ghgc-data-airflow
