@@ -126,3 +126,4 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
           backend_stack_name: "ghgc-backend-development"
+          auth_stack_name: "ghgc-auth-stack-development"

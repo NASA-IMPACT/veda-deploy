@@ -2,15 +2,16 @@ import boto3
 import json
 from argparse import ArgumentParser
 
-def get_cf_outs_as_env(stack_name, out_file):
+def get_cf_outs_as_env(stack_names, out_file):
     cf_client = boto3.client('cloudformation')
-    response = cf_client.describe_stacks(StackName=stack_name)
-    outputs = response["Stacks"][0]["Outputs"]
-    with open(out_file, "a") as _env:
-        for output in outputs:
-            out_key = output["OutputKey"]
-            out_value = output["OutputValue"]
-            _env.write(f"{out_key}={out_value}\n")
+    for stack_name in stack_names.split(","):
+        response = cf_client.describe_stacks(StackName=stack_name)
+        outputs = response["Stacks"][0]["Outputs"]
+        with open(out_file, "a") as _env:
+            for output in outputs:
+                out_key = output.get("ExportName", output["OutputKey"])
+                out_value = output["OutputValue"]
+                _env.write(f"{out_key.replace('-', '_').upper()}={out_value}\n")
 
 
 def get_secrets_as_env(secret_id, out_file):
@@ -25,9 +26,9 @@ def get_secrets_as_env(secret_id, out_file):
             _env.write(f"{out_key}={out_value}\n")
 
 
-def generate_env_file(secret_id, stack_name=None, out_file=".env"):
-    if stack_name:
-        get_cf_outs_as_env(stack_name=stack_name, out_file=out_file)
+def generate_env_file(secret_id, stack_names=None, out_file=".env"):
+    if stack_names:
+        get_cf_outs_as_env(stack_names=stack_names, out_file=out_file)
     get_secrets_as_env(secret_id=secret_id, out_file=out_file)
 
 
@@ -44,17 +45,17 @@ if __name__ == "__main__":
         required=True,
     )
     parser.add_argument(
-        "--stack-name",
-        dest="stack_name",
-        help="Cloudformation Stack name",
+        "--stack-names",
+        dest="stack_names",
+        help="Cloudformation Stack names (comma separated)",
         default=None,
     )
 
     args = parser.parse_args()
 
-    secret_id, stack_name = (
+    secret_id, stack_names = (
         args.secret_id,
-        args.stack_name
+        args.stack_names
     )
-    generate_env_file(stack_name=stack_name, secret_id=secret_id, out_file=".env")
+    generate_env_file(stack_names=stack_names, secret_id=secret_id, out_file=".env")
 
