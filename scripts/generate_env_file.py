@@ -10,7 +10,8 @@ def get_cf_outs_as_env(stack_names, out_file):
         with open(out_file, "a") as _env:
             for output in outputs:
                 out_key = output.get("ExportName", output["OutputKey"])
-                out_key = out_key.replace('-', '_').upper().split(f"{stack_name}_")[-1]
+                out_key = out_key.split(f"{stack_name}-")[-1]
+                out_key = out_key.replace('-', '_').upper()
                 out_value = output["OutputValue"]
                 _env.write(f"{out_key}={out_value}\n")
 
