@@ -5,8 +5,9 @@ permissions:
   contents: read
 
 on:
+  push:
   pull_request:
-    types: [opened, reopened, edited, synchronize]
+    types: [ opened, reopened, edited, synchronize ]
 
 jobs:
   gitflow_enforcer:
