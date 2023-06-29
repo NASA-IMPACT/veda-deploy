@@ -49,6 +49,7 @@ jobs:
     env:
       DIRECTORY: veda-auth-stack
     needs: define-environment
+    if: ${{ needs.define-environment.outputs.env_name }}
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
