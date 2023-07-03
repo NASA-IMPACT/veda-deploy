@@ -42,33 +42,28 @@ jobs:
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
-      - name: Debug variables
-        id : debug_variables
-        run: |
-          echo "${{ needs.define-environment.outputs.env_name }}"
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
 
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          lfs: "true"
-#          submodules: "recursive"
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
-#          aws-region: "us-west-2"
-#      - name: Run auth deployment
-#        uses: "./veda-auth-stack/.github/actions/cdk-deploy"
-#        with:
-#          dir: "${{ env.DIRECTORY }}"
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+          aws-region: "us-west-2"
+      - name: Run auth deployment
+        uses: "./veda-auth-stack/.github/actions/cdk-deploy"
+        with:
+          dir: "${{ env.DIRECTORY }}"
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-veda-backend:
     name: Deploy VEDA backend ⚙️
-    if: 1 == 0 # ${{ needs.define-environment.outputs.env_name }}
+    if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-backend-stack
