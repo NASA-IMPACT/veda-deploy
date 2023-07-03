@@ -25,11 +25,6 @@ jobs:
           else
             echo "No environment associated with ${GITHUB_REF##*/} branch"
           fi
-      - name: Debug variables
-        id : debug_variables
-        run: |
-          echo "${{ github.ref }} - ${{ steps.define_environment.outputs.env_name }}"
-          echo "${{ github.ref_name }}"
       - name: Print the environment
         if: ${{ steps.define_environment.outputs.env_name }}
         run: echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
@@ -43,28 +38,33 @@ jobs:
     env:
       DIRECTORY: veda-auth-stack
     needs: define-environment
-    if: 1==0 #${{ needs.define-environment.outputs.env_name }}
+    if: ${{ needs.define-environment.outputs.env_name }}
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: "true"
-          submodules: "recursive"
+      - name: Debug variables
+        id : debug_variables
+        run: |
+          echo "${{ needs.define-environment.outputs.env_name }}"
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
-          aws-region: "us-west-2"
-      - name: Run auth deployment
-        uses: "./veda-auth-stack/.github/actions/cdk-deploy"
-        with:
-          dir: "${{ env.DIRECTORY }}"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          lfs: "true"
+#          submodules: "recursive"
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+#          aws-region: "us-west-2"
+#      - name: Run auth deployment
+#        uses: "./veda-auth-stack/.github/actions/cdk-deploy"
+#        with:
+#          dir: "${{ env.DIRECTORY }}"
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-veda-backend:
     name: Deploy VEDA backend ⚙️
