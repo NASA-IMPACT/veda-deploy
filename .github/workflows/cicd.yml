@@ -25,6 +25,11 @@ jobs:
           else
             echo "No environment associated with ${GITHUB_REF##*/} branch"
           fi
+      - name: Debug variables
+        id : debug_variables
+        run: |
+          echo "${{ github.ref }} - ${{ steps.define_environment.outputs.env_name }}"
+          echo "${{ github.ref_name }}"
       - name: Print the environment
         if: ${{ needs.define-environment.outputs.env_name }}
         run: echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
@@ -38,7 +43,7 @@ jobs:
     env:
       DIRECTORY: veda-auth-stack
     needs: define-environment
-    if: ${{ needs.define-environment.outputs.env_name }}
+    if: 1==0 #${{ needs.define-environment.outputs.env_name }}
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
@@ -63,7 +68,7 @@ jobs:
 
   deploy-veda-backend:
     name: Deploy VEDA backend ⚙️
-    if: ${{ needs.define-environment.outputs.env_name }}
+    if: 1 == 0 # ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-backend-stack
