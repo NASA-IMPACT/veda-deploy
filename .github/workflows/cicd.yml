@@ -31,7 +31,7 @@ jobs:
           echo "${{ github.ref }} - ${{ steps.define_environment.outputs.env_name }}"
           echo "${{ github.ref_name }}"
       - name: Print the environment
-        if: ${{ needs.define-environment.outputs.env_name }}
+        if: ${{ steps.define_environment.outputs.env_name }}
         run: echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
 
     outputs:
