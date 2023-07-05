@@ -24,7 +24,7 @@ VEDA_RASTER_PATH_PREFIX=*****
 Define `DEPLOYMENT_ROLE_ARN` as a github secret and
 ```bash 
 DEPLOYMENT_ENV_SECRET_NAME=*** (This is the AWS secret manager you define the deployment env variables)
-PROJECT_PREFIX=*** (match the project prefix defined in AWS secret manager)
-STAGE=*** (matches the stage defined in AWS secret manager)
+PROJECT_PREFIX=***
+STAGE=*** 
 ```
 in github variables 
