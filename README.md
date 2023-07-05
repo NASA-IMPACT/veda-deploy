@@ -29,3 +29,4 @@ DEPLOYMENT_ENV_SECRET_NAME=*** (This is the AWS secret manager you define the de
 PROJECT_PREFIX=*** (match the project prefix defined in AWS secret manager)
 STAGE=*** (matches the stage defined in AWS secret manager)
 ```
+in github variables 
