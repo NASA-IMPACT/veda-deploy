@@ -7,9 +7,7 @@ Deploy full stack
 AWS_ACCOUNT_ID=******
 AWS_REGION=******
 VPC_ID=******
-STAGE=******
 SUBNET_TAGNAME=******
-PROJECT_PREFIX=******
 PERMISSIONS_BOUNDARY_POLICY_NAME=******
 COGNITO_GROUPS=******
 VEDA_DB_PGSTAC_VERSION=******
