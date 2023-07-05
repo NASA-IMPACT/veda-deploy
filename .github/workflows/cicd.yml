@@ -138,7 +138,7 @@ jobs:
     env:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
-    needs: deploy-veda-stac-ingestor
+    needs: [deploy-veda-stac-ingestor, define-environment]
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
