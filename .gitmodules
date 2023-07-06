@@ -10,3 +10,6 @@
 [submodule "veda-data-airflow"]
 	path = veda-data-airflow
 	url = https://github.com/NASA-IMPACT/ghgc-data-airflow
+[submodule "veda-feature-api"]
+	path = veda-feature-api
+	url = https://github.com/NASA-IMPACT/ghgc-features-api.git
