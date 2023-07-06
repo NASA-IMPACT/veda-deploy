@@ -164,5 +164,6 @@ jobs:
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
           backend_stack_name: "${{ vars.PROJECT_PREFIX }}-backend-${{ vars.STAGE }}"
           auth_stack_name: "${{ vars.PROJECT_PREFIX }}-auth-${{ vars.STAGE }}"
+          ingestor_stack_name: "${{ vars.PROJECT_PREFIX }}-ingestor-${{ vars.STAGE }}"
           project_prefix: ${{ vars.PROJECT_PREFIX }}
           stage: ${{ vars.STAGE }}
