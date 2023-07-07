@@ -199,6 +199,7 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           project_prefix: ${{ vars.PROJECT_PREFIX }}
           stage: ${{ vars.STAGE }}
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
