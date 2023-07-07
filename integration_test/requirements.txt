@@ -1,4 +1,4 @@
 requests
 pytest
-dotenv
+python-dotenv
 boto3
