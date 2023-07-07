@@ -205,9 +205,8 @@ jobs:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
     if: ${{ needs.define-environment.outputs.env_name }}
-    needs: [deploy-veda-stac-ingestor,  deploy-veda-backend]
+    needs: [deploy-veda-data-airflow,  deploy-feature-api]
     steps:
       - name: Integration test
-        id: integration test
         run: |
           echo "Tests placeholder"
