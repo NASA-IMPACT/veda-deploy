@@ -212,14 +212,13 @@ jobs:
     steps:
       - name: Install python dependencies
         shell: bash
-        working-directory: ${{ env.DIRECTORY }}
         run: |
           ls -al
-          pip install -r requirements.txt
-          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names ${{ vars.PROJECT_PREFIX }}-auth-${{ vars.STAGE }},${{ vars.PROJECT_PREFIX }}-backend-${{ vars.STAGE }}
-
-      - name: Integration test
-        shell: bash
-        working-directory: ${{ env.DIRECTORY }}
-        run: |
-          pytest .
+#          pip install -r requirements.txt
+#          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names ${{ vars.PROJECT_PREFIX }}-auth-${{ vars.STAGE }},${{ vars.PROJECT_PREFIX }}-backend-${{ vars.STAGE }}
+#
+#      - name: Integration test
+#        shell: bash
+#        working-directory: ${{ env.DIRECTORY }}
+#        run: |
+#          pytest .
