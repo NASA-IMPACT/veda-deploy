@@ -212,6 +212,7 @@ jobs:
     steps:
       - name: Install python dependencies
         shell: bash
+        working-directory: ${{ env.DIRECTORY }}
         run: |
           ls -al
 #          pip install -r requirements.txt
