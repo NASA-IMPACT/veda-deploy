@@ -210,12 +210,6 @@ jobs:
     env:
       DIRECTORY: integration_test
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-          cache: "pip"
-
       - name: Install python dependencies
         shell: bash
         working-directory: ${{ env.DIRECTORY }}
