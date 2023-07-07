@@ -205,7 +205,7 @@ jobs:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
     if: ${{ needs.define-environment.outputs.env_name }}
-    #needs: [deploy-veda-data-airflow,  deploy-feature-api]
+    needs: [define-environment] #deploy-veda-data-airflow,  deploy-feature-api]
     environment: ${{ needs.define-environment.outputs.env_name }}
     env:
       DIRECTORY: integration_test
