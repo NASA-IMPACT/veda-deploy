@@ -15,7 +15,6 @@ def test_stac_url_returns_200():
 
 def test_raster_url_returns_200():
     endpoint = os.getenv("RASTER_URL")
-    raster_path_prefix = os.getenv("VEDA_RASTER_PATH_PREFIX")
-    url = f"{endpoint.rstrip('/')}/{raster_path_prefix}/healthz"
+    url = f"{endpoint.rstrip('/')}/healthz"
     response = requests.get(url)
     assert response.status_code == 200
