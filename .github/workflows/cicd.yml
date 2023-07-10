@@ -209,6 +209,7 @@ jobs:
     environment: ${{ needs.define-environment.outputs.env_name }}
     env:
       DIRECTORY: integration_test
+      AWS_DEFAULT_REGION: us-west-2
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
