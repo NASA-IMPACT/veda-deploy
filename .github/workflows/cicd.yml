@@ -22,6 +22,8 @@ jobs:
             echo "env_name=development" >> $GITHUB_OUTPUT
           elif [ "${{ github.ref_name }}" == "production" ]; then
             echo "env_name=production" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref_name }}" == "ieee" ]; then
+            echo "env_name=ieee" >> $GITHUB_OUTPUT
           else
             echo "No environment associated with ${GITHUB_REF##*/} branch"
           fi
