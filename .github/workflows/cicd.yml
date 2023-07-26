@@ -65,6 +65,7 @@ jobs:
           project_prefix: ${{ vars.PROJECT_PREFIX }}
           stage: ${{ vars.STAGE }}
 
+
 #  deploy-veda-backend:
 #    name: Deploy VEDA backend ⚙️
 #    if: ${{ needs.define-environment.outputs.env_name }}
