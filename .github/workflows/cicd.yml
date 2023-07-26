@@ -65,38 +65,37 @@ jobs:
           project_prefix: ${{ vars.PROJECT_PREFIX }}
           stage: ${{ vars.STAGE }}
 
+  deploy-veda-backend:
+    name: Deploy VEDA backend ⚙️
+    if: ${{ needs.define-environment.outputs.env_name }}
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-backend-stack
+    needs: define-environment
+    environment: ${{ needs.define-environment.outputs.env_name }}
 
-#  deploy-veda-backend:
-#    name: Deploy VEDA backend ⚙️
-#    if: ${{ needs.define-environment.outputs.env_name }}
-#    runs-on: ubuntu-latest
-#    env:
-#      DIRECTORY: veda-backend-stack
-#    needs: define-environment
-#    environment: ${{ needs.define-environment.outputs.env_name }}
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          lfs: "true"
-#          submodules: "recursive"
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
-#          aws-region: "us-west-2"
-#
-#      - name: Run deployment
-#        uses: "./veda-backend-stack/.github/actions/cdk-deploy"
-#        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          dir: "${{ env.DIRECTORY }}"
-#          project_prefix: ${{ vars.PROJECT_PREFIX }}
-#          stage: ${{ vars.STAGE }}
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./veda-backend-stack/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          project_prefix: ${{ vars.PROJECT_PREFIX }}
+          stage: ${{ vars.STAGE }}
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 #
 #
 #  deploy-veda-stac-ingestor:
