@@ -52,6 +52,7 @@ jobs:
       - name: Get tag v0.0.2
         run: |
           cd ${{ env.DIRECTORY }}
+          git fetch --tags origin
           git checkout tags/v0.0.2
 
       - name: Configure AWS Credentials
