@@ -49,7 +49,7 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
-      - name: Get tag v0.0.3
+      - name: Checkout to ${{ vars.VEDA_AUTH_TAG_NAME || 'default' }}
         if: ${{ vars.VEDA_AUTH_TAG_NAME }}
         run: |
           cd ${{ env.DIRECTORY }}
