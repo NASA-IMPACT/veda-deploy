@@ -78,7 +78,7 @@ jobs:
     if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
-      DIRECTORY: veda-backend-stack
+      DIRECTORY: veda-backend
     needs: define-environment
     environment: ${{ needs.define-environment.outputs.env_name }}
 
@@ -103,7 +103,7 @@ jobs:
           aws-region: "us-west-2"
 
       - name: Run deployment
-        uses: "./veda-backend/.github/actions/cdk-deploy"
+        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
