@@ -14,3 +14,6 @@
 [submodule "veda-auth"]
 	path = veda-auth
 	url = https://github.com/NASA-IMPACT/veda-auth.git
+[submodule "veda-backend"]
+	path = veda-backend
+	url = https://github.com/NASA-IMPACT/veda-backend.git
