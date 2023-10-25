@@ -65,13 +65,14 @@ jobs:
           role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-auth-deployment"
           aws-region: "us-west-2"
       - name: Run auth deployment
+        id: deploy_stack
         uses: "./veda-auth/.github/actions/cdk-deploy"
         with:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
     outputs:
-      auth_stackname: ${{ steps.deploy-veda-auth.outputs.auth_stackname }}
+      auth_stackname: ${{ steps.deploy_stack.outputs.auth_stackname }}
 
 #  deploy-veda-backend:
 #    name: Deploy VEDA backend ⚙️
@@ -141,7 +142,7 @@ jobs:
       - name: print stack names
 
         run: |
-          echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
+          echo "The environment is ${{  needs.define-environment.outputs.env_name  }}"
           echo "The auth_stackname is ${{ needs.deploy-veda-auth.outputs.auth_stackname }}"
 #      - name: Run deployment
 #        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
