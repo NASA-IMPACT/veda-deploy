@@ -76,7 +76,7 @@ jobs:
         run: |
          echo "auth_stack_name=${{ steps.deploy_stack.outputs.auth_stackname }}" >> $GITHUB_OUTPUT
     outputs:
-      auth_stack_name: ${{ steps.deploy_stack.outputs.auth_stacknamee }}
+      auth_stack_name: ${{ steps.deploy_stack.outputs.auth_stackname }}
 
 
 
