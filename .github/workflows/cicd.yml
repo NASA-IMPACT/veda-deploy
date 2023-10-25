@@ -71,10 +71,6 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-      - name: Set stackname
-        id: set_auth_stackname
-        run: |
-         echo "auth_stack_name=${{ steps.deploy_stack.outputs.auth_stackname }}" >> $GITHUB_OUTPUT
     outputs:
       auth_stack_name: ${{ steps.deploy_stack.outputs.auth_stackname }}
 
