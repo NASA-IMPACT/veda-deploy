@@ -70,6 +70,8 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+    outputs:
+      auth_stackname: ${{ steps.deploy-veda-auth.outputs.auth_stackname }}
 
 #  deploy-veda-backend:
 #    name: Deploy VEDA backend ⚙️
