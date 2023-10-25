@@ -71,6 +71,13 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+      - name: Set stackname
+        id: get_auth_stackname
+        run: |
+         echo "auth_stack_name=${{ steps.deploy_stack.outputs.auth_stackname }}"
+    outputs:
+      auth_stack_name: ${{ steps.deploy_stack.outputs.auth_stacknamee }}
+
 
 
 #  deploy-veda-backend:
@@ -142,7 +149,7 @@ jobs:
 
         run: |
           echo "The environment is ${{ needs.define-environment.outputs.env_name }}"
-          echo "The auth_stackname is ${{ needs.deploy-veda-auth.outputs }}"
+          echo "The auth_stackname is ${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 #      - name: Run deployment
 #        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
 #        with:
