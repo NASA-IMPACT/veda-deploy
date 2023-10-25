@@ -141,7 +141,8 @@ jobs:
       - name: print stack names
 
         run: |
-          echo ${{ needs.deploy-veda-auth.outputs.auth_stackname }}
+          echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
+          echo "The auth_stackname is ${{ needs.deploy-veda-auth.outputs.auth_stackname }}"
 #      - name: Run deployment
 #        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
 #        with:
