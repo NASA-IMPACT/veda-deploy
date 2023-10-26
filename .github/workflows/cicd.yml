@@ -120,7 +120,7 @@ jobs:
     if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
-      DIRECTORY: veda-stack-ingestor
+      DIRECTORY: veda-stac-ingestor
       AWS_REGION: "us-west-2"
     needs: [define-environment] #, deploy-veda-auth, deploy-veda-backend]
     environment: ${{ needs.define-environment.outputs.env_name }}
