@@ -36,43 +36,43 @@ jobs:
     outputs:
       env_name: ${{ steps.define_environment.outputs.env_name }}
 
-  deploy-veda-auth:
-    name: Deploy VEDA auth 🔐
-    runs-on: ubuntu-latest
-    env:
-      DIRECTORY: veda-auth
-    needs: define-environment
-    if: ${{ needs.define-environment.outputs.env_name }}
-    environment: ${{ needs.define-environment.outputs.env_name }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: "true"
-          submodules: "recursive"
-      - name: Checkout to ${{ vars.VEDA_AUTH_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_AUTH_TAG_NAME }}
-        run: |
-          cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_AUTH_TAG_NAME }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-auth-deployment"
-          aws-region: "us-west-2"
-      - name: Run auth deployment
-        id: deploy_auth_stack
-        uses: "./veda-auth/.github/actions/cdk-deploy"
-        with:
-          dir: "${{ env.DIRECTORY }}"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-    outputs:
-      auth_stack_name: ${{ steps.deploy_auth_stack.outputs.auth_stackname }}
+#  deploy-veda-auth:
+#    name: Deploy VEDA auth 🔐
+#    runs-on: ubuntu-latest
+#    env:
+#      DIRECTORY: veda-auth
+#    needs: define-environment
+#    if: ${{ needs.define-environment.outputs.env_name }}
+#    environment: ${{ needs.define-environment.outputs.env_name }}
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          lfs: "true"
+#          submodules: "recursive"
+#      - name: Checkout to ${{ vars.VEDA_AUTH_TAG_NAME || 'origin' }}
+#        if: ${{ vars.VEDA_AUTH_TAG_NAME }}
+#        run: |
+#          cd ${{ env.DIRECTORY }}
+#          git fetch --tags origin
+#          git checkout tags/${{ vars.VEDA_AUTH_TAG_NAME }}
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-auth-deployment"
+#          aws-region: "us-west-2"
+#      - name: Run auth deployment
+#        id: deploy_auth_stack
+#        uses: "./veda-auth/.github/actions/cdk-deploy"
+#        with:
+#          dir: "${{ env.DIRECTORY }}"
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+#    outputs:
+#      auth_stack_name: ${{ steps.deploy_auth_stack.outputs.auth_stackname }}
 
 
 
@@ -122,7 +122,7 @@ jobs:
     env:
       DIRECTORY: veda-stac-ingestor
       AWS_REGION: "us-west-2"
-    needs: [define-environment, deploy-veda-auth, deploy-veda-backend]
+    needs: [define-environment, deploy-veda-backend]
     environment: ${{ needs.define-environment.outputs.env_name }}
     steps:
       - name: Checkout
@@ -150,7 +150,7 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+          auth_stack_name: "veda-auth-stack-pre-dev" # "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
           backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
 
 #
