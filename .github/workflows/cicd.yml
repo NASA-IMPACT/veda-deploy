@@ -71,87 +71,94 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-    outputs:
-      auth_stack_name: ${{ steps.deploy_auth_stack.outputs.auth_stackname }}
-
-
-
-  deploy-veda-backend:
-    name: Deploy VEDA backend ⚙️
-    if: ${{ needs.define-environment.outputs.env_name }}
-    runs-on: ubuntu-latest
-    env:
-      DIRECTORY: veda-backend
-    needs: define-environment
-    environment: ${{ needs.define-environment.outputs.env_name }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: "true"
-          submodules: "recursive"
-      - name: Checkout to ${{ vars.VEDA_BACKEND_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_BACKEND_TAG_NAME }}
+      - name: Deploy
+        id: get_auth_stack
+        shell: bash
+        working-directory: ${{ inputs.dir }}
         run: |
-          cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_BACKEND_TAG_NAME }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-backend-deployment"
-          aws-region: "us-west-2"
-
-      - name: Run deployment
-        uses: "./veda-backend/.github/actions/cdk-deploy"
-        id: deploy_backend_stack
-        with:
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}"
-          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
+          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
     outputs:
-      backend_stack_name: ${{ steps.deploy_backend_stack.outputs.backend_stackname }}
+      auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
 
-  deploy-veda-stac-ingestor:
-    name: deploy VEDA stac ingestor 🍽️
-    if: ${{ needs.define-environment.outputs.env_name }}
-    runs-on: ubuntu-latest
-    env:
-      DIRECTORY: veda-stac-ingestor
-      AWS_REGION: "us-west-2"
-    needs: [define-environment, deploy-veda-auth, deploy-veda-backend]
-    environment: ${{ needs.define-environment.outputs.env_name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: "true"
-          submodules: "recursive"
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-ingestor-deployment"
-          aws-region: "${{ env.AWS_REGION }}"
 
-      - name: Checkout to ${{ vars.VEDA_INGESTOR_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_INGESTOR_TAG_NAME }}
-        run: |
-          cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_INGESTOR_TAG_NAME }}
-      - name: Run deployment
-        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
-        with:
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}"
-          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
-          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+#  deploy-veda-backend:
+#    name: Deploy VEDA backend ⚙️
+#    if: ${{ needs.define-environment.outputs.env_name }}
+#    runs-on: ubuntu-latest
+#    env:
+#      DIRECTORY: veda-backend
+#    needs: define-environment
+#    environment: ${{ needs.define-environment.outputs.env_name }}
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          lfs: "true"
+#          submodules: "recursive"
+#      - name: Checkout to ${{ vars.VEDA_BACKEND_TAG_NAME || 'origin' }}
+#        if: ${{ vars.VEDA_BACKEND_TAG_NAME }}
+#        run: |
+#          cd ${{ env.DIRECTORY }}
+#          git fetch --tags origin
+#          git checkout tags/${{ vars.VEDA_BACKEND_TAG_NAME }}
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-backend-deployment"
+#          aws-region: "us-west-2"
+#
+#      - name: Run deployment
+#        uses: "./veda-backend/.github/actions/cdk-deploy"
+#        id: deploy_backend_stack
+#        with:
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+#          dir: "${{ env.DIRECTORY }}"
+#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+#    outputs:
+#      backend_stack_name: ${{ steps.deploy_backend_stack.outputs.backend_stackname }}
+#
+#  deploy-veda-stac-ingestor:
+#    name: deploy VEDA stac ingestor 🍽️
+#    if: ${{ needs.define-environment.outputs.env_name }}
+#    runs-on: ubuntu-latest
+#    env:
+#      DIRECTORY: veda-stac-ingestor
+#      AWS_REGION: "us-west-2"
+#    needs: [define-environment, deploy-veda-auth, deploy-veda-backend]
+#    environment: ${{ needs.define-environment.outputs.env_name }}
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          lfs: "true"
+#          submodules: "recursive"
+#
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v2
+#        with:
+#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+#          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-ingestor-deployment"
+#          aws-region: "${{ env.AWS_REGION }}"
+#
+#      - name: Checkout to ${{ vars.VEDA_INGESTOR_TAG_NAME || 'origin' }}
+#        if: ${{ vars.VEDA_INGESTOR_TAG_NAME }}
+#        run: |
+#          cd ${{ env.DIRECTORY }}
+#          git fetch --tags origin
+#          git checkout tags/${{ vars.VEDA_INGESTOR_TAG_NAME }}
+#      - name: Run deployment
+#        uses: "./veda-stac-ingestor/.github/actions/cdk-deploy"
+#        with:
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+#          dir: "${{ env.DIRECTORY }}"
+#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+#          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+#          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
 
 #
 #  deploy-veda-data-airflow:
