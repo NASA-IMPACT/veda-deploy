@@ -74,10 +74,14 @@ jobs:
       - name: Deploy
         id: get_auth_stack
         shell: bash
-        working-directory: ${{ inputs.dir }}
         run: |
           stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
           echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
+      - name: Verify
+        shell: bash
+        run: |
+          
+          echo "auth_stackname=${{ steps.get_auth_stack.outputs.auth_stackname }}"
     outputs:
       auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
 
