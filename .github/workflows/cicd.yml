@@ -165,6 +165,14 @@ jobs:
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
           auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
           backend_stack_name:  "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+      - name: Get ingestor Stack Name
+        id: get_ingestor_stack
+        shell: bash
+        run: |
+          stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
+          echo "ingestor_stackname=$stack" >> $GITHUB_OUTPUT
+    outputs:
+      ingestor_stack_name: ${{ steps.get_ingestor_stack.outputs.ingestor_stackname }}
 
   deploy-veda-data-airflow:
     name: deploy VEDA data airflow 🍃
@@ -204,9 +212,9 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          backend_stack_name: "${{ vars.PROJECT_PREFIX }}-backend-${{ vars.STAGE }}"
-          auth_stack_name: "${{ vars.PROJECT_PREFIX }}-auth-${{ vars.STAGE }}"
-          ingestor_stack_name: "${{ vars.PROJECT_PREFIX }}-ingestor-${{ vars.STAGE }}"
+          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+          ingestor_stack_name: "${{ needs.deploy-veda-stac-ingestor.outputs.ingestor_stack_name }}"
 
 #
 #  deploy-feature-api:
