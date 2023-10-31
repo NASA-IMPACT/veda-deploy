@@ -174,7 +174,7 @@ jobs:
     outputs:
       ingestor_stack_name: ${{ steps.get_ingestor_stack.outputs.ingestor_stackname }}
       auth_stack_name: ${{ needs.deploy-veda-auth.outputs.auth_stack_name }}
-      backend_stack_name: needs.deploy-veda-backend.outputs.backend_stack_name
+      backend_stack_name: ${{ needs.deploy-veda-backend.outputs.backend_stack_name }}
 
   deploy-veda-data-airflow:
     name: deploy VEDA data airflow 🍃
