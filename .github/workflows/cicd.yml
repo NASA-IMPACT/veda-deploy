@@ -288,7 +288,7 @@ jobs:
         working-directory: ${{ env.DIRECTORY }}
         run: |
           pip install -r requirements.txt
-          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names ${{ vars.PROJECT_PREFIX }}-auth-${{ vars.STAGE }},${{ vars.PROJECT_PREFIX }}-backend-${{ vars.STAGE }}
+          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names${{ needs.deploy-veda-stac-ingestor.outputs.backend_stack_name }},${{ needs.deploy-veda-stac-ingestor.outputs.auth_stack_name }}
 
       - name: Integration test
         shell: bash
