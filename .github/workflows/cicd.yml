@@ -70,7 +70,7 @@ jobs:
         id: deploy_backend_stack
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}"
+          dir: veda-backend
 
       - name: Get Backend Stack Name
         id: get_backend_stack
