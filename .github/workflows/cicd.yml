@@ -81,4 +81,45 @@ jobs:
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
 
-  
+  deploy-veda-auth:
+    name: Deploy VEDA auth 🔐
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-auth
+    needs: define-environment
+    if: ${{ needs.define-environment.outputs.env_name }}
+    environment: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: "true"
+          submodules: "recursive"
+      - name: Checkout to ${{ vars.VEDA_AUTH_TAG_NAME || 'origin' }}
+        if: ${{ vars.VEDA_AUTH_TAG_NAME }}
+        run: |
+          cd ${{ env.DIRECTORY }}
+          git fetch --tags origin
+          git checkout tags/${{ vars.VEDA_AUTH_TAG_NAME }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-auth-deployment"
+          aws-region: "us-west-2"
+      - name: Run auth deployment
+        id: deploy_auth_stack
+        uses: "./veda-auth/.github/actions/cdk-deploy"
+        with:
+          dir: "${{ env.DIRECTORY }}"
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+      - name: Get Auth Stack Name
+        id: get_auth_stack
+        shell: bash
+        run: |
+          stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
+          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
+    outputs:
+      auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
