@@ -163,4 +163,5 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          backend_stack_name: "${{ needs.deploy-veda-stac-ingestor.outputs.backend_stack_name }}"
+          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
