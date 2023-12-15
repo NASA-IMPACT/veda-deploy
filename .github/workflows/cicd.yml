@@ -74,7 +74,7 @@ jobs:
         id: get_auth_stack
         shell: bash
         run: |
-          stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
           echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
     outputs:
       auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
@@ -120,7 +120,7 @@ jobs:
         id: get_backend_stack
         shell: bash
         run: |
-          stack=$(cat ${HOME}/cdk-outputs.json | jq -r 'keys_unsorted[0]')
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
           echo "backend_stackname=$stack" >> $GITHUB_OUTPUT
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
