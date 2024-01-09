@@ -12,4 +12,4 @@
 	url = https://github.com/NASA-IMPACT/veda-backend.git
 [submodule "veda-stac-ingestor"]
 	path = veda-stac-ingestor
-	url = https://github.com/NASA-IMPACT/veda-stac-ingestor
+	url = https://github.com/NASA-IMPACT/veda-stac-ingestor.git
