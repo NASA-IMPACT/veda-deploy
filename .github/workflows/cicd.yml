@@ -113,7 +113,9 @@ jobs:
         id: deploy_backend_stack
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          auth_env_aws_secret_name: ${{ vars.DEPLOYMENT_AUTH_ENV_SECRET_NAME }}
+          env-file: ".env"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
           dir: "${{ env.DIRECTORY }}"
 
       - name: Get Backend Stack Name
