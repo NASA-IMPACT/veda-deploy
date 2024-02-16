@@ -1,35 +1,69 @@
 name: Deploy and Test VEDA Instance
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
       environment:
         type: environment
-        description: Select the environment
-      boolean:
-        type: boolean
-        description: True or False
-      choice:
-        type: choice
-        description: Make a choice
-        options:
-        - foo
-        - bar
-        - baz
-      input:
-        description: "Optional notes for dispatch"
-        required: false
-        default: "No notes provided"
-jobs:
-  build:
-    runs-on: ubuntu-latest
+        description: Select the environment to deploy
 
+jobs:
+  define-environment:
+    name: Set ✨ environment ✨ 
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: dispatch
+      - name: Set the environment
+        id: define_environment
         run: | 
-          echo "environment is ${{ github.event.inputs.environment }} / ${{ inputs.environment }}"
-          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }} 
-          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
-          echo "dispatch notes ${{ github.event.inputs.note }}" / ${{ inputs.input }}
+          echo "Dispatch deployment to ${{ github.event.inputs.environment }} environment"
+          echo "env_name=${{ github.event.inputs.environment }} " >> $GITHUB_OUTPUT
+    outputs:
+      env_name: ${{ steps.define_environment.outputs.env_name }}
+
+  deploy-veda-auth:
+    name: Deploy VEDA auth 🔐
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-auth
+    needs: define-environment
+    if: ${{ needs.define-environment.outputs.env_name }}
+    environment: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Mock veda-auth checkout and deploy action
+        run: |
+          echo "veda-auth"
+
+  deploy-veda-backend:
+    name: Deploy VEDA backend ⚙️
+    if: ${{ needs.define-environment.outputs.env_name }}
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-backend
+    needs: [define-environment, deploy-veda-auth]
+    environment: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Mock veda-backend checkout and deploy action
+        run: |
+          echo "veda-backend"
+
+  deploy-veda-data-airflow:
+    name: deploy VEDA data airflow 🍃
+    if: ${{ needs.define-environment.outputs.env_name }}
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-data-airflow
+      AWS_REGION: "us-west-2"
+    needs: [define-environment, deploy-veda-backend]
+    environment: ${{ needs.define-environment.outputs.env_name }}
+
+    steps:
+      - name: Mock veda-data-airflow checkout and deploy action
+        run: |
+          echo "veda-data-airflow"
