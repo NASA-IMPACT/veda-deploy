@@ -1,6 +1,8 @@
-import boto3
 import json
 from argparse import ArgumentParser
+
+import boto3
+
 
 def get_cf_outs_as_env(stack_names, out_file):
     cf_client = boto3.client('cloudformation')
@@ -59,5 +61,8 @@ if __name__ == "__main__":
         args.secret_id,
         args.stack_names
     )
-    generate_env_file(stack_names=stack_names, secret_id=secret_id, out_file=".env")
-
+    generate_env_file(
+        stack_names=stack_names,
+        secret_id=secret_id,
+        out_file=".env"
+    )
