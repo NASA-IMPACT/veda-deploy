@@ -1,8 +1,33 @@
-# veda-deploy
-Deploy full stack 
+# What?
+Deploy full VEDA stack easily.
 
-# Steps
-1- Define the necessary environment variables in AWS secret manager (make note of the name of the secret manager)
+# How to deploy?
+## Steps
+1. Create an Environment in the repository. See [Requirements](#requirements) on details of creating the environment.
+2. Add necessary env vars in the Environment
+3. Go to Actions. Select "CI/CD" workflow. Select "Run workflow", choose the environment from step 1. Click "Run workflow."
+
+# Requirements
+## Environment
+Each environment needs a minimum of
+
+### Secrets
+`DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
+
+### Variables
+`DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required env vars. See AWS Secrets Requirements for what env vars are needed.
+`PROJECT_PREFIX` (TBD)
+`STAGE` (TBD)
+
+### Variables (Optional)
+Indexes for each project to use to deploy. Can be branch name, release tag, commit hash, etc. Anything that works with `git checkout`
+
+`VEDA_AUTH_GIT_INDEX`
+`VEDA_BACKEND_GIT_INDEX`
+`VEDA_DATA_AIRFLOW_GIT_INDEX`
+`VEDA_FEATURES_API_GIT_INDEX`
+
+#### AWS Secrets Requirements
 ```bash
 AWS_ACCOUNT_ID=******
 AWS_REGION=******
@@ -19,12 +44,3 @@ STATE_DYNAMO_TABLE=*****
 VEDA_STAC_PATH_PREFIX=*****
 VEDA_RASTER_PATH_PREFIX=*****
 ```
-
-2- Define github secrets and variables
-Define `DEPLOYMENT_ROLE_ARN` as a github secret and
-```bash 
-DEPLOYMENT_ENV_SECRET_NAME=*** (This is the AWS secret manager you define the deployment env variables)
-PROJECT_PREFIX=***
-STAGE=*** 
-```
-in github variables 
