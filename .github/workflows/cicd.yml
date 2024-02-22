@@ -29,12 +29,12 @@ jobs:
           submodules: "recursive"
       - name: Checkout to the provided Git Ref
         run: |
-          cd ${{ env.DIRECTORY }}
+          cd ${{ github.workspace }}/${{ env.DIRECTORY }}
+          ls  # Debugging output to verify the directory
           git remote update
           git fetch --tags
-          git branch
-          echo `git checkout --track origin/${{ vars.VEDA_AUTH_GIT_REF || 'main' }}`
-          git checkout origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+          git branch -a  # Debugging output to see available branches
+          git checkout -B my_branch origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
