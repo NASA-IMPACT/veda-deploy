@@ -30,8 +30,10 @@ jobs:
       - name: Checkout to the provided Git Ref
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch
-          echo `git checkout origin/${{ vars.VEDA_AUTH_GIT_REF || 'main' }}`
+          git remote update
+          git fetch --tags
+          git branch
+          echo `git checkout --track origin/${{ vars.VEDA_AUTH_GIT_REF || 'main' }}`
           git checkout origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
