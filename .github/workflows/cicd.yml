@@ -29,11 +29,10 @@ jobs:
           submodules: "recursive"
       - name: Checkout to the provided Git Ref
         run: |
-          git submodule foreach 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin'
           cd ${{ env.DIRECTORY }}
-          ls  # Debugging output to verify the directory
-          git branch -a  # Debugging output to see available branches
-          git checkout -B my_branch origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
+          git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -74,9 +73,10 @@ jobs:
       - name: Checkout to the provided Git Ref
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch
-          echo `git checkout origin/${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
-          git checkout origin/${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
+          echo `git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
+          git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -131,7 +131,8 @@ jobs:
       - name: Checkout to the provided Git Ref
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
           echo `git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
           git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
           
