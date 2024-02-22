@@ -29,11 +29,10 @@ jobs:
           lfs: "true"
           submodules: "recursive"
       - name: Checkout to the provided Git Ref
-        if: ${{ vars.VEDA_AUTH_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          git checkout ${{ vars.VEDA_AUTH_GIT_REF }}
+          git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -72,11 +71,10 @@ jobs:
           lfs: "true"
           submodules: "recursive"
       - name: Checkout to the provided Git Ref
-        if: ${{ vars.VEDA_BACKEND_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          git checkout ${{ vars.VEDA_BACKEND_GIT_REF }}
+          git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -127,11 +125,10 @@ jobs:
           aws-region: "${{ env.AWS_REGION }}"
 
       - name: Checkout to the provided Git Ref
-        if: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF }}
+          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
           
       - name: Run deployment
         uses: "./veda-data-airflow/.github/actions/terraform-deploy"
