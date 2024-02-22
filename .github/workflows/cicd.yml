@@ -13,7 +13,6 @@ on:
         description: Environment to deploy to
 
 jobs:
-
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
     runs-on: ubuntu-latest
@@ -90,6 +89,8 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           auth_env_aws_secret_name: ${{ vars.DEPLOYMENT_AUTH_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
       - name: Get Backend Stack Name
         id: get_backend_stack
