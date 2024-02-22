@@ -20,12 +20,12 @@ Each environment needs a minimum of
 `STAGE` (TBD)
 
 ### Variables (Optional)
-Indexes for each project to use to deploy. Can be branch name, release tag, commit hash, etc. Anything that works with `git checkout`
+Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`.
 
-`VEDA_AUTH_GIT_INDEX`
-`VEDA_BACKEND_GIT_INDEX`
-`VEDA_DATA_AIRFLOW_GIT_INDEX`
-`VEDA_FEATURES_API_GIT_INDEX`
+`VEDA_AUTH_GIT_REF`
+`VEDA_BACKEND_GIT_REF`
+`VEDA_DATA_AIRFLOW_GIT_REF`
+`VEDA_FEATURES_API_GIT_REF`
 
 #### AWS Secrets Requirements
 ```bash

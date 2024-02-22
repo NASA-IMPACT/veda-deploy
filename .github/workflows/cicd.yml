@@ -14,41 +14,13 @@ on:
 
 jobs:
 
-  define-environment:
-    name: Set ✨ environment ✨ based on the branch 🌳
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set the environment
-        id: define_environment
-        run: |
-          if [ "${{ github.ref_name }}" == "main" ]; then
-            echo "env_name=staging" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref_name }}" == "dev" ]; then
-            echo "env_name=development" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref_name }}" == "production" ]; then
-            echo "env_name=production" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref_name }}" == "ieee" ]; then
-            echo "env_name=ieee" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref_name }}" == "pre-production" ]; then
-            echo "env_name=pre-production" >> $GITHUB_OUTPUT
-          else
-            echo "No environment associated with ${GITHUB_REF##*/} branch"
-          fi
-      - name: Print the environment
-        if: ${{ steps.define_environment.outputs.env_name }}
-        run: echo "The environment is ${{ steps.define_environment.outputs.env_name }}"
-
-    outputs:
-      env_name: ${{ steps.define_environment.outputs.env_name }}
-
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-auth
-    needs: define-environment
-    if: ${{ needs.define-environment.outputs.env_name }}
-    environment: ${{ needs.define-environment.outputs.env_name }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
@@ -56,18 +28,18 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
-      - name: Checkout to ${{ vars.VEDA_AUTH_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_AUTH_TAG_NAME }}
+      - name: Checkout to the provided Git Ref
+        if: ${{ vars.VEDA_AUTH_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_AUTH_TAG_NAME }}
+          git fetch
+          git checkout ${{ vars.VEDA_AUTH_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-auth-deployment"
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-auth-deployment"
           aws-region: "us-west-2"
       - name: Run auth deployment
         id: deploy_auth_stack
@@ -86,12 +58,12 @@ jobs:
 
   deploy-veda-backend:
     name: Deploy VEDA backend ⚙️
-    if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-backend
-    needs: [define-environment, deploy-veda-auth]
-    environment: ${{ needs.define-environment.outputs.env_name }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [deploy-veda-auth]
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
@@ -99,18 +71,18 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
-      - name: Checkout to ${{ vars.VEDA_BACKEND_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_BACKEND_TAG_NAME }}
+      - name: Checkout to the provided Git Ref
+        if: ${{ vars.VEDA_BACKEND_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_BACKEND_TAG_NAME }}
+          git fetch
+          git checkout ${{ vars.VEDA_BACKEND_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-backend-deployment"
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-backend-deployment"
           aws-region: "us-west-2"
 
       - name: Run deployment
@@ -132,13 +104,13 @@ jobs:
 
   deploy-veda-data-airflow:
     name: deploy VEDA data airflow 🍃
-    if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
     env:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
-    needs: [define-environment, deploy-veda-backend]
-    environment: ${{ needs.define-environment.outputs.env_name }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [deploy-veda-backend]
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
@@ -151,15 +123,15 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ needs.define-environment.outputs.env_name }}-airflow-deployment"
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
-      - name: Checkout to ${{ vars.VEDA_AIRFLOW_TAG_NAME || 'origin' }}
-        if: ${{ vars.VEDA_AIRFLOW_TAG_NAME }}
+      - name: Checkout to the provided Git Ref
+        if: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF }}
         run: |
           cd ${{ env.DIRECTORY }}
-          git fetch --tags origin
-          git checkout tags/${{ vars.VEDA_AIRFLOW_TAG_NAME }}
+          git fetch
+          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF }}
           
       - name: Run deployment
         uses: "./veda-data-airflow/.github/actions/terraform-deploy"
