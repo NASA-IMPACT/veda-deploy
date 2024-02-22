@@ -29,10 +29,9 @@ jobs:
           submodules: "recursive"
       - name: Checkout to the provided Git Ref
         run: |
-          cd ${{ github.workspace }}/${{ env.DIRECTORY }}
+          git submodule foreach 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin'
+          cd ${{ env.DIRECTORY }}
           ls  # Debugging output to verify the directory
-          git remote update
-          git fetch --tags
           git branch -a  # Debugging output to see available branches
           git checkout -B my_branch origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
