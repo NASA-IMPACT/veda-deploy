@@ -31,8 +31,8 @@ jobs:
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          echo `git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main' }}`
-          git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+          echo `git checkout origin/${{ vars.VEDA_AUTH_GIT_REF || 'main' }}`
+          git checkout origin/${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -74,8 +74,8 @@ jobs:
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          echo `git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
-          git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
+          echo `git checkout origin/${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
+          git checkout origin/${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -131,8 +131,8 @@ jobs:
         run: |
           cd ${{ env.DIRECTORY }}
           git fetch
-          echo `git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
-          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+          echo `git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
+          git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
           
       - name: Run deployment
         uses: "./veda-data-airflow/.github/actions/terraform-deploy"
