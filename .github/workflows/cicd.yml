@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: "true"
           submodules: "recursive"
@@ -66,7 +66,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: "true"
           submodules: "recursive"
@@ -90,10 +90,9 @@ jobs:
         id: deploy_backend_stack
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          auth_env_aws_secret_name: ${{ vars.DEPLOYMENT_AUTH_ENV_SECRET_NAME }}
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
       - name: Get Backend Stack Name
         id: get_backend_stack
@@ -116,13 +115,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: "true"
           submodules: "recursive"
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
