@@ -99,6 +99,7 @@ jobs:
         with:
           repository: NASA-IMPACT/veda-config
           ref: add-playwright
+          submodules: recursive
 
       - name: Use Node.js 16
         uses: actions/setup-node@v3
