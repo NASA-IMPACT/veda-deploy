@@ -110,7 +110,7 @@ jobs:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-backend]
+    needs: [deploy-veda-auth, deploy-veda-backend]
     environment: ${{ github.event.inputs.environment }}
 
     steps:
