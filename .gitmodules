@@ -1,9 +1,6 @@
 [submodule "veda-data-airflow"]
 	path = veda-data-airflow
 	url = https://github.com/NASA-IMPACT/veda-data-airflow.git
-[submodule "veda-feature-api"]
-	path = veda-feature-api
-	url = https://github.com/NASA-IMPACT/veda-features-api.git
 [submodule "veda-auth"]
 	path = veda-auth
 	url = https://github.com/NASA-IMPACT/veda-auth.git
