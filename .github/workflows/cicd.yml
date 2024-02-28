@@ -11,6 +11,8 @@ on:
         type: environment
         description: Select the environment to deploy
 
+run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
+
 jobs:
   define-environment:
     name: Set ✨ environment ✨ 
