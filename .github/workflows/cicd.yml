@@ -12,6 +12,8 @@ on:
         required: true
         description: Environment to deploy to
 
+run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
+
 jobs:
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
