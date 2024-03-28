@@ -216,6 +216,11 @@ jobs:
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
 
+      - name: Set environment
+        run: |
+          echo "API_RASTER_ENDPOINT=$(echo $VEDA_RASTER_URL)" >> $API_RASTER_ENDPOINT
+          echo "API_STAC_ENDPOINT=$(echo $VEDA_STAC_URL)" >> $API_STAC_ENDPOINT
+
       - name: Playwright tests
         env:
           MAPBOX_TOKEN: ${{secrets.MAPBOX_TOKEN}}
