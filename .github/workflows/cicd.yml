@@ -203,7 +203,7 @@ jobs:
     env:
       DIRECTORY: veda-feature-api
       AWS_REGION: "us-west-2"
-    needs: [ define-environment, deploy-veda-stac-ingestor]
+    needs: [ define-environment] #, deploy-veda-stac-ingestor]
     environment: ${{ needs.define-environment.outputs.env_name }}
 
     steps:
