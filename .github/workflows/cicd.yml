@@ -216,14 +216,32 @@ jobs:
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
 
-      - name: Set environment
+      - name: Generate .env file from cdk.out
+        shell: bash
+        working-directory: ${{ env.DIRECTORY }}
         run: |
-          echo "API_RASTER_ENDPOINT=$(echo $VEDA_RASTER_URL)" >> $API_RASTER_ENDPOINT
-          echo "API_STAC_ENDPOINT=$(echo $VEDA_STAC_URL)" >> $API_STAC_ENDPOINT
+          pip install -r requirements.txt
+          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
 
-      - name: Playwright tests
+
+      - name: Load .env file
+        id: dotenv
+        uses: falti/dotenv-action@v1.1
+
+      - name: Create env.local file
         env:
           MAPBOX_TOKEN: ${{secrets.MAPBOX_TOKEN}}
+        run: |
+          touch .env.local
+          echo "API_RASTER_ENDPOINT=${{steps.dotenv.outputs.VEDA_RASTER_URL}}" >> .env.local
+          echo "API_STAC_ENDPOINT=${{steps.dotenv.outputs.VEDA_STAC_URL}}" >> .env.local
+
+          echo "Testing deployment URLs"
+          cat .env.local
+
+          echo "MAPBOX_TOKEN="$MAPBOX_TOKEN" >> .env.local
+
+      - name: Playwright tests
         run: yarn test:e2e
       - uses: actions/upload-artifact@v3
         if: always()
