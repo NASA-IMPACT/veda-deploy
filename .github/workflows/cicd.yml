@@ -210,8 +210,8 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install
-        run: yarn
+      - name: Run veda setup
+        run: ./.veda/setup
 
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
