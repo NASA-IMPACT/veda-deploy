@@ -213,8 +213,12 @@ jobs:
       - name: Run veda setup
         run: ./.veda/setup
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+      - name: Checkout generate_env script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /scripts/generate_env_file.py
+          sparse-checkout-cone-mode: false
 
       - name: Generate .env file from cdk.out
         shell: bash
@@ -222,7 +226,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-
 
       - name: Load .env file
         id: dotenv
@@ -240,6 +243,9 @@ jobs:
           cat .env.local
 
           echo "MAPBOX_TOKEN="$MAPBOX_TOKEN" >> .env.local
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
 
       - name: Playwright tests
         run: yarn test:e2e
