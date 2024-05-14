@@ -29,6 +29,7 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout to the provided Git Ref
         run: |
@@ -76,6 +77,7 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout to the provided Git Ref
         run: |
@@ -127,6 +129,7 @@ jobs:
   #       with:
   #         lfs: "true"
   #         submodules: "recursive"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
 
   #     - name: Checkout to the provided Git Ref
   #       run: |
@@ -169,6 +172,7 @@ jobs:
         with:
           lfs: "true"
           submodules: "recursive"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout to the provided Git Ref
         run: |
