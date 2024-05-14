@@ -9,4 +9,4 @@
 	url = https://github.com/NASA-IMPACT/veda-backend.git
 [submodule "veda-monitoring"]
 	path = veda-monitoring
-	url = https://github.com/NASA-IMPACT/veda-monitoring.git
+	url = git@github.com:NASA-IMPACT/veda-monitoring.git
