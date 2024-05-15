@@ -84,7 +84,6 @@ jobs:
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
 
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -93,7 +92,7 @@ jobs:
           aws-region: "us-west-2"
 
       - name: Run deployment
-        uses: "./${{ env.DIRECTORY }}/.github/actions/cdk-deploy"
+        uses: "./veda-backend/.github/actions/cdk-deploy"
         id: deploy_backend_stack
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
