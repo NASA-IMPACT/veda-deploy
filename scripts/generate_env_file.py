@@ -14,7 +14,7 @@ def get_cf_outs_as_env(stack_names, out_file):
                 out_key = output.get("ExportName", output["OutputKey"])
                 if (out_key == f"{stack_name}-userpool-domain-base-url"):
                 # for missing env variables required for veda-backend workflow actions
-                    out_key = f"{stack_name}-VEDA_COGNITO_DOMAIN"
+                    out_key = f"{stack_name}-COGNITO_DOMAIN"
                 out_key = out_key.split(f"{stack_name}-")[-1]
                 out_key = f"VEDA_{out_key.replace('-', '_').upper()}"
                 out_value = output["OutputValue"]
