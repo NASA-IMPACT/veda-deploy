@@ -140,7 +140,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
           
       - name: Run deployment
