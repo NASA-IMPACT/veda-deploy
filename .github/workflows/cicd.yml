@@ -41,7 +41,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-auth-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
           aws-region: "us-west-2"
 
       - name: Run auth deployment
@@ -89,7 +89,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-backend-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
           aws-region: "us-west-2"
 
       - name: Run deployment
@@ -140,7 +140,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
       - name: Run deployment
@@ -177,7 +177,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-integration-test"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
           aws-region: "${{ env.AWS_DEFAULT_REGION }}"
 
       - name: Install python dependencies
