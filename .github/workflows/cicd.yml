@@ -168,7 +168,6 @@ jobs:
         with:
           lfs: "true"
           submodules: "false"
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout veda-monitoring "submodule"
         uses: actions/checkout@v4
@@ -176,7 +175,7 @@ jobs:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_MONITORING_GIT_REF || 'main' }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
