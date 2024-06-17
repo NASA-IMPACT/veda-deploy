@@ -110,47 +110,47 @@ jobs:
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
 
-  # deploy-veda-data-airflow:
-  #   name: deploy VEDA data airflow 🍃
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     DIRECTORY: veda-data-airflow
-  #     AWS_REGION: "us-west-2"
-  #     ENVIRONMENT: ${{ github.event.inputs.environment }}
-  #   needs: [deploy-veda-auth, deploy-veda-backend]
-  #   environment: ${{ github.event.inputs.environment }}
+  deploy-veda-data-airflow:
+    name: deploy VEDA data airflow 🍃
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-data-airflow
+      AWS_REGION: "us-west-2"
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [deploy-veda-auth, deploy-veda-backend]
+    environment: ${{ github.event.inputs.environment }}
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         lfs: "true"
-  #         submodules: "recursive"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "recursive"
 
-  #     - name: Checkout to the provided Git Ref
-  #       run: |
-  #         cd ${{ env.DIRECTORY }}
-  #         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-  #         git fetch --tags origin
-  #         echo `git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
-  #         git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+      - name: Checkout to the provided Git Ref
+        run: |
+          cd ${{ env.DIRECTORY }}
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
+          echo `git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
+          git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
-  #     - name: Configure AWS Credentials
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-  #         role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
-  #         aws-region: "${{ env.AWS_REGION }}"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
           
-  #     - name: Run deployment
-  #       uses: "./veda-data-airflow/.github/actions/terraform-deploy"
-  #       with:
-  #         env-file: ".env"
-  #         env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-  #         dir: "${{ env.DIRECTORY }}"
-  #         script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-  #         backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-  #         auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+      - name: Run deployment
+        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
+        with:
+          env-file: ".env"
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
   deploy-veda-monitoring:
     name: deploy VEDA monitoring 👁️
