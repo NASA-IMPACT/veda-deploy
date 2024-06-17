@@ -24,24 +24,24 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
 
     steps:
-      - name: Checkout deployment repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: "true"
-          submodules: "false"
+          submodules: "recursive"
 
-      - name: Checkout veda-auth "submodule"
-        uses: actions/checkout@v4
-        with:
-          repository: "NASA-IMPACT/veda-auth"
-          path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+      - name: Checkout to the provided Git Ref
+        run: |
+          cd ${{ env.DIRECTORY }}
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
+          git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-auth-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
           aws-region: "us-west-2"
 
       - name: Run auth deployment
@@ -71,24 +71,25 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
 
     steps:
-      - name: Checkout deployment repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: "true"
-          submodules: "false"
+          submodules: "recursive"
 
-      - name: Checkout veda-backend "submodule"
-        uses: actions/checkout@v4
-        with:
-          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-          path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
+      - name: Checkout to the provided Git Ref
+        run: |
+          cd ${{ env.DIRECTORY }}
+          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+          git fetch --tags origin
+          echo `git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
+          git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-backend-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
           aws-region: "us-west-2"
 
       - name: Run deployment
