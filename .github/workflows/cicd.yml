@@ -133,16 +133,16 @@ jobs:
           cd ${{ env.DIRECTORY }}
           git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
           git fetch --tags origin
-          echo `git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
-          git checkout origin/${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+          echo `git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
+          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-airflow-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
-          
+
       - name: Run deployment
         uses: "./veda-data-airflow/.github/actions/terraform-deploy"
         with:
@@ -218,7 +218,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-integration-test"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
           aws-region: "${{ env.AWS_DEFAULT_REGION }}"
 
       - name: Install python dependencies
