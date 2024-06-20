@@ -132,7 +132,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -159,7 +159,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
-    needs: [deploy-veda-auth, deploy-veda-backend]
+    needs: [deploy-veda-auth, deploy-veda-backend, deploy-veda-data-airflow]
     environment: ${{ github.event.inputs.environment }}
 
     steps:
