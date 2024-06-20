@@ -160,17 +160,18 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
     needs: [deploy-veda-auth, deploy-veda-backend]
-    if: ${{ env.GH_PAT_CHECK != '' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: actions/checkout@v4
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-monitoring "submodule"
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: actions/checkout@v4
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
@@ -179,6 +180,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
@@ -186,6 +188,7 @@ jobs:
           aws-region: "${{ env.AWS_REGION }}"
           
       - name: Run deployment
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: "./veda-monitoring/.github/actions/cdk-deploy"
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
