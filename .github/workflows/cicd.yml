@@ -28,14 +28,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: "true"
-          submodules: "recursive"
+          submodules: "false"
 
-      - name: Checkout to the provided Git Ref
-        run: |
-          cd ${{ env.DIRECTORY }}
-          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-          git fetch --tags origin
-          git checkout ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+      - name: Checkout veda-auth submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -75,15 +75,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: "true"
-          submodules: "recursive"
+          submodules: "false"
 
-      - name: Checkout to the provided Git Ref
-        run: |
-          cd ${{ env.DIRECTORY }}
-          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-          git fetch --tags origin
-          echo `git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}`
-          git checkout ${{ vars.VEDA_BACKEND_GIT_REF || 'main' }}
+      - name: Checkout veda-backend submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -126,15 +125,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: "true"
-          submodules: "recursive"
+          submodules: "false"
 
-      - name: Checkout to the provided Git Ref
-        run: |
-          cd ${{ env.DIRECTORY }}
-          git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-          git fetch --tags origin
-          echo `git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main' }}`
-          git checkout ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+      - name: Checkout veda-data-airflow submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -160,17 +158,20 @@ jobs:
       DIRECTORY: veda-monitoring
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth, deploy-veda-backend]
+      GH_PAT_CHECK: ${{ secrets.GH_PAT }}
+    needs: [deploy-veda-auth, deploy-veda-backend, deploy-veda-data-airflow]
     environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: actions/checkout@v4
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-monitoring "submodule"
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: actions/checkout@v4
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
@@ -179,13 +180,15 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "${{ env.DIRECTORY }}-github-${{ env.ENVIRONMENT }}-monitoring-deployment"
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
           aws-region: "${{ env.AWS_REGION }}"
           
       - name: Run deployment
+        if: ${{ env.GH_PAT_CHECK != '' }}
         uses: "./veda-monitoring/.github/actions/cdk-deploy"
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
