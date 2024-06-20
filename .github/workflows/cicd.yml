@@ -160,10 +160,10 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
     needs: [deploy-veda-auth, deploy-veda-backend]
+    if: ${{ env.GH_PAT_CHECK != '' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
-      - if: ${{ env.GH_PAT_CHECK != '' }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
