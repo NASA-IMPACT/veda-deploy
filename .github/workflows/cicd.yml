@@ -151,9 +151,58 @@ jobs:
           backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
           auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
+  deploy-veda-features-api:
+    name: Deploy VEDA features-api ⚙️
+    runs-on: ubuntu-latest
+    if: vars.DEPLOY_FEATURES_API
+    env:
+      DIRECTORY: veda-features-api-cdk
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-features-api submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./veda-features-api-cdk/.github/actions/cdk-deploy"
+        id: deploy_features_stack
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+      - name: Get Features API Stack Name
+        id: get_features_api_stack
+        shell: bash
+        run: |
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "features_api_stackname=$stack" >> $GITHUB_OUTPUT
+
+    outputs:
+      features_api_stack_name: ${{ steps.get_features_api_stack.outputs.features_api_stackname }}
+
   deploy-veda-monitoring:
     name: deploy VEDA monitoring 👁️
     runs-on: ubuntu-latest
+    if: vars.DEPLOY_MONITORING
     env:
       DIRECTORY: veda-monitoring
       AWS_REGION: "us-west-2"
