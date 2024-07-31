@@ -12,6 +12,10 @@ on:
         required: true
         description: Environment to deploy to
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.environment }}
+  cancel-in-progress: true
+
 run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
 
 jobs:
@@ -154,7 +158,7 @@ jobs:
   deploy-veda-features-api:
     name: Deploy VEDA features-api 🗺️
     runs-on: ubuntu-latest
-    if: vars.DEPLOY_FEATURES_API
+    if: ${{ vars.DEPLOY_FEATURES_API == true }}
     env:
       DIRECTORY: veda-features-api-cdk
       ENVIRONMENT: ${{ github.event.inputs.environment }}
