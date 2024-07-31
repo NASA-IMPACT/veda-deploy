@@ -152,7 +152,7 @@ jobs:
           auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
   deploy-veda-features-api:
-    name: Deploy VEDA features-api ⚙️
+    name: Deploy VEDA features-api 🗺️
     runs-on: ubuntu-latest
     if: vars.DEPLOY_FEATURES_API
     env:
@@ -243,7 +243,6 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-
 
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
