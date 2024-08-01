@@ -183,7 +183,7 @@ jobs:
     needs: [export-env-vars]
     if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API
     env:
-      DIRECTORY: veda-auth
+      DIRECTORY: veda-features-api-cdk
       ENVIRONMENT: ${{ github.event.inputs.environment }}
 
     steps:
