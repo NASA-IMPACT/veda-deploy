@@ -138,7 +138,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.DEPLOY_AIRFLOW
+    if: needs.export-env-vars.outputs.DEPLOY_AIRFLOW
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -177,7 +177,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.DEPLOY_FEATURES_API
+    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API
 
     steps:
       - name: Checkout
@@ -227,7 +227,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
     needs: [deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.DEPLOY_AIRFLOW
+    if: needs.export-env-vars.outputs.DEPLOY_AIRFLOW
     environment: ${{ github.event.inputs.environment }}
 
     steps:
