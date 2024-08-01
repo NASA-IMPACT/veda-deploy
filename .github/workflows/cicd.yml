@@ -26,6 +26,7 @@ jobs:
       DEPLOY_FEATURES_API: ${{ steps.init.outputs.DEPLOY_FEATURES_API }}
       DEPLOY_AIRFLOW: ${{ steps.init.outputs.DEPLOY_AIRFLOW }}
       DEPLOY_MONITORING: ${{ steps.init.outputs.DEPLOY_MONITORING }}
+      DEPLOY_AUTH: ${{ steps.init.outputs.DEPLOY_AUTH }}
 
     steps:        
       - name: Environment variables to output 
@@ -34,6 +35,7 @@ jobs:
           echo "DEPLOY_FEATURES_API=${{ vars.DEPLOY_FEATURES_API }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_AIRFLOW=${{ vars.DEPLOY_AIRFLOW }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_MONITORING=${{ vars.DEPLOY_MONITORING }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
 
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
@@ -42,6 +44,8 @@ jobs:
       DIRECTORY: veda-auth
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
+    needs: [export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH
 
     steps:
       - name: Checkout
@@ -178,6 +182,9 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
     if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API
+    env:
+      DIRECTORY: veda-auth
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
