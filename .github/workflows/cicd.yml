@@ -47,7 +47,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AUTH
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH != false
 
     steps:
       - name: Checkout
@@ -94,7 +94,7 @@ jobs:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_BACKEND
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != false
     environment: ${{ github.event.inputs.environment }}
 
     steps:
