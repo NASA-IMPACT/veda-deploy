@@ -24,18 +24,20 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     outputs:
       DEPLOY_FEATURES_API: ${{ steps.init.outputs.DEPLOY_FEATURES_API }}
-      DEPLOY_AIRFLOW: ${{ steps.init.outputs.DEPLOY_AIRFLOW }}
+      DEPLOY_DATA_AIRFLOW: ${{ steps.init.outputs.DEPLOY_DATA_AIRFLOW }}
       DEPLOY_MONITORING: ${{ steps.init.outputs.DEPLOY_MONITORING }}
       DEPLOY_AUTH: ${{ steps.init.outputs.DEPLOY_AUTH }}
+      DEPLOY_BACKEND: ${{ steps.init.outputs.DEPLOY_BACKEND }}
 
     steps:        
       - name: Environment variables to output 
         id: init
         run: |
           echo "DEPLOY_FEATURES_API=${{ vars.DEPLOY_FEATURES_API }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_AIRFLOW=${{ vars.DEPLOY_AIRFLOW }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_DATA_AIRFLOW=${{ vars.DEPLOY_DATA_AIRFLOW }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_MONITORING=${{ vars.DEPLOY_MONITORING }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_BACKEND=${{ vars.DEPLOY_BACKEND }}" >> $GITHUB_OUTPUT
 
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
@@ -91,7 +93,8 @@ jobs:
     env:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth]
+    needs: [deploy-veda-auth, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -142,7 +145,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AIRFLOW
+    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -234,7 +237,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
     needs: [deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AIRFLOW
+    if: needs.export-env-vars.outputs.DEPLOY_MONITORING
     environment: ${{ github.event.inputs.environment }}
 
     steps:
