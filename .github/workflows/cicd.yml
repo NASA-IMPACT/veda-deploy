@@ -157,7 +157,6 @@ jobs:
         run: |
           workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
           echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
-          cat $GITHUB_OUTPUT
 
   deploy-veda-monitoring:
     name: deploy VEDA monitoring 👁️
