@@ -12,9 +12,33 @@ on:
         required: true
         description: Environment to deploy to
 
+concurrency:
+  group: ${{ inputs.environment }}
+  cancel-in-progress: true
+
 run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
 
 jobs:
+  export-env-vars:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    outputs:
+      DEPLOY_FEATURES_API: ${{ steps.init.outputs.DEPLOY_FEATURES_API }}
+      DEPLOY_DATA_AIRFLOW: ${{ steps.init.outputs.DEPLOY_DATA_AIRFLOW }}
+      DEPLOY_MONITORING: ${{ steps.init.outputs.DEPLOY_MONITORING }}
+      DEPLOY_AUTH: ${{ steps.init.outputs.DEPLOY_AUTH }}
+      DEPLOY_BACKEND: ${{ steps.init.outputs.DEPLOY_BACKEND }}
+
+    steps:        
+      - name: Environment variables to output 
+        id: init
+        run: |
+          echo "DEPLOY_FEATURES_API=${{ vars.DEPLOY_FEATURES_API }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_DATA_AIRFLOW=${{ vars.DEPLOY_DATA_AIRFLOW }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_MONITORING=${{ vars.DEPLOY_MONITORING }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_BACKEND=${{ vars.DEPLOY_BACKEND }}" >> $GITHUB_OUTPUT
+
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
     runs-on: ubuntu-latest
@@ -22,6 +46,8 @@ jobs:
       DIRECTORY: veda-auth
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
+    needs: [export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH != 'false'
 
     steps:
       - name: Checkout
@@ -67,7 +93,8 @@ jobs:
     env:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth]
+    needs: [deploy-veda-auth, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != 'false'
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -117,7 +144,8 @@ jobs:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth, deploy-veda-backend]
+    needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -161,6 +189,55 @@ jobs:
     outputs:
       workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
 
+  deploy-veda-features-api:
+    name: Deploy VEDA features-api 🗺️
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    needs: [export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API
+    env:
+      DIRECTORY: veda-features-api-cdk
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-features-api submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./veda-features-api-cdk/.github/actions/cdk-deploy"
+        id: deploy_features_stack
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+      - name: Get Features API Stack Name
+        id: get_features_api_stack
+        shell: bash
+        run: |
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "features_api_stackname=$stack" >> $GITHUB_OUTPUT
+
+    outputs:
+      features_api_stack_name: ${{ steps.get_features_api_stack.outputs.features_api_stackname }}
+
   deploy-veda-monitoring:
     name: deploy VEDA monitoring 👁️
     runs-on: ubuntu-latest
@@ -169,7 +246,8 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
-    needs: [deploy-veda-auth, deploy-veda-backend, deploy-veda-data-airflow]
+    needs: [deploy-veda-backend, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_MONITORING
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -204,7 +282,6 @@ jobs:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-
 
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
@@ -245,3 +322,66 @@ jobs:
         working-directory: ${{ env.DIRECTORY }}
         run: |
           pytest .
+
+  run-playwright-checks:
+    name: playwright end to end tests
+    if: ${{ needs.define-environment.outputs.env_name }}
+    runs-on: ubuntu-latest
+    needs: [ deploy-veda-backend, deploy-veda-data-airflow]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: NASA-IMPACT/veda-config
+          ref: add-playwright
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Run veda setup
+        run: ./.veda/setup
+
+      - name: Checkout generate_env script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /scripts/generate_env_file.py
+          sparse-checkout-cone-mode: false
+
+      - name: Generate .env file from cdk.out
+        shell: bash
+        working-directory: ${{ env.DIRECTORY }}
+        run: |
+          pip install -r requirements.txt
+          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+
+      - name: Load .env file
+        id: dotenv
+        uses: falti/dotenv-action@v1.1
+
+      - name: Create env.local file
+        env:
+          MAPBOX_TOKEN: ${{secrets.MAPBOX_TOKEN}}
+        run: |
+          touch .env.local
+          echo "API_RASTER_ENDPOINT=${{steps.dotenv.outputs.VEDA_RASTER_URL}}" >> .env.local
+          echo "API_STAC_ENDPOINT=${{steps.dotenv.outputs.VEDA_STAC_URL}}" >> .env.local
+
+          echo "Testing deployment URLs"
+          cat .env.local
+
+          echo "MAPBOX_TOKEN="$MAPBOX_TOKEN" >> .env.local
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+
+      - name: Playwright tests
+        run: yarn test:e2e
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
