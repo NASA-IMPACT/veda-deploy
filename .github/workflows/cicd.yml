@@ -179,6 +179,16 @@ jobs:
           backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
           auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
+      - name: Get Workflows API Endpoint
+        id: get_workflows_api_endpoint
+        shell: bash
+        run: |
+          workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
+          echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
+
+    outputs:
+      workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
+
   deploy-veda-features-api:
     name: Deploy VEDA features-api 🗺️
     runs-on: ubuntu-latest
@@ -264,7 +274,7 @@ jobs:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
           aws-region: "${{ env.AWS_REGION }}"
-          
+
       - name: Run deployment
         if: ${{ env.GH_PAT_CHECK != '' }}
         uses: "./veda-monitoring/.github/actions/cdk-deploy"
