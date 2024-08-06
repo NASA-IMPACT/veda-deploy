@@ -145,7 +145,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW != 'false'
+    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW != 'false'
     environment: ${{ github.event.inputs.environment }}
 
     steps:
