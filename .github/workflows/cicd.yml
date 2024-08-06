@@ -104,19 +104,19 @@ jobs:
         id: get_backend_stack
         shell: bash
         run: |
-          stack=$(jq 'keys_unsorted[0]' ${HOME}/veda-backend-cdk-outputs.json)
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
           echo "backend_stackname=$stack" >> $GITHUB_OUTPUT
 
-          raster_api_url=$(jq '.[keys_unsorted[0]].rasterapiurl' ${HOME}/veda-backend-cdk-outputs.json)
+          raster_api_url=$(jq '.[keys_unsorted[0]].rasterapiurl' ${HOME}/cdk-outputs.json)
           echo "raster_api_url=$raster_api_url" >> $GITHUB_OUTPUT
 
-          ingest_api_url=$(jq '.[keys_unsorted[0]].ingestapiurl' ${HOME}/veda-backend-cdk-outputs.json)
+          ingest_api_url=$(jq '.[keys_unsorted[0]].ingestapiurl' ${HOME}/cdk-outputs.json)
           echo "ingest_api_url=$ingest_api_url" >> $GITHUB_OUTPUT
 
-          stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/veda-backend-cdk-outputs.json)
+          stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/cdk-outputs.json)
           echo "stac_api_url=$stac_api_url" >> $GITHUB_OUTPUT
 
-          stack_browser_url=$(jq '.[keys_unsorted[0]].stacbrowserurl' ${HOME}/veda-backend-cdk-outputs.json)
+          stack_browser_url=$(jq '.[keys_unsorted[0]].stacbrowserurl' ${HOME}/cdk-outputs.json)
           echo "stack_browser_url=$stack_browser_url" >> $GITHUB_OUTPUT
 
     outputs:
