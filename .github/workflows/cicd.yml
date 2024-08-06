@@ -194,7 +194,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API
+    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API != 'false'
     env:
       DIRECTORY: veda-features-api-cdk
       ENVIRONMENT: ${{ github.event.inputs.environment }}
