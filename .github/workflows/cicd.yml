@@ -119,7 +119,6 @@ jobs:
           stack_browser_url=$(jq '.[keys_unsorted[0]].stacbrowserurl' ${HOME}/veda-backend-cdk-outputs.json)
           echo "stack_browser_url=$stack_browser_url" >> $GITHUB_OUTPUT
 
-
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
 
