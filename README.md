@@ -44,3 +44,27 @@ STATE_DYNAMO_TABLE=*****
 VEDA_STAC_PATH_PREFIX=*****
 VEDA_RASTER_PATH_PREFIX=*****
 ```
+
+
+#### AWS Secrets Requirements For SM2A
+```bash
+AIRFLOW_UID=******
+PREFIX=******
+VPC_ID=******
+STATE_BUCKET_NAME=******
+STATE_BUCKET_KEY=******
+STATE_DYNAMO_TABLE=******
+PRIVATE_SUBNETS_TAGNAME=******
+PUBLIC_SUBNETS_TAGNAME=******
+AIRFLOW_FERNET_KEY=******
+AIRFLOW_DB_NAME=******
+AIRFLOW_DB_USERNAME=******
+AIRFLOW_DB_PASSWORD=******
+PERMISSION_BOUNDARIES_ARN=******
+DOMAIN_NAME=******
+STAGE=******
+TF_VAR_gh_app_client_id=******
+TF_VAR_gh_app_client_secret=******
+TF_VAR_gh_team_name=******
+TF_VAR_subdomain=******
+```
