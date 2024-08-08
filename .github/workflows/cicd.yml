@@ -143,8 +143,8 @@ jobs:
           stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/cdk-outputs.json)
           echo "stac_api_url=$stac_api_url" >> $GITHUB_OUTPUT
 
-          stack_browser_url=$(jq '.[keys_unsorted[0]].stacbrowserurl' ${HOME}/cdk-outputs.json)
-          echo "stack_browser_url=$stack_browser_url" >> $GITHUB_OUTPUT
+          stack_browser_bucket_name=$(jq '.[keys_unsorted[0]].stacbrowserbucketname' ${HOME}/cdk-outputs.json)
+          echo "stack_browser_bucket_name=stack_browser_bucket_name" >> $GITHUB_OUTPUT
 
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
