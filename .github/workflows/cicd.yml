@@ -47,7 +47,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AUTH = 'false_' 
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH = "false_" 
 
     steps:
       - name: Checkout
@@ -94,7 +94,7 @@ jobs:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_BACKEND = 'false_' 
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND = "false_" 
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -157,7 +157,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [export-env-vars] #[deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    #if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW = 'false_'
+    #if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW = "false_"
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -213,7 +213,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API && needs.export-env-vars.outputs.DEPLOY_FEATURES_API = 'false_'
+    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API && needs.export-env-vars.outputs.DEPLOY_FEATURES_API = "false_"
     env:
       DIRECTORY: veda-features-api-cdk
       ENVIRONMENT: ${{ github.event.inputs.environment }}
@@ -266,7 +266,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
     needs: [deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_MONITORING = 'false_'
+    if: needs.export-env-vars.outputs.DEPLOY_MONITORING = "false_"
     environment: ${{ github.event.inputs.environment }}
 
     steps:
