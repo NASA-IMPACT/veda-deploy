@@ -204,7 +204,7 @@ jobs:
           ls -al ${HOME}
           workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
           # echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
-          echo $workflows_api_value
+          echo ${workflows_api_value}
           echo "Done"
 
     outputs:
