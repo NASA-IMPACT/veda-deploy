@@ -201,9 +201,11 @@ jobs:
         id: get_workflows_api_endpoint
         shell: bash
         run: |
+          ls -al ${HOME}
           workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
           # echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
           echo $workflows_api_value
+          echo "Done"
 
     outputs:
       workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
