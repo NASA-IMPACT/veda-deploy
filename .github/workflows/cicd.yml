@@ -180,17 +180,23 @@ jobs:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
+#      - name: Run deployment
+#        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
+#        with:
+#          env-file: ".env"
+#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+#          dir: "${{ env.DIRECTORY }}"
+#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+#          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+#          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
-      - name: Run deployment
-        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
+      - name: Run SM2A deployment
+        uses: "./veda-data-airflow/.github/actions/terraform-deploy-sm2a"
         with:
           env-file: ".env"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}"
+          env_aws_secret_name: ${{ vars.SM2A_ENVS_DEPLOYMENT_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}/sm2a"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
-
       - name: Get Workflows API Endpoint
         id: get_workflows_api_endpoint
         shell: bash
