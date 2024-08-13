@@ -39,115 +39,119 @@ jobs:
           echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_BACKEND=${{ vars.DEPLOY_BACKEND }}" >> $GITHUB_OUTPUT
 
-#  deploy-veda-auth:
-#    name: Deploy VEDA auth 🔐
-#    runs-on: ubuntu-latest
-#    env:
-#      DIRECTORY: veda-auth
-#      ENVIRONMENT: ${{ github.event.inputs.environment }}
-#    environment: ${{ github.event.inputs.environment }}
-#    needs: [export-env-vars]
-#    if: ${{ needs.export-env-vars.outputs.DEPLOY_AUTH }} = "false_"
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          lfs: "true"
-#          submodules: "false"
-#
-#      - name: Checkout veda-auth submodule
-#        uses: actions/checkout@v4
-#        with:
-#          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-#          path: ${{ env.DIRECTORY }}
-#          ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
-#          aws-region: "us-west-2"
-#
-#      - name: Run auth deployment
-#        id: deploy_auth_stack
-#        uses: "./veda-auth/.github/actions/cdk-deploy"
-#        with:
-#          dir: "${{ env.DIRECTORY }}"
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#
-#      - name: Get Auth Stack Name
-#        id: get_auth_stack
-#        shell: bash
-#        run: |
-#          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
-#          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
-#
-#    outputs:
-#      auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
+  deploy-veda-auth:
+    name: Deploy VEDA auth 🔐
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-auth
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
+    needs: [export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH != 'false'
 
-#  deploy-veda-backend:
-#    name: Deploy VEDA backend ⚙️
-#    runs-on: ubuntu-latest
-#    env:
-#      DIRECTORY: veda-backend
-#      ENVIRONMENT: ${{ github.event.inputs.environment }}
-#    needs: [deploy-veda-auth, export-env-vars]
-#    if: ${{ needs.export-env-vars.outputs.DEPLOY_BACKEND }} = "false_"
-#    environment: ${{ github.event.inputs.environment }}
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          lfs: "true"
-#          submodules: "false"
-#
-#      - name: Checkout veda-backend submodule
-#        uses: actions/checkout@v4
-#        with:
-#          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-#          path: ${{ env.DIRECTORY }}
-#          ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
-#          aws-region: "us-west-2"
-#
-#      - name: Run deployment
-#        uses: "./veda-backend/.github/actions/cdk-deploy"
-#        id: deploy_backend_stack
-#        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
-#          dir: "${{ env.DIRECTORY }}"
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-#
-#      - name: Get Backend Output Values
-#        id: get_backend_stack
-#        shell: bash
-#        run: |
-#          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
-#          echo "backend_stackname=$stack" >> $GITHUB_OUTPUT
-#
-#          raster_api_url=$(jq '.[keys_unsorted[0]].rasterapiurl' ${HOME}/cdk-outputs.json)
-#          echo "raster_api_url=$raster_api_url" >> $GITHUB_OUTPUT
-#
-#          ingest_api_url=$(jq '.[keys_unsorted[0]].ingestapiurl' ${HOME}/cdk-outputs.json)
-#          echo "ingest_api_url=$ingest_api_url" >> $GITHUB_OUTPUT
-#
-#          stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/cdk-outputs.json)
-#          echo "stac_api_url=$stac_api_url" >> $GITHUB_OUTPUT
-#
-#          stack_browser_url=$(jq '.[keys_unsorted[0]].stacbrowserurl' ${HOME}/cdk-outputs.json)
-#          echo "stack_browser_url=$stack_browser_url" >> $GITHUB_OUTPUT
-#
-#    outputs:
-#      backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-auth submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run auth deployment
+        id: deploy_auth_stack
+        uses: "./veda-auth/.github/actions/cdk-deploy"
+        with:
+          dir: "${{ env.DIRECTORY }}"
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+
+      - name: Get Auth Stack Name
+        id: get_auth_stack
+        shell: bash
+        run: |
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
+
+    outputs:
+      auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
+
+  deploy-veda-backend:
+    name: Deploy VEDA backend ⚙️
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-backend
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [deploy-veda-auth, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != 'false'
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-backend submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./veda-backend/.github/actions/cdk-deploy"
+        id: deploy_backend_stack
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+      - name: Get Backend Output Values
+        id: get_backend_stack
+        shell: bash
+        run: |
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "backend_stackname=$stack" >> $GITHUB_OUTPUT
+
+          raster_api_url=$(jq '.[keys_unsorted[0]].rasterapiurl' ${HOME}/cdk-outputs.json)
+          echo "raster_api_url=$raster_api_url" >> $GITHUB_OUTPUT
+
+          ingest_api_url=$(jq '.[keys_unsorted[0]].ingestapiurl' ${HOME}/cdk-outputs.json)
+          echo "ingest_api_url=$ingest_api_url" >> $GITHUB_OUTPUT
+
+          stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/cdk-outputs.json)
+          echo "stac_api_url=$stac_api_url" >> $GITHUB_OUTPUT
+
+          stack_browser_bucket_name=$(jq '.[keys_unsorted[0]].stacbrowserbucketname' ${HOME}/cdk-outputs.json)
+          echo "stack_browser_bucket_name=stack_browser_bucket_name" >> $GITHUB_OUTPUT
+
+    outputs:
+      backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
+      raster_api_url: ${{ steps.get_backend_stack.outputs.raster_api_url }}
+      ingest_api_url: ${{ steps.get_backend_stack.outputs.ingest_api_url }}
+      stac_api_url: ${{ steps.get_backend_stack.outputs.stac_api_url }}
+      stack_browser_bucket_name: ${{ steps.get_backend_stack.outputs.stack_browser_bucket_name }}
 
   deploy-veda-data-airflow:
     name: deploy VEDA data airflow 🍃
@@ -156,8 +160,8 @@ jobs:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [export-env-vars] #[deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    #if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW = "false_"
+    needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW != 'false'
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -172,7 +176,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: "feature/add-sm2a-to-veda-pipeline" # ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -180,18 +184,27 @@ jobs:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
-#      - name: Run deployment
-#        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
-#        with:
-#          env-file: ".env"
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          dir: "${{ env.DIRECTORY }}"
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-#          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-#          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+
+      - name: Run MWAA deployment
+        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
+        with:
+          env-file: ".env"
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
+
+      - name: Get Workflows API Endpoint
+        id: get_workflows_api_endpoint
+        shell: bash
+        run: |
+          workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
+          echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
 
       - name: Run SM2A deployment
         id: deploy_sm2a
+        if: ${{ vars.DEPLOY_SM2A }} = "true"
         uses: "./veda-data-airflow/.github/actions/terraform-deploy-sm2a"
         with:
           env-file: ".env"
@@ -199,209 +212,210 @@ jobs:
           dir: "${{ env.DIRECTORY }}/sm2a"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
-      - name: Get Workflows API Endpoint
+      - name: Get Workflows SM2A API Endpoint
         id: get_sm2a_workflows_api_endpoint
         shell: bash
         run: |
-          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json | tr -d '"' |tr -d '\n' )
-          echo "workflows_sm2a_api_value=$workflows_sm2a_api_value" >> $GITHUB_OUTPUT
+          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json 2>/dev/null | tr -d '"' | tr -d '\n' )
+          echo "workflows_sm2a_api_value=${workflows_sm2a_api_value:-NA}" >> $GITHUB_OUTPUT
 
     outputs:
+      workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
       workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
-#
-#  deploy-veda-features-api:
-#    name: Deploy VEDA features-api 🗺️
-#    runs-on: ubuntu-latest
-#    environment: ${{ github.event.inputs.environment }}
-#    needs: [export-env-vars]
-#    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API && needs.export-env-vars.outputs.DEPLOY_FEATURES_API = "false_"
-#    env:
-#      DIRECTORY: veda-features-api-cdk
-#      ENVIRONMENT: ${{ github.event.inputs.environment }}
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          lfs: "true"
-#          submodules: "false"
-#
-#      - name: Checkout veda-features-api submodule
-#        uses: actions/checkout@v4
-#        with:
-#          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-#          path: ${{ env.DIRECTORY }}
-#          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
-#          aws-region: "us-west-2"
-#
-#      - name: Run deployment
-#        uses: "./veda-features-api-cdk/.github/actions/cdk-deploy"
-#        id: deploy_features_stack
-#        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          dir: "${{ env.DIRECTORY }}"
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-#
-#      - name: Get Features API Stack Name
-#        id: get_features_api_stack
-#        shell: bash
-#        run: |
-#          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
-#          echo "features_api_stackname=$stack" >> $GITHUB_OUTPUT
-#
-#    outputs:
-#      features_api_stack_name: ${{ steps.get_features_api_stack.outputs.features_api_stackname }}
-#
-#  deploy-veda-monitoring:
-#    name: deploy VEDA monitoring 👁️
-#    runs-on: ubuntu-latest
-#    env:
-#      DIRECTORY: veda-monitoring
-#      AWS_REGION: "us-west-2"
-#      ENVIRONMENT: ${{ github.event.inputs.environment }}
-#      GH_PAT_CHECK: ${{ secrets.GH_PAT }}
-#    needs: [deploy-veda-backend, export-env-vars]
-#    if: needs.export-env-vars.outputs.DEPLOY_MONITORING = "false_"
-#    environment: ${{ github.event.inputs.environment }}
-#
-#    steps:
-#      - name: Checkout
-#        if: ${{ env.GH_PAT_CHECK != '' }}
-#        uses: actions/checkout@v4
-#        with:
-#          lfs: "true"
-#          submodules: "false"
-#
-#      - name: Checkout veda-monitoring "submodule"
-#        if: ${{ env.GH_PAT_CHECK != '' }}
-#        uses: actions/checkout@v4
-#        with:
-#          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-#          path: ${{ env.DIRECTORY }}
-#          ref: ${{ vars.VEDA_MONITORING_GIT_REF || 'main' }}
-#          token: ${{ secrets.GH_PAT }}
-#
-#      - name: Configure AWS Credentials
-#        if: ${{ env.GH_PAT_CHECK != '' }}
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
-#          aws-region: "${{ env.AWS_REGION }}"
-#
-#      - name: Run deployment
-#        if: ${{ env.GH_PAT_CHECK != '' }}
-#        uses: "./veda-monitoring/.github/actions/cdk-deploy"
-#        with:
-#          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-#          dir: "${{ env.DIRECTORY }}"
-#          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-#
-#  test-deployment:
-#    name: Test Deployment 👨🏻‍🔬
-#    runs-on: ubuntu-latest
-#    needs: [ deploy-veda-backend ]
-#    env:
-#      DIRECTORY: integration_test
-#      ENVIRONMENT: ${{ github.event.inputs.environment }}
-#      AWS_DEFAULT_REGION: us-west-2
-#    environment: ${{ github.event.inputs.environment }}
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: "3.10"
-#          cache: "pip"
-#          cache-dependency-path: |
-#            ${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt
-#
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-#          role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
-#          aws-region: "${{ env.AWS_DEFAULT_REGION }}"
-#
-#      - name: Install python dependencies
-#        shell: bash
-#        working-directory: ${{ env.DIRECTORY }}
-#        run: |
-#          pip install -r requirements.txt
-#          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-#
-#      - name: Integration test
-#        shell: bash
-#        working-directory: ${{ env.DIRECTORY }}
-#        run: |
-#          pytest .
-#
-#  run-playwright-checks:
-#    name: playwright end to end tests
-#    if: ${{ needs.define-environment.outputs.env_name }}
-#    runs-on: ubuntu-latest
-#    needs: [ deploy-veda-backend, deploy-veda-data-airflow]
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          repository: NASA-IMPACT/veda-config
-#          ref: add-playwright
-#
-#      - name: Use Node.js 16
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 16
-#
-#      - name: Run veda setup
-#        run: ./.veda/setup
-#
-#      - name: Checkout generate_env script
-#        uses: actions/checkout@v4
-#        with:
-#          sparse-checkout: |
-#            /scripts/generate_env_file.py
-#          sparse-checkout-cone-mode: false
-#
-#      - name: Generate .env file from cdk.out
-#        shell: bash
-#        working-directory: ${{ env.DIRECTORY }}
-#        run: |
-#          pip install -r requirements.txt
-#          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-#
-#      - name: Load .env file
-#        id: dotenv
-#        uses: falti/dotenv-action@v1.1
-#
-#      - name: Create env.local file
-#        env:
-#          MAPBOX_TOKEN: ${{secrets.MAPBOX_TOKEN}}
-#        run: |
-#          touch .env.local
-#          echo "API_RASTER_ENDPOINT=${{steps.dotenv.outputs.VEDA_RASTER_URL}}" >> .env.local
-#          echo "API_STAC_ENDPOINT=${{steps.dotenv.outputs.VEDA_STAC_URL}}" >> .env.local
-#
-#          echo "Testing deployment URLs"
-#          cat .env.local
-#
-#          echo "MAPBOX_TOKEN="$MAPBOX_TOKEN" >> .env.local
-#
-#      - name: Install Playwright Browsers
-#        run: yarn playwright install --with-deps
-#
-#      - name: Playwright tests
-#        run: yarn test:e2e
-#      - uses: actions/upload-artifact@v3
-#        if: always()
-#        with:
-#          name: playwright-report
-#          path: playwright-report/
-#          retention-days: 30
+
+  deploy-veda-features-api:
+    name: Deploy VEDA features-api 🗺️
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    needs: [export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API && needs.export-env-vars.outputs.DEPLOY_FEATURES_API != 'false'
+    env:
+      DIRECTORY: veda-features-api-cdk
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-features-api submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
+          aws-region: "us-west-2"
+
+      - name: Run deployment
+        uses: "./veda-features-api-cdk/.github/actions/cdk-deploy"
+        id: deploy_features_stack
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+      - name: Get Features API Stack Name
+        id: get_features_api_stack
+        shell: bash
+        run: |
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "features_api_stackname=$stack" >> $GITHUB_OUTPUT
+
+    outputs:
+      features_api_stack_name: ${{ steps.get_features_api_stack.outputs.features_api_stackname }}
+
+  deploy-veda-monitoring:
+    name: deploy VEDA monitoring 👁️
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-monitoring
+      AWS_REGION: "us-west-2"
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+      GH_PAT_CHECK: ${{ secrets.GH_PAT }}
+    needs: [deploy-veda-backend, export-env-vars]
+    if: needs.export-env-vars.outputs.DEPLOY_MONITORING != 'false'
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        if: ${{ env.GH_PAT_CHECK != '' }}
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-monitoring "submodule"
+        if: ${{ env.GH_PAT_CHECK != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_MONITORING_GIT_REF || 'main' }}
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Configure AWS Credentials
+        if: ${{ env.GH_PAT_CHECK != '' }}
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: Run deployment
+        if: ${{ env.GH_PAT_CHECK != '' }}
+        uses: "./veda-monitoring/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+  test-deployment:
+    name: Test Deployment 👨🏻‍🔬
+    runs-on: ubuntu-latest
+    needs: [ deploy-veda-backend ]
+    env:
+      DIRECTORY: integration_test
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+      AWS_DEFAULT_REGION: us-west-2
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+          cache-dependency-path: |
+            ${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
+          aws-region: "${{ env.AWS_DEFAULT_REGION }}"
+
+      - name: Install python dependencies
+        shell: bash
+        working-directory: ${{ env.DIRECTORY }}
+        run: |
+          pip install -r requirements.txt
+          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+
+      - name: Integration test
+        shell: bash
+        working-directory: ${{ env.DIRECTORY }}
+        run: |
+          pytest .
+
+  run-playwright-checks:
+    name: playwright end to end tests
+    if: ${{ needs.define-environment.outputs.env_name }}
+    runs-on: ubuntu-latest
+    needs: [ deploy-veda-backend, deploy-veda-data-airflow]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: NASA-IMPACT/veda-config
+          ref: add-playwright
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Run veda setup
+        run: ./.veda/setup
+
+      - name: Checkout generate_env script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /scripts/generate_env_file.py
+          sparse-checkout-cone-mode: false
+
+      - name: Generate .env file from cdk.out
+        shell: bash
+        working-directory: ${{ env.DIRECTORY }}
+        run: |
+          pip install -r requirements.txt
+          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+
+      - name: Load .env file
+        id: dotenv
+        uses: falti/dotenv-action@v1.1
+
+      - name: Create env.local file
+        env:
+          MAPBOX_TOKEN: ${{secrets.MAPBOX_TOKEN}}
+        run: |
+          touch .env.local
+          echo "API_RASTER_ENDPOINT=${{steps.dotenv.outputs.VEDA_RASTER_URL}}" >> .env.local
+          echo "API_STAC_ENDPOINT=${{steps.dotenv.outputs.VEDA_STAC_URL}}" >> .env.local
+
+          echo "Testing deployment URLs"
+          cat .env.local
+
+          echo "MAPBOX_TOKEN="$MAPBOX_TOKEN" >> .env.local
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+
+      - name: Playwright tests
+        run: yarn test:e2e
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
