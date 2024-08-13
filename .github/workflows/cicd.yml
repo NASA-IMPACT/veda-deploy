@@ -199,8 +199,15 @@ jobs:
           dir: "${{ env.DIRECTORY }}/sm2a"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
+      - name: Get Workflows API Endpoint
+        id: get_sm2a_workflows_api_endpoint
+        shell: bash
+        run: |
+          workflows_sm2a_api_value=$(cat ${HOME}/terraform_outputs.json)
+          echo "workflows_sm2a_api_value=$workflows_sm2a_api_value" >> $GITHUB_OUTPUT
+
     outputs:
-      workflows_api_endpoint: ${{ steps.deploy_sm2a.outputs.workflows_api_endpoint }}
+      workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
 #
 #  deploy-veda-features-api:
 #    name: Deploy VEDA features-api 🗺️
