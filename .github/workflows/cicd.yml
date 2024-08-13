@@ -172,7 +172,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: "test-sm2a-deploy" # ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
+          ref: "feature/add-sm2a-to-veda-pipeline" # ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
