@@ -362,10 +362,78 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
+  deploy-veda-routes:
+    name: deploy VEDA routes 🔀
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-routes
+      AWS_REGION: "us-west-2"
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [ deploy-veda-backend, deploy-veda-data-airflow ]
+    if: ${{ github.event.inputs.DEPLOY_ROUTES == 'true' }}
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-routes "submodule"
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_ROUTES_GIT_REF || 'main' }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-routes-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Setup python cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt') }}
+
+      - name: Install python dependencies
+        working-directory: ${{ env.DIRECTORY }}
+        shell: bash
+        run: |
+          pip install -r requirements.txt
+
+      - name: Update Veda Routes secrets with dependency outputs
+        shell: bash
+        run: |
+          python3 "${{ github.workspace }}/scripts/update_secret_with_inputs.py" \
+            --secret-id ${{ vars.DEPLOYMENT_ENV_ROUTES_SECRET_NAME }} \
+            --prefix=VEDA_ \
+            --raster_api_url=${{ needs.deploy-veda-backend.outputs.raster_api_url }} \
+            --ingest_api_url=${{ needs.deploy-veda-backend.outputs.ingest_api_url }} \
+            --stac_api_url=${{ needs.deploy-veda-backend.outputs.stac_api_url }} \
+            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }} \
+            --workflows_api_url=${{ needs.deploy-veda-data-airflow.outputs.workflows_api_endpoint }} \
+
+      - name: Run deployment
+        uses: "./veda-routes/.github/actions/cdk-deploy"
+        with:
+          env_aws_secret_name: ${{ env.DEPLOYMENT_ENV_ROUTES_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+
+
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
-    needs: [ deploy-veda-backend ]
+    needs: [ deploy-veda-routes ]
     env:
       DIRECTORY: integration_test
       ENVIRONMENT: ${{ github.event.inputs.environment }}

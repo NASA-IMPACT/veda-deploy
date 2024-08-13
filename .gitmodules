@@ -13,3 +13,6 @@
 [submodule "veda-features-api-cdk"]
 	path = veda-features-api-cdk
 	url = git@github.com:NASA-IMPACT/veda-features-api-cdk.git
+[submodule "veda-routes"]
+	path = veda-routes
+	url = git@github.com:NASA-IMPACT/veda-routes.git
