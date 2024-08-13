@@ -203,8 +203,8 @@ jobs:
         id: get_sm2a_workflows_api_endpoint
         shell: bash
         run: |
-          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json | tr -d '"')
-          echo "workflows_sm2a_api_value=$workflows_sm2a_api_value" >> $GITHUB_OUTPUT
+          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json)
+          echo "::set-output name=workflows_sm2a_api_value::$workflows_sm2a_api_value"
 
     outputs:
       workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
