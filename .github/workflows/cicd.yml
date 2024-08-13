@@ -203,7 +203,7 @@ jobs:
         id: get_sm2a_workflows_api_endpoint
         shell: bash
         run: |
-          workflows_sm2a_api_value=$(cat ${HOME}/terraform_outputs.json)
+          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json | tr -d '"')
           echo "workflows_sm2a_api_value=$workflows_sm2a_api_value" >> $GITHUB_OUTPUT
 
     outputs:
