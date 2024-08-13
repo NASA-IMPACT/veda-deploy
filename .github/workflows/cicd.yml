@@ -195,13 +195,6 @@ jobs:
           backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
           auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
 
-      - name: Get Workflows API Endpoint
-        id: get_workflows_api_endpoint
-        shell: bash
-        run: |
-          workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
-          echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
-
       - name: Run SM2A deployment
         id: deploy_sm2a
         if: ${{ vars.DEPLOY_SM2A }} = "true"
@@ -212,16 +205,18 @@ jobs:
           dir: "${{ env.DIRECTORY }}/sm2a"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
-      - name: Get Workflows SM2A API Endpoint
-        id: get_sm2a_workflows_api_endpoint
+      - name: Get Workflows API Endpoint
+        id: get_workflows_api_endpoint
         shell: bash
         run: |
+          workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
           workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json 2>/dev/null | tr -d '"' | tr -d '\n' )
+          echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
           echo "workflows_sm2a_api_value=${workflows_sm2a_api_value:-NA}" >> $GITHUB_OUTPUT
 
     outputs:
       workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
-      workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
+      workflows_sm2a_api_value: ${{ steps.get_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
 
   deploy-veda-features-api:
     name: Deploy VEDA features-api 🗺️
