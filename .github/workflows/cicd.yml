@@ -216,7 +216,7 @@ jobs:
 
     outputs:
       workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
-      workflows_sm2a_api_value: ${{ steps.get_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
+      workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
 
   deploy-veda-features-api:
     name: Deploy VEDA features-api 🗺️
@@ -413,4 +413,4 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days:
+          retention-days: 30

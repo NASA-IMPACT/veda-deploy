@@ -68,3 +68,9 @@ TF_VAR_gh_app_client_secret=******
 TF_VAR_gh_team_name=******
 TF_VAR_subdomain=******
 ```
+##### Github variables
+Add these variables to Github environment variables 
+```bash
+DEPLOY_SM2A=true
+SM2A_ENVS_DEPLOYMENT_SECRET_NAME=<SM2A deploymnet secrets>
+```
