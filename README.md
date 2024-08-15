@@ -73,4 +73,5 @@ Add these variables to Github environment variables
 ```bash
 DEPLOY_SM2A=true
 SM2A_ENVS_DEPLOYMENT_SECRET_NAME=<SM2A deploymnet secrets>
+VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 ```
