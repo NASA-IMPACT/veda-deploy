@@ -47,7 +47,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
     needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AUTH != 'false' 
+    if: needs.export-env-vars.outputs.DEPLOY_AUTH != 'false'
 
     steps:
       - name: Checkout
@@ -94,7 +94,7 @@ jobs:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [deploy-veda-auth, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != 'false' 
+    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != 'false'
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -185,7 +185,7 @@ jobs:
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
-      - name: Run deployment
+      - name: Run MWAA deployment
         uses: "./veda-data-airflow/.github/actions/terraform-deploy"
         with:
           env-file: ".env"
@@ -204,6 +204,57 @@ jobs:
 
     outputs:
       workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
+
+  deploy-veda-data-airflow-sm2a:
+    name: deploy VEDA data airflow SM2A 🛸
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-data-airflow
+      AWS_REGION: "us-west-2"
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    needs: [ export-env-vars ]
+    if: ${{ vars.DEPLOY_SM2A }} = "true"
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-data-airflow submodule
+        uses: actions/checkout@v4
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-sm2a-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: Run SM2A deployment
+        id: deploy_sm2a
+        uses: "./veda-data-airflow/.github/actions/terraform-deploy-sm2a"
+        with:
+          env-file: ".env"
+          env_aws_secret_name: ${{ vars.SM2A_ENVS_DEPLOYMENT_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}/sm2a"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+      - name: Get SM2A Workflows API Endpoint
+        id: get_sm2a_workflows_api_endpoint
+        shell: bash
+        run: |
+          workflows_sm2a_api_value=$(cat ${HOME}/output_sm2a_workflows_endpoint.json 2>/dev/null | tr -d '"' | tr -d '\n' )
+          echo "workflows_sm2a_api_value=${workflows_sm2a_api_value:-NA}" >> $GITHUB_OUTPUT
+
+    outputs:
+      workflows_sm2a_api_value: ${{ steps.get_sm2a_workflows_api_endpoint.outputs.workflows_sm2a_api_value }}
 
   deploy-veda-features-api:
     name: Deploy VEDA features-api 🗺️
