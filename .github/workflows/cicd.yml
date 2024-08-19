@@ -28,6 +28,7 @@ jobs:
       DEPLOY_MONITORING: ${{ steps.init.outputs.DEPLOY_MONITORING }}
       DEPLOY_AUTH: ${{ steps.init.outputs.DEPLOY_AUTH }}
       DEPLOY_BACKEND: ${{ steps.init.outputs.DEPLOY_BACKEND }}
+      DEPLOY_SM2A: ${{ steps.init.outputs.DEPLOY_SM2A }}
 
     steps:        
       - name: Environment variables to output 
@@ -38,6 +39,7 @@ jobs:
           echo "DEPLOY_MONITORING=${{ vars.DEPLOY_MONITORING }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
           echo "DEPLOY_BACKEND=${{ vars.DEPLOY_BACKEND }}" >> $GITHUB_OUTPUT
+          echo "DEPLOY_SM2A=${{ vars.DEPLOY_SM2A }}" >> $GITHUB_OUTPUT
 
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
@@ -213,7 +215,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [ export-env-vars ]
-    if: ${{ vars.DEPLOY_SM2A }} = "true"
+    if: needs.export-env-vars.outputs.DEPLOY_SM2A && needs.export-env-vars.outputs.DEPLOY_SM2A != 'false'
     environment: ${{ github.event.inputs.environment }}
 
     steps:
