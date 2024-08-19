@@ -215,7 +215,6 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     needs: [ export-env-vars ]
-    needs: [export-env-vars]
     if: needs.export-env-vars.outputs.DEPLOY_SM2A && needs.export-env-vars.outputs.DEPLOY_SM2A != 'false'
     environment: ${{ github.event.inputs.environment }}
 
