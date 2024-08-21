@@ -315,7 +315,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
-    needs: [deploy-veda-backend, export-env-vars]
+    needs: [export-env-vars]
     if: needs.export-env-vars.outputs.DEPLOY_MONITORING != 'false'
     environment: ${{ github.event.inputs.environment }}
 
