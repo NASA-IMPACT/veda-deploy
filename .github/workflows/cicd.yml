@@ -24,7 +24,7 @@ on:
       DEPLOY_DATA_AIRFLOW:
         type: boolean
         required: true
-        default: true
+        default: false
         description: DEPLOY_DATA_AIRFLOW
       DEPLOY_FEATURES_API:
         type: boolean
@@ -39,7 +39,7 @@ on:
       DEPLOY_SM2A:
         type: boolean
         required: true
-        default: true
+        default: false
         description: DEPLOY_SM2A
       DEPLOY_MONITORING:
         type: boolean
