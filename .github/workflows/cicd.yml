@@ -11,6 +11,41 @@ on:
         type: environment
         required: true
         description: Environment to deploy to
+      DEPLOY_AUTH:
+        type: boolean
+        required: true
+        default: true
+        description: DEPLOY_AUTH
+      DEPLOY_BACKEND:
+        type: boolean
+        required: true
+        default: true
+        description: DEPLOY_BACKEND
+      DEPLOY_DATA_AIRFLOW:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_DATA_AIRFLOW
+      DEPLOY_FEATURES_API:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_FEATURES_API
+      DEPLOY_ROUTES:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_ROUTES
+      DEPLOY_SM2A:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_SM2A
+      DEPLOY_MONITORING:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_MONITORING
 
 concurrency:
   group: ${{ inputs.environment }}
@@ -19,27 +54,6 @@ concurrency:
 run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
 
 jobs:
-  export-env-vars:
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
-    outputs:
-      DEPLOY_FEATURES_API: ${{ steps.init.outputs.DEPLOY_FEATURES_API }}
-      DEPLOY_DATA_AIRFLOW: ${{ steps.init.outputs.DEPLOY_DATA_AIRFLOW }}
-      DEPLOY_MONITORING: ${{ steps.init.outputs.DEPLOY_MONITORING }}
-      DEPLOY_AUTH: ${{ steps.init.outputs.DEPLOY_AUTH }}
-      DEPLOY_BACKEND: ${{ steps.init.outputs.DEPLOY_BACKEND }}
-      DEPLOY_SM2A: ${{ steps.init.outputs.DEPLOY_SM2A }}
-
-    steps:        
-      - name: Environment variables to output 
-        id: init
-        run: |
-          echo "DEPLOY_FEATURES_API=${{ vars.DEPLOY_FEATURES_API }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_DATA_AIRFLOW=${{ vars.DEPLOY_DATA_AIRFLOW }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_MONITORING=${{ vars.DEPLOY_MONITORING }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_AUTH=${{ vars.DEPLOY_AUTH }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_BACKEND=${{ vars.DEPLOY_BACKEND }}" >> $GITHUB_OUTPUT
-          echo "DEPLOY_SM2A=${{ vars.DEPLOY_SM2A }}" >> $GITHUB_OUTPUT
 
   deploy-veda-auth:
     name: Deploy VEDA auth 🔐
@@ -48,8 +62,7 @@ jobs:
       DIRECTORY: veda-auth
       ENVIRONMENT: ${{ github.event.inputs.environment }}
     environment: ${{ github.event.inputs.environment }}
-    needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_AUTH != 'false'
+    if: ${{ github.event.inputs.DEPLOY_AUTH == 'true' }}
 
     steps:
       - name: Checkout
@@ -95,8 +108,8 @@ jobs:
     env:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_BACKEND != 'false'
+    needs: [deploy-veda-auth]
+    if: ${{ github.event.inputs.DEPLOY_BACKEND == 'true' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -162,8 +175,8 @@ jobs:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [deploy-veda-auth, deploy-veda-backend, export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW && needs.export-env-vars.outputs.DEPLOY_DATA_AIRFLOW != 'false'
+    needs: [deploy-veda-auth, deploy-veda-backend]
+    if: ${{ github.event.inputs.DEPLOY_DATA_AIRFLOW == 'true' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -214,8 +227,7 @@ jobs:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [ export-env-vars ]
-    if: needs.export-env-vars.outputs.DEPLOY_SM2A && needs.export-env-vars.outputs.DEPLOY_SM2A != 'false'
+    if: ${{ github.event.inputs.DEPLOY_SM2A == 'true' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
@@ -262,8 +274,7 @@ jobs:
     name: Deploy VEDA features-api 🗺️
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
-    needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_FEATURES_API && needs.export-env-vars.outputs.DEPLOY_FEATURES_API != 'false'
+    if: ${{ github.event.inputs.DEPLOY_FEATURES_API == 'true' }}
     env:
       DIRECTORY: veda-features-api-cdk
       ENVIRONMENT: ${{ github.event.inputs.environment }}
@@ -315,8 +326,7 @@ jobs:
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
       GH_PAT_CHECK: ${{ secrets.GH_PAT }}
-    needs: [export-env-vars]
-    if: needs.export-env-vars.outputs.DEPLOY_MONITORING != 'false'
+    if: ${{ github.event.inputs.DEPLOY_MONITORING == 'true' }}
     environment: ${{ github.event.inputs.environment }}
 
     steps:
