@@ -385,7 +385,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_ROUTES_GIT_REF || 'main' }}
+          ref: ${{ vars.VEDA_ROUTES_GIT_REF || 'dev' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
