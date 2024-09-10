@@ -69,7 +69,7 @@ jobs:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,ciaransweet,botanical,ividito
           minimum-approvals: 1
-          issue-title: "Deploying to GHG production"
+          issue-title: "Deploying to ${{ github.event.inputs.environment }}"
           issue-body: "Please approve or deny the deployment"
 
   deploy-veda-auth:
