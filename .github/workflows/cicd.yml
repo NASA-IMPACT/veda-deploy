@@ -158,15 +158,15 @@ jobs:
           stac_api_url=$(jq '.[keys_unsorted[0]].stacapiurl' ${HOME}/cdk-outputs.json)
           echo "stac_api_url=$stac_api_url" >> $GITHUB_OUTPUT
 
-          stack_browser_bucket_name=$(jq '.[keys_unsorted[0]].stacbrowserbucketname' ${HOME}/cdk-outputs.json)
-          echo "stack_browser_bucket_name=$stack_browser_bucket_name" >> $GITHUB_OUTPUT
+          stac_browser_bucket_name=$(jq '.[keys_unsorted[0]].stacbrowserbucketname' ${HOME}/cdk-outputs.json)
+          echo "stac_browser_bucket_name=$stac_browser_bucket_name" >> $GITHUB_OUTPUT
 
     outputs:
       backend_stack_name: ${{ steps.get_backend_stack.outputs.backend_stackname }}
       raster_api_url: ${{ steps.get_backend_stack.outputs.raster_api_url }}
       ingest_api_url: ${{ steps.get_backend_stack.outputs.ingest_api_url }}
       stac_api_url: ${{ steps.get_backend_stack.outputs.stac_api_url }}
-      stack_browser_bucket_name: ${{ steps.get_backend_stack.outputs.stack_browser_bucket_name }}
+      stac_browser_bucket_name: ${{ steps.get_backend_stack.outputs.stac_browser_bucket_name }}
 
   deploy-veda-data-airflow:
     name: deploy VEDA data airflow 🍃
