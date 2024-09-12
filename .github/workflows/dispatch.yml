@@ -1,0 +1,83 @@
+name: Dispatch ⛟
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: Environment to deploy to
+      DEPLOY_AUTH:
+        type: boolean
+        required: true
+        default: true
+        description: DEPLOY_AUTH
+      DEPLOY_BACKEND:
+        type: boolean
+        required: true
+        default: true
+        description: DEPLOY_BACKEND
+      DEPLOY_DATA_AIRFLOW:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_DATA_AIRFLOW
+      DEPLOY_FEATURES_API:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_FEATURES_API
+      DEPLOY_ROUTES:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_ROUTES
+      DEPLOY_SM2A:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_SM2A
+      DEPLOY_MONITORING:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_MONITORING
+
+
+jobs:
+  check-environment:
+    runs-on: ubuntu-latest
+    name: Got ${{ github.event.inputs.environment }}
+    steps:
+      - name: Validation
+        uses: trstringer/manual-approval@v1
+        if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' || github.event.inputs.environment == 'mcp-prod' }}
+        timeout-minutes: 60 # The approver will have 1 hour to approve this request
+        # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
+        # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,ciaransweet,botanical,ividito,stephenkilbourn
+          minimum-approvals: 1
+          issue-title: "Deploying to ${{ github.event.inputs.environment }}"
+          issue-body: "Please approve or deny the deployment"
+
+  deploy-veda-components:
+    name: Deploy VEDA Components
+    uses: "./.github/workflows/deploy.yml"
+    needs: check-environment
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
+      DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+      DEPLOY_DATA_AIRFLOW: ${{ github.event.inputs.DEPLOY_DATA_AIRFLOW }}
+      DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+      DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+      DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+      DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+    secrets: inherit
