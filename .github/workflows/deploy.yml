@@ -259,7 +259,7 @@ jobs:
         with:
           env-file: ".env"
           env_aws_secret_name: ${{ vars.SM2A_ENVS_DEPLOYMENT_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}/sm2a"
+          dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
       - name: Get SM2A Workflows API Endpoint
