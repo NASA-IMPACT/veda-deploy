@@ -53,7 +53,10 @@ concurrency:
   group: ${{ inputs.environment }}
   cancel-in-progress: true
 
-run-name: Deploy to ${{ inputs.environment }} environment by @${{ github.actor }}
+run-name: Deploy to ${{ inputs.environment }} by @${{ github.actor }} \
+  BACKEND=${{ inputs.DEPLOY_BACKEND }} AIRFLOW=${{ inputs.DEPLOY_DATA_AIRFLOW }} \
+  FEATURES=${{ inputs.DEPLOY_FEATURES_API }} ROUTES=${{ inputs.DEPLOY_ROUTES }} \
+  SM2A=${{ inputs.DEPLOY_SM2A }} MONITORING=${{ inputs.DEPLOY_MONITORING }}  
 
 jobs:
 
