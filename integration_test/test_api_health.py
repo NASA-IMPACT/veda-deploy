@@ -63,7 +63,7 @@ def test_stac_item_next_link_returns_200():
 
     if custom_host:
         url = f"https://{custom_host}/{stac_root_path.rstrip('/')}/{collections_endpoint}"
-        print(f"Checking custom host stac-api {url=}")
+        print(f"Checking links for custom host stac-api {url=}")
         response = requests.get(url)
         assert response.status_code == 200
     
