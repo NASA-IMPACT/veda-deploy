@@ -67,7 +67,7 @@ def test_stac_item_next_link_returns_200():
         response = requests.get(url)
         assert response.status_code == 200
     
-        # Walk check root path propogation through dynamic links when using custom host
+        # Walk check root path propagation through dynamic links when using custom host
         collections = response.json().get("collections")
         next_links_untested = True
 
