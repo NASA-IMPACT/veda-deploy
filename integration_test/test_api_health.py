@@ -74,7 +74,7 @@ def test_stac_item_next_link_returns_200():
         while next_links_untested:
             for collection in collections:
     
-                # All collections should have a dynamicaly generateed items link, even if no items exist
+                # All collections should have a dynamicaly generated items link, even if no items exist
                 items_link = _get_link(collection, "items")
                 assert items_link
                 items_url = items_link.get("href")
