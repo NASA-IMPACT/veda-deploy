@@ -379,7 +379,7 @@ jobs:
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
-    needs: [ deploy-veda-backend, deploy-veda-routes ]
+    needs: [ deploy-veda-backend ]
     env:
       DIRECTORY: integration_test
       ENVIRONMENT: ${{ inputs.environment }}
