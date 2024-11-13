@@ -87,14 +87,15 @@ jobs:
         uses: "./veda-auth/.github/actions/cdk-deploy"
         with:
           dir: "${{ env.DIRECTORY }}"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          env_aws_secret_name: ${{ vars.VEDA_AUTH_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
       - name: Get Auth Stack Name
         id: get_auth_stack
         shell: bash
         run: |
-          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
-          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
+          echo "This is secret name ${env_aws_secret_name}"
+          # stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          # echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
 
     outputs:
       auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
