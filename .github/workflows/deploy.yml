@@ -93,9 +93,8 @@ jobs:
         id: get_auth_stack
         shell: bash
         run: |
-          echo "This is secret name ${env_aws_secret_name}"
-          # stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
-          # echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
+          stack=$(jq 'keys_unsorted[0]' ${HOME}/cdk-outputs.json)
+          echo "auth_stackname=$stack" >> $GITHUB_OUTPUT
 
     outputs:
       auth_stack_name: ${{ steps.get_auth_stack.outputs.auth_stackname }}
