@@ -13,7 +13,6 @@ on:
         type: string
         required: true
         description: Environment to deploy to
-        default: ''
       DEPLOY_AUTH:
         type: string
         required: true
