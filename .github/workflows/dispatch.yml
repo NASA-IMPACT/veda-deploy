@@ -12,6 +12,7 @@ on:
         type: environment
         required: true
         description: Environment to deploy to
+        default: none
       DEPLOY_AUTH:
         type: boolean
         required: true
