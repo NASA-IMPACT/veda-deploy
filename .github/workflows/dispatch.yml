@@ -12,7 +12,7 @@ on:
         type: environment
         required: true
         description: Environment to deploy to
-        default: none
+        default: "select-env"
       DEPLOY_AUTH:
         type: boolean
         required: true
