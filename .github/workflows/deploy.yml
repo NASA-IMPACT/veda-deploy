@@ -23,11 +23,6 @@ on:
         required: true
         default: true
         description: DEPLOY_BACKEND
-      DEPLOY_DATA_AIRFLOW:
-        type: string
-        required: true
-        default: true
-        description: DEPLOY_DATA_AIRFLOW
       DEPLOY_FEATURES_API:
         type: string
         required: true
@@ -81,7 +76,7 @@ jobs:
           ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
@@ -92,7 +87,7 @@ jobs:
         uses: "./veda-auth/.github/actions/cdk-deploy"
         with:
           dir: "${{ env.DIRECTORY }}"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+          env_aws_secret_name: ${{ vars.VEDA_AUTH_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
       - name: Get Auth Stack Name
         id: get_auth_stack
@@ -129,7 +124,7 @@ jobs:
           ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
@@ -169,58 +164,6 @@ jobs:
       ingest_api_url: ${{ steps.get_backend_stack.outputs.ingest_api_url }}
       stac_api_url: ${{ steps.get_backend_stack.outputs.stac_api_url }}
       stac_browser_bucket_name: ${{ steps.get_backend_stack.outputs.stac_browser_bucket_name }}
-
-  deploy-veda-data-airflow:
-    name: deploy VEDA data airflow 🍃
-    runs-on: ubuntu-latest
-    env:
-      DIRECTORY: veda-data-airflow
-      AWS_REGION: "us-west-2"
-      ENVIRONMENT: ${{ inputs.environment }}
-    needs: [deploy-veda-auth, deploy-veda-backend]
-    if: ${{ inputs.DEPLOY_DATA_AIRFLOW == 'true' }}
-    environment: ${{ inputs.environment }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: "true"
-          submodules: "false"
-
-      - name: Checkout veda-data-airflow submodule
-        uses: actions/checkout@v4
-        with:
-          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
-          path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_DATA_AIRFLOW_GIT_REF || 'main'}}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
-          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-deployment"
-          aws-region: "${{ env.AWS_REGION }}"
-
-      - name: Run MWAA deployment
-        uses: "./veda-data-airflow/.github/actions/terraform-deploy"
-        with:
-          env-file: ".env"
-          env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          dir: "${{ env.DIRECTORY }}"
-          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
-          backend_stack_name: "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
-
-      - name: Get Workflows API Endpoint
-        id: get_workflows_api_endpoint
-        shell: bash
-        run: |
-          workflows_api_value=$(cat ${HOME}/terraform_outputs.json)
-          echo "workflows_api_endpoint=$workflows_api_value" >> $GITHUB_OUTPUT
-
-    outputs:
-      workflows_api_endpoint: ${{ steps.get_workflows_api_endpoint.outputs.workflows_api_endpoint }}
 
   deploy-veda-data-airflow-sm2a:
     name: deploy VEDA data airflow SM2A 🛸
@@ -296,7 +239,7 @@ jobs:
           ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
@@ -350,7 +293,7 @@ jobs:
 
       - name: Configure AWS Credentials
         if: ${{ env.GH_PAT_CHECK != '' }}
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
@@ -371,7 +314,7 @@ jobs:
       DIRECTORY: veda-routes
       AWS_REGION: "us-west-2"
       ENVIRONMENT: ${{ github.event.inputs.environment }}
-    needs: [ deploy-veda-backend, deploy-veda-data-airflow ]
+    needs: [ deploy-veda-backend ]
     if: ${{ github.event.inputs.DEPLOY_ROUTES == 'true' }}
     environment: ${{ github.event.inputs.environment }}
 
@@ -391,7 +334,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-routes-deployment"
@@ -424,8 +367,7 @@ jobs:
             --raster_api_url=${{ needs.deploy-veda-backend.outputs.raster_api_url }} \
             --ingest_api_url=${{ needs.deploy-veda-backend.outputs.ingest_api_url }} \
             --stac_api_url=${{ needs.deploy-veda-backend.outputs.stac_api_url }} \
-            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }} \
-            --workflows_api_url=${{ needs.deploy-veda-data-airflow.outputs.workflows_api_endpoint }} \
+            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }} 
 
       - name: Run deployment
         uses: "./veda-routes/.github/actions/cdk-deploy"
@@ -437,7 +379,7 @@ jobs:
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
-    needs: [ deploy-veda-backend, deploy-veda-routes ]
+    needs: [ deploy-veda-backend ]
     env:
       DIRECTORY: integration_test
       ENVIRONMENT: ${{ inputs.environment }}
@@ -455,7 +397,7 @@ jobs:
             ${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
@@ -478,7 +420,7 @@ jobs:
     name: playwright end to end tests
     if: ${{ needs.define-environment.outputs.env_name }}
     runs-on: ubuntu-latest
-    needs: [ deploy-veda-backend, deploy-veda-data-airflow]
+    needs: [ deploy-veda-backend ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

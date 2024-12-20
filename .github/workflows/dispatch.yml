@@ -22,11 +22,6 @@ on:
         required: true
         default: true
         description: DEPLOY_BACKEND
-      DEPLOY_DATA_AIRFLOW:
-        type: boolean
-        required: true
-        default: false
-        description: DEPLOY_DATA_AIRFLOW
       DEPLOY_FEATURES_API:
         type: boolean
         required: true
@@ -48,7 +43,7 @@ on:
         default: false
         description: DEPLOY_MONITORING
 
-run-name: Dispatch to ${{ inputs.environment }} by @${{ github.actor }} BACKEND=${{ inputs.DEPLOY_BACKEND }} AIRFLOW=${{ inputs.DEPLOY_DATA_AIRFLOW }} FEATURES=${{ inputs.DEPLOY_FEATURES_API }} ROUTES=${{ inputs.DEPLOY_ROUTES }} SM2A=${{ inputs.DEPLOY_SM2A }} MONITORING=${{ inputs.DEPLOY_MONITORING }} ⛟
+run-name: Dispatch to ${{ inputs.environment }} AUTH=${{ inputs.DEPLOY_AUTH }} BACKEND=${{ inputs.DEPLOY_BACKEND }} FEATURES=${{ inputs.DEPLOY_FEATURES_API }} ROUTES=${{ inputs.DEPLOY_ROUTES }} SM2A=${{ inputs.DEPLOY_SM2A }} MONITORING=${{ inputs.DEPLOY_MONITORING }} ⛟
 
 jobs:
   check-environment:
@@ -76,7 +71,6 @@ jobs:
       environment: ${{ github.event.inputs.environment }}
       DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
       DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
-      DEPLOY_DATA_AIRFLOW: ${{ github.event.inputs.DEPLOY_DATA_AIRFLOW }}
       DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
       DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
       DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
