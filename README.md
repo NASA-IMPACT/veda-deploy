@@ -94,7 +94,7 @@ To keep the components modular, each action should include all necessary steps f
 
 ### Examples
 - Veda-auth [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-auth/blob/main/.github/actions/cdk-deploy/action.yml) provides a simple example of adding configuration from an Aws Secrets Manager secret and running cdk deploy for an imported submodule.
-- Veda-backend [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/actions/cdk-deploy/action.yml) contains logic to run tests before deploying comonents.
+- Veda-backend [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/actions/cdk-deploy/action.yml) contains logic to run tests before deploying components.
 - This [CICD workflow in veda-backend](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/workflows/cicd.yml) demonstrates importing the cdk-deploy/action on a merge event to test the deployment in a dev enviornment.
 
 ## Add component submodule to veda-deploy
