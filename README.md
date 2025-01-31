@@ -3,29 +3,20 @@ Deploy full VEDA stack easily.
 
 # How to deploy?
 ## Steps
-1. Create an Environment in the repository. See [Requirements](#requirements) on details of creating the environment.
+0. To deploy a new component, add the necessary github actions to component repo and add the component as a submodule in veda-deploy. See [Add New Components](#add-new-components).
+1. Create a new Github Environment in the repository. See [Requirements](#requirements) on details of creating the environment.
 2. Add necessary env vars in the Environment
-3. Go to Actions. Select "CI/CD" workflow. Select "Run workflow", choose the environment from step 1. Click "Run workflow."
+3. Go to Actions. Select "Dispatch" workflow. Select "Run workflow", choose the environment from step 1. Select the components to dispatch and then "Run workflow."
 
 # Requirements
 ## Environment
-Each environment needs a minimum of
+Each Github Environment needs a minimum of:
 
 ### Secrets
 `DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
 
 ### Variables
-`DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required env vars. See AWS Secrets Requirements for what env vars are needed.
-`PROJECT_PREFIX` (TBD)
-`STAGE` (TBD)
-
-### Variables (Optional)
-Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`.
-
-`VEDA_AUTH_GIT_REF`
-`VEDA_BACKEND_GIT_REF`
-`VEDA_DATA_AIRFLOW_GIT_REF`
-`VEDA_FEATURES_API_GIT_REF`
+`DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required component env vars. See [AWS Secrets Requirements](#aws-secrets-requirements) for what env vars are needed.
 
 #### AWS Secrets Requirements
 ```bash
@@ -45,6 +36,7 @@ VEDA_STAC_PATH_PREFIX=*****
 VEDA_RASTER_PATH_PREFIX=*****
 ```
 
+`SM2A_ENVS_DEPLOYMENT_SECRET_NAME` - the AWS secrets manager secret name with env vars specific to a SM2A deployment. [AWS Secrets Requirements for SM2A](#aws-secrets-requirements-for-sm2a) for what env vars are needed.
 
 #### AWS Secrets Requirements for SM2A
 ```bash
@@ -68,9 +60,14 @@ TF_VAR_gh_app_client_secret=******
 TF_VAR_gh_team_name=******
 TF_VAR_subdomain=******
 ```
-##### Github variables
-Add these variables to Github environment variables 
+
+Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`.
+
 ```bash
+VEDA_AUTH_GIT_REF=
+VEDA_BACKEND_GIT_REF=
+VEDA_DATA_AIRFLOW_GIT_REF=
+VEDA_FEATURES_API_GIT_REF=
 DEPLOY_SM2A=true
 SM2A_ENVS_DEPLOYMENT_SECRET_NAME=<SM2A deploymnet secrets>
 VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
