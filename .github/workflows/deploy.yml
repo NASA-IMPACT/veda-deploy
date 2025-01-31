@@ -348,6 +348,7 @@ jobs:
           with:
             dir: "${{ env.DIRECTORY }}/infrastructure/aws"
             env_aws_secret_name: ${{ vars.TITILER_XARRAY_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
+            script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
 
   deploy-veda-routes:
