@@ -78,14 +78,20 @@ VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 
 # Add New Components
 > [!IMPORTANT]
-> This section is intended to expand an existing configured environment, see [How to Deploy](#how-to-deploy) to start from scratch. Please read the full overview before starting, some steps overlap.
+> This section is intended to expand an existing configured environment, see [How to Deploy](#how-to-deploy) to start from scratch. Please read the full overview before starting; some steps overlap.
 
 ## Overview
 - [Add deployment action to component github repository](#add-deployment-action-to-component-github-repository)
+
 - [Store `.env` configuration in AWS Secrets Manager](#store-env-configuration-in-aws-secrets-manager)
+
+
 - [Add component submodule to veda-deploy](#add-component-submodule-to-veda-deploy)
+
 - [Extend composite dispatched deployment action with an optional component job that uses the component submodule and environment secret](#extend-composite-dispatched-deployment-action)
+
 - [Add new component release version and environment secret name to veda-deploy environment(s)](#add-new-component-release-version-and-environment-secret-name-to-veda-deploy-environments)
+
 - [Configure domain and custom routes](#configure-domain-and-custom-routes)
 
 ## Add deployment action to component github repository
