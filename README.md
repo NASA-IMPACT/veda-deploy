@@ -77,13 +77,16 @@ VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 ```
 
 # Add New Components
+> [!IMPORTANT]
+> This section is intended to expand an existing configured environment, see [How to Deploy](#how-to-deploy) to start from scratch. Please read the full overview before starting, some steps overlap.
+
 ## Overview
-1. [Add deployment action to component github repository](#add-deployment-action-to-component-github-repository)
-2. [Add component submodule to veda-deploy](#add-component-submodule-to-veda-deploy)
-3. [Store `.env` configuration in AWS Secrets Manager](#store-env-configuration-in-aws-secrets-manager)
-4. [Extend composite dispatched deployment action with an optional component job that uses the component submodule and environment secret](#extend-composite-dispatched-deployment-action)
-5. [Add new component release version and environment secret name to veda-deploy environment(s)](#add-new-component-release-version-and-environment-secret-name-to-veda-deploy-environments)
-6. [Configure domain and custom routes](#configure-domain-and-custom-routes)
+- [Add deployment action to component github repository](#add-deployment-action-to-component-github-repository)
+- [Store `.env` configuration in AWS Secrets Manager](#store-env-configuration-in-aws-secrets-manager)
+- [Add component submodule to veda-deploy](#add-component-submodule-to-veda-deploy)
+- [Extend composite dispatched deployment action with an optional component job that uses the component submodule and environment secret](#extend-composite-dispatched-deployment-action)
+- [Add new component release version and environment secret name to veda-deploy environment(s)](#add-new-component-release-version-and-environment-secret-name-to-veda-deploy-environments)
+- [Configure domain and custom routes](#configure-domain-and-custom-routes)
 
 ## Add deployment action to component github repository
 Dispatches from veda-deploy are composed of deployment actions imported from github submodules. The management of all configuration, testing, and deployment concerns is managed within the component's github repository (not in veda-deploy).
@@ -92,24 +95,18 @@ Create a new `cdk-deploy/action.yml` in the component project's repository. On a
 
 To keep the components modular, each action should include all necessary steps for deployment including Python and Node setup steps. While veda-deploy uses the same runner to deploy all components, it should not be assumed that the runner already has all needed installations and environment configuration from other components (unless a dependency is configured for the job using needs: {upstream-job-name}).
 
+> [!TIP]
+> Most deployments require [custom environment configuration](#store-env-configuration-in-aws-secrets-manager) that can be retrieved from the AWS Secrets Manager for the deployment. See [veda-backend/scripts/get-env.sh](https://github.com/NASA-IMPACT/veda-backend/blob/develop/scripts/get-env.sh) for an example environmennt configuration utility.
+
 ### Examples
 - Veda-auth [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-auth/blob/main/.github/actions/cdk-deploy/action.yml) provides a simple example of adding configuration from an Aws Secrets Manager secret and running cdk deploy for an imported submodule.
 - Veda-backend [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/actions/cdk-deploy/action.yml) contains logic to run tests before deploying components.
 - This [CICD workflow in veda-backend](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/workflows/cicd.yml) demonstrates importing the cdk-deploy/action on a merge event to test the deployment in a dev enviornment.
 
-## Add component submodule to veda-deploy
-Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.gitmodules). Submodules are checked out on the github runner when your component is deployed.
-
-```
-[submodule "my-project"]
-	path = my-project
-	url = git@github.com:NASA-IMPACT/my-project.git
-```
-
 ## Store `.env` configuration in AWS Secrets Manager
 Custom configurations like RDS instance size as well as AWS environment specific configuration like VPC ID and a Permission Boundary Policy Name should be added to a key-value secret that will be loaded into the github runner environment by your action. This secret should be stored in the target AWS account where the component will be deployed.
 
-> **Note:** 
+> [!NOTE]
 > 1. For higher security environments, a permissions boundary policy needs to be identified. 
 > 2. The qualifier of the CDK Toolkit bootstrapped for the target environment must be provided if not using the default toolkit.
 
@@ -119,6 +116,15 @@ VPC_ID=******
 PERMISSIONS_BOUNDARY_POLICY_NAME=******
 STAGE=******
 BOOTSTRAP_QUALIFIER=******
+```
+
+## Add component submodule to veda-deploy
+Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.gitmodules). Submodules are checked out on the github runner when your component is deployed.
+
+```
+[submodule "my-project"]
+	path = my-project
+	url = git@github.com:NASA-IMPACT/my-project.git
 ```
 
 ## Extend composite dispatched deployment action
@@ -131,8 +137,9 @@ BOOTSTRAP_QUALIFIER=******
 ## Add new component release version and environment secret name to veda-deploy environment(s)
 Adding new deployment environments requires admin permissions for this veda-deploy repository. New environments are added by entering project settings and selecting `Environments` from the code and automation menu. The environment naming convention is `<aws-account>-<stage>`, i.e. `smce-staging`. As more environments are added this convention will need to be updated.
 
-In the Environment variables for the instance you are dispatching your component to, add a new variable with the github reference to the release you want to deploy. 
+In the Environment variables for the instance you are dispatching your component to, add a new variable with the github reference to the release you want to deploy. It is best practice to refer to a release tag but a branch name or commit hash can also be used.
 
 `MY_COMPONENT_GIT_REF=v1.0`
 
 ## Configure domain and custom routes
+VEDA platform components include options for custom subdomains and custom root paths. Coordinate how your custom resource should be configured with the team maintaining the target environment you are deploying to.
