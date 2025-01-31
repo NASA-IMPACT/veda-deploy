@@ -346,7 +346,7 @@ jobs:
           id: deploy_titiler_xarray
           uses: "./titiler-xarray/.github/actions/cdk-deploy"
           with:
-            dir: "${{ env.DIRECTORY }}"
+            dir: "${{ env.DIRECTORY }}/infrastructure/aws"
             env_aws_secret_name: ${{ vars.TITILER_XARRAY_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
 
 
