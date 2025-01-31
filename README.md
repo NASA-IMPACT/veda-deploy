@@ -6,7 +6,7 @@ Deploy full VEDA stack easily.
 1. Create a new Github Environment in the repository. See [Requirements](#requirements) on details of creating the environment.
 2. Add necessary env vars in the Environment
 3. Go to Actions. Select "Dispatch" workflow. Select "Run workflow", choose the environment from step 1. Select the components to dispatch and then "Run workflow."
-4. (Optional) To add a new component in veda-deploy see [Add New Components].(#add-new-components).
+4. (Optional) To add a new component in veda-deploy see [Add New Components](#add-new-components).
 
 # Requirements
 ## Environment
