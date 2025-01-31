@@ -3,10 +3,10 @@ Deploy full VEDA stack easily.
 
 # How to deploy?
 ## Steps
-0. To deploy a new component, add the necessary github actions to component repo and add the component as a submodule in veda-deploy. See [Add New Components](#add-new-components).
 1. Create a new Github Environment in the repository. See [Requirements](#requirements) on details of creating the environment.
 2. Add necessary env vars in the Environment
 3. Go to Actions. Select "Dispatch" workflow. Select "Run workflow", choose the environment from step 1. Select the components to dispatch and then "Run workflow."
+4. (Optional) To add a new component in veda-deploy see [Add New Components].(#add-new-components).
 
 # Requirements
 ## Environment
@@ -64,14 +64,14 @@ TF_VAR_subdomain=******
 Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`.
 
 ```bash
-VEDA_AUTH_GIT_REF=
-VEDA_BACKEND_GIT_REF=
-VEDA_DATA_AIRFLOW_GIT_REF=
-VEDA_FEATURES_API_GIT_REF=
-DEPLOY_SM2A=true
-SM2A_ENVS_DEPLOYMENT_SECRET_NAME=<SM2A deploymnet secrets>
+VEDA_AUTH_GIT_REF=<target branch name or tag default to main>
+VEDA_BACKEND_GIT_REF=<target branch name or tag default to main>
+VEDA_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
+VEDA_FEATURES_API_GIT_REF=<target branch name or tag default to main>
 VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 ```
+
+`DEPLOY_SM2A=true` - whether to deploy SM2A
 
 # Add New Components
 > [!IMPORTANT]
