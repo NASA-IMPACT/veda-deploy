@@ -42,6 +42,11 @@ on:
         required: true
         default: false
         description: DEPLOY_MONITORING
+      DEPLOY_TITILER_XARRAY:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_TITILER_XARRAY        
 
 run-name: Dispatch to ${{ inputs.environment }} AUTH=${{ inputs.DEPLOY_AUTH }} BACKEND=${{ inputs.DEPLOY_BACKEND }} FEATURES=${{ inputs.DEPLOY_FEATURES_API }} ROUTES=${{ inputs.DEPLOY_ROUTES }} SM2A=${{ inputs.DEPLOY_SM2A }} MONITORING=${{ inputs.DEPLOY_MONITORING }} ⛟
 
@@ -75,4 +80,5 @@ jobs:
       DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
       DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
       DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+      DEPLOY_TITILER_XARRAY: ${{ github.event.inputs.DEPLOY_TITILER_XARRAY }}
     secrets: inherit

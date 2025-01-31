@@ -43,6 +43,11 @@ on:
         required: true
         default: false
         description: DEPLOY_MONITORING
+      DEPLOY_TITILER_XARRAY:
+        type: string
+        required: true
+        default: false
+        description: DEPLOY_TITILER_XARRAY
 
 concurrency:
   group: ${{ inputs.environment }}
@@ -307,6 +312,44 @@ jobs:
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
+  deploy-titiler-xarray:
+      name: Deploy titiler-xarray 🌎
+      runs-on: ubuntu-latest
+      env:
+        DIRECTORY: titiler-xarray
+        ENVIRONMENT: ${{ inputs.environment }}
+      environment: ${{ inputs.environment }}
+      if: ${{ inputs.DEPLOY_TITILER_XARRAY == 'true' }}
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            lfs: "true"
+            submodules: "false"
+
+        - name: Checkout titiler-xarray submodule
+          uses: actions/checkout@v4
+          with:
+            repository: "developmentseed/${{ env.DIRECTORY }}"
+            path: ${{ env.DIRECTORY }}
+            ref: ${{ vars.TITILER_XARRAY_GIT_REF || 'main'}}
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-session-name: "gh-${{ env.ENVIRONMENT }}-titiler-xarray-deployment"
+            aws-region: "us-west-2"
+
+        - name: Run titiler-xarray deployment
+          id: deploy_titiler_xarray
+          uses: "./titiler-xarray/.github/actions/cdk-deploy"
+          with:
+            dir: "${{ env.DIRECTORY }}"
+            env_aws_secret_name: ${{ vars.TITILER_XARRAY_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
+
+
   deploy-veda-routes:
     name: deploy VEDA routes 🔀
     runs-on: ubuntu-latest
@@ -478,3 +521,4 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
