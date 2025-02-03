@@ -92,7 +92,7 @@ VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 - [Configure domain and custom routes](#configure-domain-and-custom-routes)
 
 ## Add deployment action to component github repository
-Dispatches from veda-deploy are composed of deployment actions imported from github submodules. The management of all configuration, testing, and deployment concerns is managed within the component's github repository (not in veda-deploy).
+Dispatches from veda-deploy are composed of deployment actions imported from GitHub submodules. The management of all configuration, testing, and deployment concerns is managed within the component's GitHub repository (not in veda-deploy).
 
 Create a new `cdk-deploy/action.yml` in the component project's repository. On a dispatch, the configured release version of the project will be checked out and executed on the veda-deploy GitHub runner. 
 
