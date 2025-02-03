@@ -122,7 +122,7 @@ BOOTSTRAP_QUALIFIER=******
 ```
 
 ## Add component submodule to veda-deploy
-Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.gitmodules). Submodules are checked out on the github runner when your component is deployed.
+Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.gitmodules). Submodules are checked out on the GitHub runner when your component is deployed.
 
 ```
 [submodule "my-project"]
