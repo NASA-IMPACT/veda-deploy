@@ -10,7 +10,7 @@ Deploy full VEDA stack easily.
 
 # Requirements
 ## Environment
-Each Github Environment needs a minimum of:
+Each veda-deploy Github Environment needs a minimum of:
 
 ### Secrets
 `DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
