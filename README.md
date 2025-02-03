@@ -107,7 +107,7 @@ To keep the components modular, each action should include all necessary steps f
 - This [CICD workflow in veda-backend](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/workflows/cicd.yml) demonstrates importing the cdk-deploy/action on a merge event to test the deployment in a dev enviornment.
 
 ## Store `.env` configuration in AWS Secrets Manager
-Custom configurations like RDS instance size as well as AWS environment specific configuration like VPC ID and a Permission Boundary Policy Name should be added to a key-value secret that will be loaded into the github runner environment by your action. This secret should be stored in the target AWS account where the component will be deployed.
+Custom configurations like RDS instance size as well as AWS environment specific configuration like VPC ID and a Permission Boundary Policy Name should be added to a key-value secret that will be loaded into the GitHub runner environment by your action. This secret should be stored in the target AWS account where the component will be deployed.
 
 > [!NOTE]
 > 1. For higher security environments, a permissions boundary policy needs to be identified. 
