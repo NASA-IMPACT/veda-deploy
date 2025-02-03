@@ -113,7 +113,7 @@ Custom configurations like RDS instance size as well as AWS environment specific
 > 1. For higher security environments, a permissions boundary policy needs to be identified. 
 > 2. The qualifier of the CDK Toolkit bootstrapped for the target environment must be provided if not using the default toolkit.
 
-### Sample environmnt variables
+### Sample environment variables
 ```
 VPC_ID=******
 PERMISSIONS_BOUNDARY_POLICY_NAME=******
