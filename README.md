@@ -140,7 +140,7 @@ Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/ved
 ## Add new component release version and environment secret name to veda-deploy environment(s)
 Adding new deployment environments requires admin permissions for this veda-deploy repository. New environments are added by entering project settings and selecting `Environments` from the code and automation menu. The environment naming convention is `<aws-account>-<stage>`, i.e. `smce-staging`. As more environments are added this convention will need to be updated.
 
-In the Environment variables for the instance you are dispatching your component to, add a new variable with the github reference to the release you want to deploy. It is best practice to refer to a release tag but a branch name or commit hash can also be used.
+In the Environment variables for the instance you are dispatching your component to, add a new variable with the GitHub reference to the release you want to deploy. It is best practice to refer to a release tag but a branch name or commit hash can also be used.
 
 `MY_COMPONENT_GIT_REF=v1.0`
 
