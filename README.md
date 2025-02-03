@@ -36,7 +36,7 @@ VEDA_STAC_PATH_PREFIX=*****
 VEDA_RASTER_PATH_PREFIX=*****
 ```
 
-`SM2A_ENVS_DEPLOYMENT_SECRET_NAME` - the AWS secrets manager secret name with env vars specific to a SM2A deployment. [AWS Secrets Requirements for SM2A](#aws-secrets-requirements-for-sm2a) for what env vars are needed.
+`SM2A_ENVS_DEPLOYMENT_SECRET_NAME` - the AWS secrets manager secret name with env vars specific to a SM2A deployment. See [AWS Secrets Requirements for SM2A](#aws-secrets-requirements-for-sm2a) for what env vars are needed.
 
 #### AWS Secrets Requirements for SM2A
 ```bash
