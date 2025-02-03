@@ -99,7 +99,7 @@ Create a new `cdk-deploy/action.yml` in the component project's repository. On a
 To keep the components modular, each action should include all necessary steps for deployment including Python and Node setup steps. While veda-deploy uses the same runner to deploy all components, it should not be assumed that the runner already has all needed installations and environment configuration from other components (unless a dependency is configured for the job using needs: {upstream-job-name}).
 
 > [!TIP]
-> Most deployments require [custom environment configuration](#store-env-configuration-in-aws-secrets-manager) that can be retrieved from the AWS Secrets Manager for the deployment. See [veda-backend/scripts/get-env.sh](https://github.com/NASA-IMPACT/veda-backend/blob/develop/scripts/get-env.sh) for an example environmennt configuration utility.
+> Most deployments require [custom environment configuration](#store-env-configuration-in-aws-secrets-manager) that can be retrieved from the AWS Secrets Manager for the deployment. See [veda-backend/scripts/get-env.sh](https://github.com/NASA-IMPACT/veda-backend/blob/develop/scripts/get-env.sh) for an example environment configuration utility.
 
 ### Examples
 - Veda-auth [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-auth/blob/main/.github/actions/cdk-deploy/action.yml) provides a simple example of adding configuration from an AWS Secrets Manager secret and running `cdk deploy` for an imported submodule.
