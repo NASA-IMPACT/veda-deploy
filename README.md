@@ -94,7 +94,7 @@ VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 ## Add deployment action to component github repository
 Dispatches from veda-deploy are composed of deployment actions imported from github submodules. The management of all configuration, testing, and deployment concerns is managed within the component's github repository (not in veda-deploy).
 
-Create a new `cdk-deploy/action.yml` in the component project's repository. On a dispatch the configured release version of the project will be checked out and executed on the veda-deploy github runner. 
+Create a new `cdk-deploy/action.yml` in the component project's repository. On a dispatch, the configured release version of the project will be checked out and executed on the veda-deploy GitHub runner. 
 
 To keep the components modular, each action should include all necessary steps for deployment including Python and Node setup steps. While veda-deploy uses the same runner to deploy all components, it should not be assumed that the runner already has all needed installations and environment configuration from other components (unless a dependency is configured for the job using needs: {upstream-job-name}).
 
