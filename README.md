@@ -9,16 +9,36 @@ Deploy full VEDA stack easily.
 4. (Optional) To add a new component in veda-deploy see [Add New Components](#add-new-components).
 
 # Requirements
-## Environment
-Each veda-deploy Github Environment needs a minimum of:
 
-### Secrets
+## GitHub Environment
+Each veda-deploy Github Environment needs Environment Secrets and Variables configured in the GitHub UI Settings for this veda-deploy project as well as detailed key-value AWS Secrets Manager secret(s) with configuration for the deployment of all components.
+
+### GitHub Environment Secrets
+GitHub Environment secret configured in the GitHub UI settings for this veda-deploy repo.
 `DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
 
-### Variables
-`DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required component env vars. See [AWS Secrets Requirements](#aws-secrets-requirements) for what env vars are needed.
+### GitHub Environment Variables
+GitHub Environment variables need to be set in the GitHub UI project settings should be configured with the name(s) of AWS Secrets Manager secrets and GitHub references to the versions of each github submodule that should be checked out for each component deployed.
 
+#### AWS Secrets Manager Name(s)
+
+`DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required component env vars. See [AWS Secrets Requirements](#aws-secrets-requirements) for what env vars are needed. Note that the individual submodule GitHub repositories should be consulted for the most up to date environment variable names and explanations.
+
+`SM2A_ENVS_DEPLOYMENT_SECRET_NAME` - the AWS secrets manager secret name with env vars specific to a SM2A deployment. See [AWS Secrets Requirements for SM2A](#aws-secrets-requirements-for-sm2a) for what env vars are needed.
+
+#### GitHub References
+
+Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`. Below are some examples of the components that may be configured in a GitHub Environment.
+
+```bash
+VEDA_AUTH_GIT_REF=<target branch name or tag default to main>
+VEDA_BACKEND_GIT_REF=<target branch name or tag default to main>
+VEDA_FEATURES_API_GIT_REF=<target branch name or tag default to main>
+VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
+```
 #### AWS Secrets Requirements
+A single secret is used to store the configuration for all components for a given GitHub Environment. In some cases, an additional secret may be needed if a component does not have uniquely namespaced `.env` parameters and requires custom values--for example, the Self Managed Apache Airflow (SM2A) component requires a separate [SM2A secret](#aws-secrets-requirements-for-sm2a) in the AWS Secrets Manager.
+
 ```bash
 AWS_ACCOUNT_ID=******
 AWS_REGION=******
@@ -35,8 +55,6 @@ STATE_DYNAMO_TABLE=*****
 VEDA_STAC_PATH_PREFIX=*****
 VEDA_RASTER_PATH_PREFIX=*****
 ```
-
-`SM2A_ENVS_DEPLOYMENT_SECRET_NAME` - the AWS secrets manager secret name with env vars specific to a SM2A deployment. See [AWS Secrets Requirements for SM2A](#aws-secrets-requirements-for-sm2a) for what env vars are needed.
 
 #### AWS Secrets Requirements for SM2A
 ```bash
@@ -61,17 +79,7 @@ TF_VAR_gh_team_name=******
 TF_VAR_subdomain=******
 ```
 
-Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`.
 
-```bash
-VEDA_AUTH_GIT_REF=<target branch name or tag default to main>
-VEDA_BACKEND_GIT_REF=<target branch name or tag default to main>
-VEDA_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
-VEDA_FEATURES_API_GIT_REF=<target branch name or tag default to main>
-VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
-```
-
-`DEPLOY_SM2A=true` - whether to deploy SM2A
 
 # Add New Components
 > [!IMPORTANT]
@@ -81,7 +89,6 @@ VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
 - [Add deployment action to component github repository](#add-deployment-action-to-component-github-repository)
 
 - [Store `.env` configuration in AWS Secrets Manager](#store-env-configuration-in-aws-secrets-manager)
-
 
 - [Add component submodule to veda-deploy](#add-component-submodule-to-veda-deploy)
 
@@ -107,19 +114,11 @@ To keep the components modular, each action should include all necessary steps f
 - This [CICD workflow in veda-backend](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/workflows/cicd.yml) demonstrates importing the cdk-deploy/action on a merge event to test the deployment in a dev enviornment.
 
 ## Store `.env` configuration in AWS Secrets Manager
-Custom configurations like RDS instance size as well as AWS environment specific configuration like VPC ID and a Permission Boundary Policy Name should be added to a key-value secret that will be loaded into the GitHub runner environment by your action. This secret should be stored in the target AWS account where the component will be deployed.
+AWS environment specific configuration like VPC ID and a Permission Boundary Policy Name are already included in a core key-value secret that can be loaded into the GitHub runner environment by your action. This core secret is set in the GitHub Variable `DEPLOYMENT_ENV_SECRET_NAME` (See [AWS Secrets Requirements](#aws-secrets-requirements) for the core variable names). Additional required configuration variables should be added to this core secret as needed for the new component. If your component requires custom configuration that conflicts with the core secret, a new secret can be configured--see the implementation of a custom secret for [SM2A](#aws-secrets-requirements-for-sm2a).
 
 > [!NOTE]
 > 1. For higher security environments, a permissions boundary policy needs to be identified. 
 > 2. The qualifier of the CDK Toolkit bootstrapped for the target environment must be provided if not using the default toolkit.
-
-### Sample environment variables
-```
-VPC_ID=******
-PERMISSIONS_BOUNDARY_POLICY_NAME=******
-STAGE=******
-BOOTSTRAP_QUALIFIER=******
-```
 
 ## Add component submodule to veda-deploy
 Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.gitmodules). Submodules are checked out on the GitHub runner when your component is deployed.
