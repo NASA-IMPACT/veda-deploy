@@ -22,7 +22,7 @@ GitHub Environment secret(s) configured in the GitHub UI settings for this veda-
 ### GitHub Environment Variables
 GitHub Environment variables need to be set in the GitHub UI project settings should be configured with the name(s) of AWS Secrets Manager secrets and GitHub references to the versions of each github submodule that should be checked out for each component deployed.
 
-#### AWS Secrets Manager Name(s)
+#### AWS Secrets Manager Secret Name(s)
 
 `DEPLOYMENT_ENV_SECRET_NAME` - the AWS secrets manager secret name with the required component env vars. See [AWS Secrets Requirements](#aws-secrets-requirements) for what env vars are needed. Note that the individual submodule GitHub repositories should be consulted for the most up to date environment variable names and explanations.
 
