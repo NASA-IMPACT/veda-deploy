@@ -10,6 +10,8 @@ Deploy full VEDA stack easily.
 
 # Requirements
 
+Adding new deployment environments requires admin permissions for this veda-deploy repository. New environments are added by entering project settings and selecting `Environments` from the code and automation menu. The environment naming convention is `<aws-account>-<stage>`, i.e. `smce-staging`. As more environments are added, this convention will need to be updated.
+
 ## GitHub Environment
 Each veda-deploy Github Environment needs Environment Secrets and Variables configured in the GitHub UI Settings for this veda-deploy project as well as detailed key-value AWS Secrets Manager secret(s) with configuration for the deployment of all components.
 
@@ -136,12 +138,6 @@ Add your component submodule to [.gitmodules](https://github.com/NASA-IMPACT/ved
 3. Transfer the above dispatch information to the [.github/workflows/deploy.yml workflow_call](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.github/workflows/deploy.yml#L10). The deploy action is called after the environment is set by the dispatch and for production environments is only executed after the dispatch has been approved by a maintainer.
 4. Add a new [named job to deploy.yml](https://github.com/NASA-IMPACT/veda-deploy/blob/dev/.github/workflows/deploy.yml#L218) that checks the condition the deployment condition for the component and, when true, checks out the deployment action from the component's GitHub repository and passes in any relevant information like the configuration environment secret name.
 
-## Add new component release version and environment secret name to veda-deploy environment(s)
-Adding new deployment environments requires admin permissions for this veda-deploy repository. New environments are added by entering project settings and selecting `Environments` from the code and automation menu. The environment naming convention is `<aws-account>-<stage>`, i.e. `smce-staging`. As more environments are added, this convention will need to be updated.
-
-In the Environment variables for the instance you are dispatching your component to, add a new variable with the GitHub reference to the release you want to deploy. It is best practice to refer to a release tag but a branch name or commit hash can also be used.
-
-`MY_COMPONENT_GIT_REF=v1.0`
 
 ## Configure domain and custom routes
 VEDA platform components include options for custom subdomains and custom root paths. Coordinate how your custom resource should be configured with the team maintaining the target environment you are deploying to.
