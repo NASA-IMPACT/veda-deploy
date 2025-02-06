@@ -85,7 +85,7 @@ TF_VAR_subdomain=******
 
 # Add New Components
 > [!IMPORTANT]
-> This section is intended to expand an existing configured environment, see [How to Deploy](#how-to-deploy) to start from scratch. Please read the full overview before starting; some steps overlap.
+> This section is intended to add a new component to an existing configured environment, see [How to Deploy](#how-to-deploy) to start from scratch. Please read the full overview before starting; some steps overlap.
 
 ## Overview
 - [Add deployment action to component github repository](#add-deployment-action-to-component-github-repository)
