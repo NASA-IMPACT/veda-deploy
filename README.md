@@ -20,7 +20,9 @@ GitHub Environment secret(s) configured in the GitHub UI settings for this veda-
 `DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
 
 ### GitHub Environment Variables
-GitHub Environment variables need to be set in the GitHub UI project settings should be configured with the name(s) of AWS Secrets Manager secrets and GitHub references to the versions of each github submodule that should be checked out for each component deployed.
+GitHub Environment variables need to be set in the GitHub UI project settings. There should be one variable for each AWS Secrets Manager secret name. There should be one variable for each component indicating which GitHub reference to use to deploy that component via checking out that Github reference in the git submodule.
+
+More instructions on these Github environment variables is provided below.
 
 #### AWS Secrets Manager Secret Name(s)
 
