@@ -347,7 +347,7 @@ jobs:
           uses: "./titiler-multidim/.github/actions/cdk-deploy"
           with:
             dir: "${{ env.DIRECTORY }}/infrastructure/aws"
-            env_aws_secret_name: ${{ vars.TITILER_MULTIDIM_DEPLOYMENT_SECRET || vars.DEPLOYMENT_ENV_SECRET_NAME }}
+            env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
 
