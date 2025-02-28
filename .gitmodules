@@ -15,4 +15,7 @@
 	url = git@github.com:NASA-IMPACT/veda-features-api-cdk.git
 [submodule "veda-routes"]
 	path = veda-routes
-	url = git@github.com:NASA-IMPACT/veda-routes.git
+  url = git@github.com:NASA-IMPACT/veda-routes.git
+[submodule "titiler-multidim"]
+	path = titiler-multidim
+	url = git@github.com:developmentseed/titiler-multidim.git
