@@ -68,20 +68,20 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-auth submodule
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
@@ -116,20 +116,20 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-backend submodule
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
@@ -182,20 +182,20 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-data-airflow submodule
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-sm2a-deployment"
@@ -231,20 +231,20 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-features-api submodule
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
@@ -282,14 +282,14 @@ jobs:
     steps:
       - name: Checkout
         if: ${{ env.GH_PAT_CHECK != '' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-monitoring "submodule"
         if: ${{ env.GH_PAT_CHECK != '' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
@@ -298,7 +298,7 @@ jobs:
 
       - name: Configure AWS Credentials
         if: ${{ env.GH_PAT_CHECK != '' }}
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
@@ -323,20 +323,20 @@ jobs:
 
       steps:
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           with:
             lfs: "true"
             submodules: "false"
 
         - name: Checkout titiler-multidim submodule
-          uses: actions/checkout@v4
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           with:
             repository: "developmentseed/${{ env.DIRECTORY }}"
             path: ${{ env.DIRECTORY }}
             ref: ${{ vars.TITILER_MULTIDIM_GIT_REF || 'main'}}
 
         - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v4
+          uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
           with:
             role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
             role-session-name: "gh-${{ env.ENVIRONMENT }}-titiler-multidim-deployment"
@@ -364,13 +364,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           lfs: "true"
           submodules: "false"
 
       - name: Checkout veda-routes "submodule"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
@@ -378,19 +378,19 @@ jobs:
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-routes-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@b64ffcaf5b410884ad320a9cfac8866006a109aa #v4.8.0
         with:
           python-version: "3.10"
 
       - name: Setup python cache
-        uses: actions/cache@v4
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt') }}
@@ -411,7 +411,7 @@ jobs:
             --raster_api_url=${{ needs.deploy-veda-backend.outputs.raster_api_url }} \
             --ingest_api_url=${{ needs.deploy-veda-backend.outputs.ingest_api_url }} \
             --stac_api_url=${{ needs.deploy-veda-backend.outputs.stac_api_url }} \
-            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }} 
+            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }}
 
       - name: Run deployment
         uses: "./veda-routes/.github/actions/cdk-deploy"
@@ -430,10 +430,10 @@ jobs:
       AWS_DEFAULT_REGION: us-west-2
     environment: ${{ inputs.environment }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 #v2.7.0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@b64ffcaf5b410884ad320a9cfac8866006a109aa #v4.8.0
         with:
           python-version: "3.10"
           cache: "pip"
@@ -441,7 +441,7 @@ jobs:
             ${{ github.workspace }}/${{ env.DIRECTORY }}/requirements.txt
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
           role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
@@ -467,13 +467,13 @@ jobs:
     needs: [ deploy-veda-backend ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: NASA-IMPACT/veda-config
           ref: add-playwright
 
       - name: Use Node.js 16
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 #v3.8.2
         with:
           node-version: 16
 
@@ -481,7 +481,7 @@ jobs:
         run: ./.veda/setup
 
       - name: Checkout generate_env script
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           sparse-checkout: |
             /scripts/generate_env_file.py
@@ -496,7 +496,7 @@ jobs:
 
       - name: Load .env file
         id: dotenv
-        uses: falti/dotenv-action@v1.1
+        uses: falti/dotenv-action@a33be0b8cf6a6e6f1b82cc9f3782061ab1022be5 #v1.1.4
 
       - name: Create env.local file
         env:
@@ -516,7 +516,7 @@ jobs:
 
       - name: Playwright tests
         run: yarn test:e2e
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@c24449f33cd45d4826c6702db7e49f7cdb9b551d #v3.2.1-node20
         if: always()
         with:
           name: playwright-report
