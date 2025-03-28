@@ -18,4 +18,4 @@
   url = git@github.com:NASA-IMPACT/veda-routes.git
 [submodule "titiler-multidim"]
 	path = titiler-multidim
-	url = git@github.com:developmentseed/titiler-multidim.git
+	url = https://github.com/developmentseed/titiler-multidim.git
