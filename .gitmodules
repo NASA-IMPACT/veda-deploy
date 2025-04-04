@@ -19,3 +19,6 @@
 [submodule "titiler-multidim"]
 	path = titiler-multidim
 	url = https://github.com/developmentseed/titiler-multidim.git
+[submodule "s3-disaster-recovery"]
+	path = s3-disaster-recovery
+	url = https://github.com/NASA-IMPACT/s3-disaster-recovery.git
