@@ -46,7 +46,12 @@ on:
         type: boolean
         required: true
         default: false
-        description: DEPLOY_TITILER_MULTIDIM        
+        description: DEPLOY_TITILER_MULTIDIM
+      DEPLOY_S3_DISASTER_RECOVERY:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_S3_DISASTER_RECOVERY        
 
 run-name: Dispatch to ${{ inputs.environment }} AUTH=${{ inputs.DEPLOY_AUTH }} BACKEND=${{ inputs.DEPLOY_BACKEND }} FEATURES=${{ inputs.DEPLOY_FEATURES_API }} ROUTES=${{ inputs.DEPLOY_ROUTES }} SM2A=${{ inputs.DEPLOY_SM2A }} MONITORING=${{ inputs.DEPLOY_MONITORING }} TITILER_MULTIDIM=${{ inputs.DEPLOY_TITILER_MULTIDIM }} ⛟
 
@@ -81,4 +86,5 @@ jobs:
       DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
       DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
       DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+      DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
     secrets: inherit
