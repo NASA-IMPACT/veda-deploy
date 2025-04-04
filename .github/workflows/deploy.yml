@@ -389,21 +389,14 @@ jobs:
           id: deploy_s3-disaster-recovery
           uses: "./.github/workflows/s3-disaster-recovery"
           with:
-            dir: "${{ env.DIRECTORY }}"
-            script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+            env-file: ".env"
+            aws-region: ${{ vars.AWS_REGION }}
+            allow-batch-replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
             source-bucket: ${{ vars.SOURCE_BUCKET_NAME }}
             destination-bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
-            allow-batch-replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
-            aws-region: ${{ vars.AWS_REGION }}
-          secrets:
-            deployment-account: ${{ secrets.DEPLOYMENT_ACCOUNT }}
-            deployment-role: ${{ secrets.DEPLOYMENT_ROLE_NAME }}
-            permissions-boundary: ${{ secrets.PERMISSIONS_BOUNDARY_ARN }}
-
-          # with:
-          #   dir: "${{ env.DIRECTORY }}/infrastructure/aws"
-          #   env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          #   script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+            env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+            dir: "${{ env.DIRECTORY }}"
+            script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-veda-routes:
     name: deploy VEDA routes 🔀
