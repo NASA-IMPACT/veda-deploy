@@ -389,11 +389,11 @@ jobs:
           id: deploy_s3-disaster-recovery
           uses: "./s3-disaster-recovery/.github/workflows"
           with:
-            env-file: ".env"
-            aws-region: ${{ vars.AWS_REGION }}
-            allow-batch-replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
-            source-bucket: ${{ vars.SOURCE_BUCKET_NAME }}
-            destination-bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
+            env_file: ".env"
+            aws_region: ${{ vars.AWS_REGION }}
+            allow_batch_replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
+            source_bucket: ${{ vars.SOURCE_BUCKET_NAME }}
+            destination_bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
             env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             dir: "${{ env.DIRECTORY }}"
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
