@@ -387,7 +387,7 @@ jobs:
 
         - name: Run s3-disaster-recovery deployment
           id: deploy_s3-disaster-recovery
-          uses: "./.github/workflows/s3-disaster-recovery"
+          uses: "./.github/workflows/action"
           with:
             env-file: ".env"
             aws-region: ${{ vars.AWS_REGION }}
