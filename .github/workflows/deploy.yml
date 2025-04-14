@@ -48,6 +48,11 @@ on:
         required: true
         default: false
         description: DEPLOY_TITILER_MULTIDIM
+      DEPLOY_S3_DISASTER_RECOVERY:
+        type: string
+        required: true
+        default: false
+        description: DEPLOY_S3_DISASTER_RECOVERY
 
 concurrency:
   group: ${{ inputs.environment }}
@@ -350,6 +355,48 @@ jobs:
             env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
+  deploy-s3-disaster-recovery:
+      name: Deploy s3-disaster-recovery
+      runs-on: ubuntu-latest
+      env:
+        DIRECTORY: s3-disaster-recovery
+        ENVIRONMENT: ${{ inputs.environment }}
+      environment: ${{ inputs.environment }}
+      if: ${{ inputs.DEPLOY_S3_DISASTER_RECOVERY == 'true' }}
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          with:
+            lfs: "true"
+            submodules: "false"
+
+        - name: Checkout s3-disaster-recovery submodule
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          with:
+            repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+            path: ${{ env.DIRECTORY }}
+            ref: ${{ vars.S3_DISASTER_RECOVERY_GIT_REF || 'main'}}
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
+          with:
+            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-session-name: "gh-${{ env.ENVIRONMENT }}-s3-disaster-recovery-deployment"
+            aws-region: "us-west-2"
+
+        - name: Run s3-disaster-recovery deployment
+          id: deploy_s3-disaster-recovery
+          uses: "./s3-disaster-recovery/.github/workflows"
+          with:
+            env_file: ".env"
+            aws_region: ${{ vars.AWS_REGION }}
+            allow_batch_replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
+            source_bucket: ${{ vars.SOURCE_BUCKET_NAME }}
+            destination_bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
+            env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
+            dir: "${{ env.DIRECTORY }}"
+            script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-veda-routes:
     name: deploy VEDA routes 🔀
