@@ -115,7 +115,6 @@ jobs:
     env:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ inputs.environment }}
-    needs: [deploy-veda-auth]
     if: ${{ inputs.DEPLOY_BACKEND == 'true' }}
     environment: ${{ inputs.environment }}
 
