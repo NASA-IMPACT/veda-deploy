@@ -52,6 +52,7 @@ if __name__ == "__main__":
         "--stack-names",
         dest="stack_names",
         help="Cloudformation Stack names (comma separated)",
+        required=False,
         default=None,
     )
     parser.add_argument(

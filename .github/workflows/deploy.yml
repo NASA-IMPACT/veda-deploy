@@ -16,7 +16,7 @@ on:
       DEPLOY_AUTH:
         type: string
         required: true
-        default: true
+        default: false
         description: DEPLOY_AUTH
       DEPLOY_BACKEND:
         type: string
