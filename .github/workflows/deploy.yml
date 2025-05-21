@@ -404,7 +404,7 @@ jobs:
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-titiler-cmr:
-      name: Deploy titiler-cmr 🌎
+      name: Deploy titiler-cmr 📚
       runs-on: ubuntu-latest
       env:
         DIRECTORY: titiler-cmr
