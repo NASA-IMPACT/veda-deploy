@@ -53,11 +53,11 @@ on:
         required: true
         default: false
         description: DEPLOY_S3_DISASTER_RECOVERY
-      DEPLOY_TITILER_CNR:
+      DEPLOY_TITILER_CMR:
         type: string
         required: true
         default: false
-        description: DEPLOY_TITILER_CNR
+        description: DEPLOY_TITILER_CMR
 
 concurrency:
   group: ${{ inputs.environment }}
