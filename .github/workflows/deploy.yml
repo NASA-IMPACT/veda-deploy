@@ -391,9 +391,9 @@ jobs:
           with:
             env_file: ".env"
             aws_region: ${{ vars.AWS_REGION }}
-            allow_batch_replication: ${{ vars.ALLOW_BATCH_REPLICATION }}
-            source_bucket: ${{ vars.SOURCE_BUCKET_NAME }}
-            destination_bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
+            allow_batch_replication: ${{ vars.VEDA_S3_DISASTER_RECOV_ALLOW_BATCH_REPLICATION }}
+            source_bucket: ${{ vars.VEDA_S3_DISASTER_RECOV_SOURCE_BUCKET_NAME }}
+            destination_bucket: ${{ vars.VEDA_S3_DISASTER_RECOV_DESTINATION_BUCKET_NAME }}
             env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             dir: "${{ env.DIRECTORY }}"
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
