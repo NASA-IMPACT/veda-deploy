@@ -53,6 +53,11 @@ on:
         required: true
         default: false
         description: DEPLOY_S3_DISASTER_RECOVERY
+      DEPLOY_TITILER_CMR:
+        type: string
+        required: true
+        default: false
+        description: DEPLOY_TITILER_CMR
 
 concurrency:
   group: ${{ inputs.environment }}
@@ -396,6 +401,45 @@ jobs:
             destination_bucket: ${{ vars.DESTINATION_BUCKET_NAME }}
             env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             dir: "${{ env.DIRECTORY }}"
+            script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+
+  deploy-titiler-cmr:
+      name: Deploy titiler-cmr 📚
+      runs-on: ubuntu-latest
+      env:
+        DIRECTORY: titiler-cmr
+        ENVIRONMENT: ${{ inputs.environment }}
+      environment: ${{ inputs.environment }}
+      if: ${{ inputs.DEPLOY_TITILER_CMR == 'true' }}
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          with:
+            # curious why this is needed
+            lfs: "true"
+            submodules: "false"
+
+        - name: Checkout titiler-cmr submodule
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          with:
+            repository: "developmentseed/${{ env.DIRECTORY }}"
+            path: ${{ env.DIRECTORY }}
+            ref: ${{ vars.TITILER_CMR_GIT_REF || 'develop'}}
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
+          with:
+            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-session-name: "gh-${{ env.ENVIRONMENT }}-titiler-cmr-deployment"
+            aws-region: "us-west-2"
+
+        - name: Run titiler-cmr deployment
+          id: deploy_titiler_cmr
+          uses: "./titiler-cmr/.github/actions/cdk-deploy"
+          with:
+            dir: "${{ env.DIRECTORY }}/infrastructure/aws"
+            env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
   deploy-veda-routes:

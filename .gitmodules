@@ -22,3 +22,6 @@
 [submodule "s3-disaster-recovery"]
 	path = s3-disaster-recovery
 	url = https://github.com/NASA-IMPACT/s3-disaster-recovery.git
+[submodule "titiler-cmr"]
+	path = titiler-cmr
+	url = https://github.com/developmentseed/titiler-cmr.git
