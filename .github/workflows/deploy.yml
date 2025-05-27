@@ -16,7 +16,7 @@ on:
       DEPLOY_AUTH:
         type: string
         required: true
-        default: true
+        default: false
         description: DEPLOY_AUTH
       DEPLOY_BACKEND:
         type: string
@@ -120,7 +120,6 @@ jobs:
     env:
       DIRECTORY: veda-backend
       ENVIRONMENT: ${{ inputs.environment }}
-    needs: [deploy-veda-auth]
     if: ${{ inputs.DEPLOY_BACKEND == 'true' }}
     environment: ${{ inputs.environment }}
 
@@ -150,7 +149,6 @@ jobs:
         id: deploy_backend_stack
         with:
           env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
-          auth_stack_name: "${{ needs.deploy-veda-auth.outputs.auth_stack_name }}"
           dir: "${{ env.DIRECTORY }}"
           script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
 
