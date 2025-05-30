@@ -25,3 +25,6 @@
 [submodule "titiler-cmr"]
 	path = titiler-cmr
 	url = https://github.com/developmentseed/titiler-cmr.git
+[submodule "stac-manager"]
+	path = stac-manager
+	url = https://github.com/developmentseed/stac-manager.git
