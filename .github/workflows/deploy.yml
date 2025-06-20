@@ -441,6 +441,7 @@ jobs:
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
           env:
             ADDITIONAL_ENV: '{"AWS_REQUEST_PAYER": "requester"}'
+            TITILER_CMR_S3_AUTH_STRATEGY: iam
 
   deploy-veda-routes:
     name: deploy VEDA routes 🔀
