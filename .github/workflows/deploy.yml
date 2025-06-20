@@ -439,6 +439,8 @@ jobs:
             dir: "${{ env.DIRECTORY }}/infrastructure/aws"
             env_aws_secret_name: ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }}
             script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          env:
+            ADDITIONAL_ENV: '{"AWS_REQUEST_PAYER": "requester"}'
 
   deploy-veda-routes:
     name: deploy VEDA routes 🔀
