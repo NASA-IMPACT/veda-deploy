@@ -16,7 +16,8 @@ def _get_link(obj: dict, rel: str) -> str:
 def test_collection_pagination_next_link_is_valid():
     """
     Validates that for collections with enough items to require pagination,
-    the 'next' link provided in the item list is a valid URL that returns a 200 OK status.
+    the 'next' link provided in the item list is a valid URL that returns a 200 OK status
+    and does not contain a CloudFront cache error.
 
     This test fetches all collections and then individually checks their item lists for pagination links.
     It focuses on the custom host configuration as it's the primary way
@@ -80,8 +81,11 @@ def test_collection_pagination_next_link_is_valid():
                 # Assert that the link is valid and returns a 200 OK status
                 assert next_page_response.status_code == 200, f"'next' link for {collection_id} failed with status {next_page_response.status_code}"
                 print(f"  - Success! 'next' link returned status {next_page_response.status_code}.")
-                
-                
+
+                x_cache_header = next_page_response.headers.get("x-cache", "").lower()
+                assert "error from cloudfront" not in x_cache_header, f"CloudFront error detected in x-cache header for {collection_id}: {x_cache_header}"
+                print(f"  - Success! No CloudFront error found in x-cache header.")
+
                 # Once we've successfully tested one 'next' link, we can exit to keep the test fast.
                 break
             except requests.exceptions.RequestException as e:
