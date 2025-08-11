@@ -1,0 +1,47 @@
+name: Update Deployment Status
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  update-status-md:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout deployment-state branch
+        uses: actions/checkout@v4
+        with:
+          ref: deployment-state
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Run update script
+        run: |
+          python scripts/update_deployment_state.py \
+            --env "${{ inputs.environment }}" \
+            --auth "${{ vars.VEDA_AUTH_GIT_REF }}" \
+            --backend "${{ vars.VEDA_BACKEND_GIT_REF }}" \
+            --features_api "${{ vars.VEDA_FEATURES_API_GIT_REF }}" \
+            --routes "${{ vars.VEDA_ROUTES_GIT_REF }}" \
+            --sm2a "${{ vars.VEDA_SM2A_GIT_REF }}" \
+            --monitoring "${{ vars.VEDA_MONITORING_GIT_REF }}" \
+            --titiler_multidim "${{ vars.VEDA_TITILER_MULTIDIM_GIT_REF }}" \
+            --s3_dr "${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}" \
+            --titiler_cmr "${{ vars.VEDA_TITILER_CMR_GIT_REF }}"
+
+      - name: Commit and push updated deployment-status.md
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add deployment-status.md
+          git commit -m "Update deployment refs for ${{ inputs.environment }}"
+          git push origin deployment-state
