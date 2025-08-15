@@ -24,6 +24,9 @@ jobs:
         with:
           python-version: 3.x
 
+      - name: DEBUG show current directory
+        run: pwd; ls -la
+
       - name: Run update script
         run: |
           python scripts/update_deployment_status.py \
