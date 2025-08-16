@@ -24,23 +24,10 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: DEBUG show current directory
-        run: pwd; ls -la
-
       - name: Run update script
         run: |
           python scripts/update_deployment_status.py \
-            --env "${{ inputs.environment }}" \
-            --auth "${{ vars.VEDA_AUTH_GIT_REF }}" \
-            --backend "${{ vars.VEDA_BACKEND_GIT_REF }}" \
-            --features_api "${{ vars.VEDA_FEATURES_API_GIT_REF }}" \
-            --routes "${{ vars.VEDA_ROUTES_GIT_REF }}" \
-            --sm2a "${{ vars.VEDA_SM2A_GIT_REF }}" \
-            --monitoring "${{ vars.VEDA_MONITORING_GIT_REF }}" \
-            --titiler_multidim "${{ vars.VEDA_TITILER_MULTIDIM_GIT_REF }}" \
-            --s3_dr "${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}" \
-            --titiler_cmr "${{ vars.VEDA_TITILER_CMR_GIT_REF }}"
-
+            --env "${{ inputs.environment }}"
       - name: Commit and push updated deployment-status.md
         run: |
           git config user.name "github-actions"
