@@ -87,7 +87,7 @@ def collect_updates_from_env() -> dict:
         deploy_flag = os.getenv(deploy_env, "")
         ref_val = os.getenv(ref_env, "")
         print(f"  {deploy_env} = {deploy_flag}, {ref_env} = {ref_val}")
-        if deploy_flag and ref_val.strip():
+        if deploy_flag == "true" and ref_val.strip(): # this is weird but GHA won't let the flag be cast as a boolean
             updates[display] = (ref_val.strip(), ts)
     return updates
 
