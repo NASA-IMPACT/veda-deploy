@@ -31,6 +31,16 @@ jobs:
         run: |
           python scripts/update_deployment_status.py \
             --env "${{ inputs.environment }}"
+        env:
+          VEDA_AUTH_GIT_REF: ${{ vars.VEDA_AUTH_GIT_REF }}
+          VEDA_BACKEND_GIT_REF: ${{ vars.VEDA_BACKEND_GIT_REF }}
+          VEDA_FEATURES_API_GIT_REF: ${{ vars.VEDA_FEATURES_API_GIT_REF }}
+          VEDA_ROUTES_GIT_REF: ${{ vars.VEDA_ROUTES_GIT_REF }}
+          VEDA_SM2A_GIT_REF: ${{ vars.VEDA_SM2A_GIT_REF }}
+          VEDA_MONITORING_GIT_REF: ${{ vars.VEDA_MONITORING_GIT_REF }}
+          VEDA_TITILER_MULTIDIM_GIT_REF: ${{ vars.VEDA_TITILER_MULTIDIM_GIT_REF }}
+          VEDA_S3_DISASTER_RECOVERY_GIT_REF: ${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}
+          VEDA_TITILER_CMR_GIT_REF: ${{ vars.VEDA_TITILER_CMR_GIT_REF }}
       - name: Commit and push updated deployment-status.md
         run: |
           git config user.name "github-actions"
