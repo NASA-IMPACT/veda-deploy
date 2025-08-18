@@ -83,8 +83,10 @@ def collect_updates_from_env() -> dict:
     updates = {}
     ts = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
     for _, deploy_env, ref_env, display, _ in COMPONENTS:
+        print(f"Checking {display} for environment variables: {deploy_env}, {ref_env}")
         deploy_flag = os.getenv(deploy_env, "")
         ref_val = os.getenv(ref_env, "")
+        print(f"  {deploy_env} = {deploy_flag}, {ref_env} = {ref_val}")
         if deploy_flag and ref_val.strip():
             updates[display] = (ref_val.strip(), ts)
     return updates
