@@ -41,6 +41,15 @@ jobs:
           VEDA_TITILER_MULTIDIM_GIT_REF: ${{ vars.VEDA_TITILER_MULTIDIM_GIT_REF }}
           VEDA_S3_DISASTER_RECOVERY_GIT_REF: ${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}
           VEDA_TITILER_CMR_GIT_REF: ${{ vars.VEDA_TITILER_CMR_GIT_REF }}
+          DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+          DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH }}
+          DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+          DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+          DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+          DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+          DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+          DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
+          DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
       - name: Commit and push updated deployment-status.md
         run: |
           git config user.name "github-actions"
