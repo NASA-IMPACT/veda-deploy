@@ -104,6 +104,7 @@ def main():
     _ = state[args.env]
 
     updates = collect_updates_from_env()
+    print(f"Collected updates: {updates}")
     if not updates:
         # Nothing to do; write existing state back unchanged (no-op)
         write_state(args.file, state)

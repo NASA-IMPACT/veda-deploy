@@ -14,47 +14,47 @@ on:
         required: true
         description: Environment to deploy to
       DEPLOY_AUTH:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_AUTH
       DEPLOY_BACKEND:
-        type: string
+        type: boolean
         required: true
         default: true
         description: DEPLOY_BACKEND
       DEPLOY_FEATURES_API:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_FEATURES_API
       DEPLOY_ROUTES:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_ROUTES
       DEPLOY_SM2A:
-        type: string
+        type: boolean
         required: true
         default: true
         description: DEPLOY_SM2A
       DEPLOY_MONITORING:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_MONITORING
       DEPLOY_TITILER_MULTIDIM:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_TITILER_MULTIDIM
       DEPLOY_S3_DISASTER_RECOVERY:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_S3_DISASTER_RECOVERY
       DEPLOY_TITILER_CMR:
-        type: string
+        type: boolean
         required: true
         default: false
         description: DEPLOY_TITILER_CMR
