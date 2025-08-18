@@ -69,6 +69,17 @@ run-name: |
   TITILER_MULTIDIM=${{ inputs.DEPLOY_TITILER_MULTIDIM }} 
   TITILER_CMR=${{ inputs.DEPLOY_TITILER_CMR }} ⛟
 
+env:
+  DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
+  DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+  DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+  DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+  DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+  DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+  DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+  DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
+  DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
+
 jobs:
   check-environment:
     runs-on: ubuntu-latest
