@@ -1,0 +1,124 @@
+name: Dispatch ⛟
+
+permissions:
+  id-token: write
+  contents: write
+  issues: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: Environment to deploy to
+      DEPLOY_AUTH:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_AUTH
+      DEPLOY_BACKEND:
+        type: boolean
+        required: true
+        default: true
+        description: DEPLOY_BACKEND
+      DEPLOY_FEATURES_API:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_FEATURES_API
+      DEPLOY_ROUTES:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_ROUTES
+      DEPLOY_SM2A:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_SM2A
+      DEPLOY_MONITORING:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_MONITORING
+      DEPLOY_TITILER_MULTIDIM:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_TITILER_MULTIDIM
+      DEPLOY_S3_DISASTER_RECOVERY:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_S3_DISASTER_RECOVERY
+      DEPLOY_TITILER_CMR:
+        type: boolean
+        required: true
+        default: false
+        description: DEPLOY_TITILER_CMR
+
+run-name: |
+  Dispatch to ${{ inputs.environment }} 
+  AUTH=${{ inputs.DEPLOY_AUTH }} 
+  BACKEND=${{ inputs.DEPLOY_BACKEND }} 
+  FEATURES=${{ inputs.DEPLOY_FEATURES_API }} 
+  ROUTES=${{ inputs.DEPLOY_ROUTES }} 
+  SM2A=${{ inputs.DEPLOY_SM2A }} 
+  MONITORING=${{ inputs.DEPLOY_MONITORING }} 
+  TITILER_MULTIDIM=${{ inputs.DEPLOY_TITILER_MULTIDIM }} 
+  TITILER_CMR=${{ inputs.DEPLOY_TITILER_CMR }} ⛟
+
+env:
+  DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
+  DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+  DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+  DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+  DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+  DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+  DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+  DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
+  DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
+
+jobs:
+  check-environment:
+    runs-on: ubuntu-latest
+    name: Got ${{ github.event.inputs.environment }}
+    steps:
+      - name: Validation
+        uses: trstringer/manual-approval@v1
+        if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' || github.event.inputs.environment == 'mcp-prod' }}
+        timeout-minutes: 60 # The approver will have 1 hour to approve this request
+        # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
+        # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,botanical,ividito,stephenkilbourn
+          minimum-approvals: 1
+          issue-title: "Deploying to ${{ github.event.inputs.environment }}"
+          issue-body: "Please approve or deny the deployment"
+
+  deploy-veda-components:
+    name: Deploy VEDA Components
+    uses: "./.github/workflows/deploy.yml"
+    needs: check-environment
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
+      DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+      DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+      DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+      DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+      DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+      DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+      DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
+      DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
+    secrets: inherit
+
+  update-deployment-status:
+    name: Update Deployment Status
+    uses: "./.github/workflows/update_deployment_status.yml"
+    needs: deploy-veda-components
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets: inherit

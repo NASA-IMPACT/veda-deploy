@@ -7,3 +7,21 @@
 [submodule "veda-backend"]
 	path = veda-backend
 	url = https://github.com/NASA-IMPACT/veda-backend.git
+[submodule "veda-monitoring"]
+	path = veda-monitoring
+	url = https://github.com/NASA-IMPACT/veda-monitoring.git
+[submodule "veda-features-api-cdk"]
+	path = veda-features-api-cdk
+	url = git@github.com:NASA-IMPACT/veda-features-api-cdk.git
+[submodule "veda-routes"]
+	path = veda-routes
+  url = git@github.com:NASA-IMPACT/veda-routes.git
+[submodule "titiler-multidim"]
+	path = titiler-multidim
+	url = https://github.com/developmentseed/titiler-multidim.git
+[submodule "s3-disaster-recovery"]
+	path = s3-disaster-recovery
+	url = https://github.com/NASA-IMPACT/s3-disaster-recovery.git
+[submodule "titiler-cmr"]
+	path = titiler-cmr
+	url = https://github.com/developmentseed/titiler-cmr.git

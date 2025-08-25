@@ -51,18 +51,32 @@ if __name__ == "__main__":
     parser.add_argument(
         "--stack-names",
         dest="stack_names",
-        help="Cloudformation Stack names (comma separated)",
+        help="Cloudformation Stack names (comma separated). If the flag is used without a value, or if the flag is omitted entirely, it defaults to None.",
+        required=False,
         default=None,
+        nargs='?',
+        const=None,
+    )
+    parser.add_argument(
+        "--env-file",
+        dest="env_file",
+        help=".env file to write to",
+        required=False,
+        default=".env",
     )
 
     args = parser.parse_args()
 
-    secret_id, stack_names = (
+    secret_id, stack_names, env_file = (
         args.secret_id,
-        args.stack_names
+        args.stack_names,
+        args.env_file
     )
+
+
+
     generate_env_file(
         stack_names=stack_names,
         secret_id=secret_id,
-        out_file=".env"
+        out_file=env_file
     )
