@@ -2,6 +2,19 @@
 
 If a component or environment is not listed, it has not yet been deployed through veda-deploy.
 
+## mcp-test
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND | [main](https://github.com/NASA-IMPACT/veda-backend/tree/main) | 2025-08-26 22:14:08 |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A |  |  |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## uah-sit
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
