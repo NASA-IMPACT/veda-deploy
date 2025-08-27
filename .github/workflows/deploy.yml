@@ -512,6 +512,7 @@ jobs:
   test-deployment:
     name: Test Deployment 👨🏻‍🔬
     runs-on: ubuntu-latest
+    timeout-minutes: 15 # Normally takes ~30s
     needs: [ deploy-veda-backend ]
     env:
       DIRECTORY: integration_test
