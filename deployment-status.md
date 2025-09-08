@@ -10,7 +10,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A |  |  |
-| MONITORING | [issue-22/create-https-listener-update-sg](https://github.com/NASA-IMPACT/veda-monitoring/tree/issue-22/create-https-listener-update-sg) | 2025-08-27 20:39:49 |
+| MONITORING | [v0.3.0](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.0) | 2025-09-08 18:07:44 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
