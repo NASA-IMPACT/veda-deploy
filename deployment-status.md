@@ -45,7 +45,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [fix/disable-collection-pagination](https://github.com/NASA-IMPACT/veda-backend/tree/fix/disable-collection-pagination) | 2025-09-02 20:32:06 |
+| BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-09-10 18:24:23 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [fix/reschedule-dags](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/reschedule-dags) | 2025-08-26 00:04:27 |
