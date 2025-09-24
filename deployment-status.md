@@ -19,7 +19,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-09-23 22:28:59 |
+| BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-09-24 00:25:47 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A |  |  |
