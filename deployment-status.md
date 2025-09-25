@@ -2,6 +2,19 @@
 
 If a component or environment is not listed, it has not yet been deployed through veda-deploy.
 
+## ghgc-smce-dev
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-09-25 15:40:06 |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A |  |  |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## mcp-prod
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
