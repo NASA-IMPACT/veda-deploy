@@ -14,9 +14,9 @@ COMPONENTS = [
     ("routes", "DEPLOY_ROUTES", "VEDA_ROUTES_GIT_REF", "ROUTES", "https://github.com/NASA-IMPACT/veda-routes"),
     ("sm2a", "DEPLOY_SM2A", "VEDA_SM2A_DATA_AIRFLOW_GIT_REF", "SM2A", "https://github.com/NASA-IMPACT/veda-sm2a"),
     ("monitoring", "DEPLOY_MONITORING", "VEDA_MONITORING_GIT_REF", "MONITORING", "https://github.com/NASA-IMPACT/veda-monitoring"),
-    ("titiler_multidim", "DEPLOY_TITILER_MULTIDIM", "VEDA_TITILER_MULTIDIM_GIT_REF", "TITILER_MULTIDIM", "https://github.com/developmentseed/titiler-multidim"),
+    ("titiler_multidim", "DEPLOY_TITILER_MULTIDIM", "TITILER_MULTIDIM_GIT_REF", "TITILER_MULTIDIM", "https://github.com/developmentseed/titiler-multidim"),
     ("s3_dr", "DEPLOY_S3_DISASTER_RECOVERY", "VEDA_S3_DISASTER_RECOVERY_GIT_REF", "S3_DR", "https://github.com/NASA-IMPACT/s3-disaster-recovery"),
-    ("titiler_cmr", "DEPLOY_TITILER_CMR", "VEDA_TITILER_CMR_GIT_REF", "TITILER_CMR", "https://github.com/developmentseed/titiler-cmr"),
+    ("titiler_cmr", "DEPLOY_TITILER_CMR", "TITILER_CMR_GIT_REF", "TITILER_CMR", "https://github.com/developmentseed/titiler-cmr"),
 ]
 
 ROW_RE = re.compile(r'^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$')
