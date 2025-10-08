@@ -2,6 +2,19 @@
 
 If a component or environment is not listed, it has not yet been deployed through veda-deploy.
 
+## ghgc-mcp-staging
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND |  |  |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A | [change-version/rio-stac](https://github.com/NASA-IMPACT/veda-sm2a/tree/change-version/rio-stac) | 2025-10-08 18:46:57 |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## ghgc-smce-dev
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
