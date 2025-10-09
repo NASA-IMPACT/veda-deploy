@@ -45,7 +45,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [alukach/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/alukach/tenant-filtering-stac-auth-proxy) | 2025-10-09 21:41:20 |
+| BACKEND | [alukach/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/alukach/tenant-filtering-stac-auth-proxy) | 2025-10-09 22:10:43 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A |  |  |
