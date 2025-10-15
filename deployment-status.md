@@ -71,7 +71,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-09-16 03:37:11 |
+| BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-10-15 20:43:06 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [fix/infra-tuning](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/infra-tuning) | 2025-09-29 18:39:29 |
