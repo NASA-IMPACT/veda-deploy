@@ -1,27 +1,27 @@
 [submodule "veda-data-airflow"]
-	path = veda-data-airflow
-	url = https://github.com/NASA-IMPACT/veda-data-airflow.git
+        path = veda-data-airflow
+        url = https://github.com/NASA-IMPACT/veda-data-airflow.git
 [submodule "veda-auth"]
-	path = veda-auth
-	url = https://github.com/NASA-IMPACT/veda-auth.git
+        path = veda-auth
+        url = https://github.com/NASA-IMPACT/veda-auth.git
 [submodule "veda-backend"]
-	path = veda-backend
-	url = https://github.com/NASA-IMPACT/veda-backend.git
+        path = veda-backend
+        url = https://github.com/NASA-IMPACT/veda-backend.git
 [submodule "veda-monitoring"]
-	path = veda-monitoring
-	url = https://github.com/NASA-IMPACT/veda-monitoring.git
+        path = veda-monitoring
+        url = https://github.com/NASA-IMPACT/veda-monitoring.git
 [submodule "veda-features-api-cdk"]
-	path = veda-features-api-cdk
-	url = git@github.com:NASA-IMPACT/veda-features-api-cdk.git
+        path = veda-features-api-cdk
+        url = git@github.com:ieee-grss-veda/grss-veda-features-api-cdk.git
 [submodule "veda-routes"]
-	path = veda-routes
-  url = git@github.com:NASA-IMPACT/veda-routes.git
+        path = veda-routes
+        url = git@github.com:NASA-IMPACT/veda-routes.git
 [submodule "titiler-multidim"]
-	path = titiler-multidim
-	url = https://github.com/developmentseed/titiler-multidim.git
+        path = titiler-multidim
+        url = https://github.com/developmentseed/titiler-multidim.git
 [submodule "s3-disaster-recovery"]
-	path = s3-disaster-recovery
-	url = https://github.com/NASA-IMPACT/s3-disaster-recovery.git
+        path = s3-disaster-recovery
+        url = https://github.com/NASA-IMPACT/s3-disaster-recovery.git
 [submodule "titiler-cmr"]
-	path = titiler-cmr
-	url = https://github.com/developmentseed/titiler-cmr.git
+        path = titiler-cmr
+        url = https://github.com/developmentseed/titiler-cmr.git
