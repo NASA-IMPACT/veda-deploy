@@ -2,6 +2,19 @@
 
 If a component or environment is not listed, it has not yet been deployed through veda-deploy.
 
+## eic-staging
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND |  |  |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A | [dev](https://github.com/NASA-IMPACT/veda-sm2a/tree/dev) | 2025-11-05 22:59:05 |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## ghgc-mcp-staging
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
