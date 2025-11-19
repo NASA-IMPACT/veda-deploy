@@ -22,7 +22,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-11-19 21:34:54 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A |  |  |
+| SM2A | [dev](https://github.com/NASA-IMPACT/veda-sm2a/tree/dev) | 2025-11-19 21:44:18 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
