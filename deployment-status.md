@@ -22,7 +22,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND |  |  |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [dev](https://github.com/NASA-IMPACT/veda-sm2a/tree/dev) | 2025-11-05 21:14:54 |
+| SM2A | [dev](https://github.com/NASA-IMPACT/veda-sm2a/tree/dev) | 2025-11-19 15:19:31 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
