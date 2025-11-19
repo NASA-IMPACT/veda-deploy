@@ -2,6 +2,19 @@
 
 If a component or environment is not listed, it has not yet been deployed through veda-deploy.
 
+## disaster-dev
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND |  |  |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A | [dev](https://github.com/NASA-IMPACT/veda-sm2a/tree/dev) | 2025-11-19 22:39:36 |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## eic-staging
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
