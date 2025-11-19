@@ -15,6 +15,19 @@ If a component or environment is not listed, it has not yet been deployed throug
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
 
+## ghgc-mcp-production-blue
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-11-19 21:34:54 |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A |  |  |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## ghgc-mcp-staging
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
