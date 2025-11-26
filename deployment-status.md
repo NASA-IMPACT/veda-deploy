@@ -86,7 +86,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | AUTH |  |  |
 | BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-10-21 20:22:01 |
 | FEATURES_API |  |  |
-| ROUTES |  |  |
+| ROUTES | [v1.0.0-rc.16](https://github.com/NASA-IMPACT/veda-routes/tree/v1.0.0-rc.16) | 2025-11-26 19:41:48 |
 | SM2A |  |  |
 | MONITORING | [v0.3.0](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.0) | 2025-09-08 18:07:44 |
 | TITILER_MULTIDIM |  |  |
