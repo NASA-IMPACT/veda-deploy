@@ -114,7 +114,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [fix/infra-tuning](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/infra-tuning) | 2025-09-29 18:39:29 |
-| MONITORING | [v0.3.0](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.0) | 2025-09-08 21:48:19 |
+| MONITORING | [v0.3.1](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.1) | 2025-12-11 16:20:57 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
