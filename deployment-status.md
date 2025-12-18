@@ -35,7 +35,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND |  |  |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [issue-677/tenant-tagging-dag](https://github.com/NASA-IMPACT/veda-sm2a/tree/issue-677/tenant-tagging-dag) | 2025-12-17 23:50:59 |
+| SM2A | [issue-677/tenant-tagging-dag](https://github.com/NASA-IMPACT/veda-sm2a/tree/issue-677/tenant-tagging-dag) | 2025-12-18 00:15:02 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
