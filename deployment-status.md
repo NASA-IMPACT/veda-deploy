@@ -123,10 +123,10 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-10-21 19:39:11 |
+| BACKEND | [v14.0.0](https://github.com/NASA-IMPACT/veda-backend/tree/v14.0.0) | 2025-12-19 17:16:56 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [fix/infra-tuning](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/infra-tuning) | 2025-09-29 18:39:29 |
+| SM2A | [feat/errorLogging](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/errorLogging) | 2025-12-19 17:16:56 |
 | MONITORING | [v0.3.1](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.1) | 2025-12-11 16:20:57 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
