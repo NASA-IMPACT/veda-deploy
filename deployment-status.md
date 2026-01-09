@@ -126,7 +126,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [v14.0.0](https://github.com/NASA-IMPACT/veda-backend/tree/v14.0.0) | 2025-12-19 17:16:56 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [feat/errorLogging](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/errorLogging) | 2025-12-19 17:16:56 |
+| SM2A | [updateMetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/updateMetadata) | 2026-01-09 15:18:49 |
 | MONITORING | [v0.3.1](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.1) | 2025-12-11 16:20:57 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
