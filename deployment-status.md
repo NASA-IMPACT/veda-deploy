@@ -123,7 +123,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [mt-uma/ui-get-tenants](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/ui-get-tenants) | 2026-01-12 19:33:25 |
+| BACKEND | [mt-uma/ui-get-tenants](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/ui-get-tenants) | 2026-01-12 19:43:04 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [updateMetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/updateMetadata) | 2026-01-09 15:18:49 |
