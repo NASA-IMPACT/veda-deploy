@@ -126,7 +126,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [mt-uma/ui-get-tenants](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/ui-get-tenants) | 2026-01-12 23:22:29 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [updateMetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/updateMetadata) | 2026-01-09 15:18:49 |
+| SM2A | [poc/keycloak-auth-testing](https://github.com/NASA-IMPACT/veda-sm2a/tree/poc/keycloak-auth-testing) | 2026-02-10 17:57:02 |
 | MONITORING | [v0.3.1](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.1) | 2025-12-11 16:20:57 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
