@@ -123,7 +123,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [mt-uma/pep-poc](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-poc) | 2026-02-13 21:46:33 |
+| BACKEND | [mt-uma/pep-poc](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-poc) | 2026-02-13 22:03:03 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [poc/keycloak-auth-testing](https://github.com/NASA-IMPACT/veda-sm2a/tree/poc/keycloak-auth-testing) | 2026-02-10 18:04:42 |
