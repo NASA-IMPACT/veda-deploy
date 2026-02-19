@@ -126,7 +126,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [mt-uma/pep-poc](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-poc) | 2026-02-14 00:51:02 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [poc/keycloak-auth-testing](https://github.com/NASA-IMPACT/veda-sm2a/tree/poc/keycloak-auth-testing) | 2026-02-19 18:58:46 |
+| SM2A | [poc/keycloak-auth-testing](https://github.com/NASA-IMPACT/veda-sm2a/tree/poc/keycloak-auth-testing) | 2026-02-19 20:20:13 |
 | MONITORING | [v0.3.1](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.1) | 2025-12-11 16:20:57 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
