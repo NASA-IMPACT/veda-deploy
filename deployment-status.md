@@ -28,6 +28,19 @@ If a component or environment is not listed, it has not yet been deployed throug
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
 
+## eic-prod
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND |  |  |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A | [v0.20.2-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.20.2-dev.0) | 2026-03-04 16:08:50 |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## eic-staging
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
