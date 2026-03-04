@@ -87,7 +87,7 @@ jobs:
     steps:
       - name: Validation
         uses: trstringer/manual-approval@v1
-        if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' || github.event.inputs.environment == 'mcp-prod' }}
+        if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' || github.event.inputs.environment == 'mcp-prod' || github.event.inputs.environment == 'eic-prod' }}
         timeout-minutes: 60 # The approver will have 1 hour to approve this request
         # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
         # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
