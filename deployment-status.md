@@ -110,7 +110,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [jt/tenant-filtering-stac-auth-proxy](https://github.com/NASA-IMPACT/veda-backend/tree/jt/tenant-filtering-stac-auth-proxy) | 2025-10-21 20:22:01 |
+| BACKEND | [jt/keycloak-arn-update](https://github.com/NASA-IMPACT/veda-backend/tree/jt/keycloak-arn-update) | 2026-03-05 03:43:24 |
 | FEATURES_API |  |  |
 | ROUTES | [v1.0.0-rc.16](https://github.com/NASA-IMPACT/veda-routes/tree/v1.0.0-rc.16) | 2025-12-01 20:19:40 |
 | SM2A |  |  |
