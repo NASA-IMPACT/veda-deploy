@@ -132,6 +132,19 @@ If a component or environment is not listed, it has not yet been deployed throug
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
 
+## uah-dev
+| Component | Git Ref | Updated (UTC) |
+|-----------|---------|---------------|
+| AUTH |  |  |
+| BACKEND |  |  |
+| FEATURES_API |  |  |
+| ROUTES |  |  |
+| SM2A | [feat/delete-tipg-collection](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/delete-tipg-collection) | 2026-03-06 03:17:29 |
+| MONITORING |  |  |
+| TITILER_MULTIDIM |  |  |
+| S3_DR |  |  |
+| TITILER_CMR |  |  |
+
 ## uah-sit
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
