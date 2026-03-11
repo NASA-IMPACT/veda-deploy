@@ -149,7 +149,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [mt-uma/pep-stac-endpoints](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-stac-endpoints) | 2026-03-11 23:16:25 |
+| BACKEND | [mt-uma/pep-stac-endpoints](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-stac-endpoints) | 2026-03-11 23:26:11 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [feature/add-sm2a-dag-launcer-role](https://github.com/NASA-IMPACT/veda-sm2a/tree/feature/add-sm2a-dag-launcer-role) | 2026-03-04 19:36:30 |
