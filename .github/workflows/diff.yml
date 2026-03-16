@@ -1,0 +1,62 @@
+name: Diff Infrastructure Changes
+description: View IaC changes against current state, not applied/deployed
+
+permissions:
+  id-token: write
+  contents: write
+  issues: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: Environment to diff
+      IaC:
+        required: true
+        type: choice
+        options:
+        - SM2A
+
+jobs:
+  plan-sm2a:
+    name: '`terraform plan` sm2a'
+    runs-on: ubuntu-latest
+    env:
+      DIRECTORY: veda-data-airflow
+      AWS_REGION: "us-west-2"
+      ENVIRONMENT: ${{ inputs.environment }}
+    if: ${{ inputs.IaC == 'SM2A' }}
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          lfs: "true"
+          submodules: "false"
+
+      - name: Checkout veda-data-airflow submodule
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
+          path: ${{ env.DIRECTORY }}
+          ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF || 'main'}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
+        with:
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-sm2a-deployment"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: Run `terraform plan`
+        id: plan_sm2a
+        uses: "./veda-data-airflow/.github/actions/terraform-deploy-sm2a"
+        with:
+          env-file: ".env"
+          env_aws_secret_name: ${{ vars.SM2A_ENVS_DEPLOYMENT_SECRET_NAME }}
+          dir: "${{ env.DIRECTORY }}"
+          script_path: "${{ github.workspace }}/scripts/generate_env_file.py"
+          run_command: plan
