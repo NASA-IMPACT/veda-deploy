@@ -407,11 +407,10 @@ jobs:
         run: |
           python3 "${{ github.workspace }}/scripts/update_secret_with_inputs.py" \
             --secret-id ${{ vars.DEPLOYMENT_ENV_ROUTES_SECRET_NAME }} \
-            --prefix=VEDA_ \
             --raster_api_url=${{ needs.deploy-veda-backend.outputs.raster_api_url }} \
             --ingest_api_url=${{ needs.deploy-veda-backend.outputs.ingest_api_url }} \
             --stac_api_url=${{ needs.deploy-veda-backend.outputs.stac_api_url }} \
-            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }} 
+            --stac_browser_bucket_name=${{ needs.deploy-veda-backend.outputs.stac_browser_bucket_name }}
 
       - name: Run deployment
         uses: "./veda-routes/.github/actions/cdk-deploy"
