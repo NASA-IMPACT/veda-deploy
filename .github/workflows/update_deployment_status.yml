@@ -1,0 +1,59 @@
+name: Update Deployment Status
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  update-status-md:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout deployment-state branch
+        uses: actions/checkout@v4
+        with:
+          ref: deployment-state
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Run update script
+        run: |
+          python scripts/update_deployment_status.py \
+            --env "${{ inputs.environment }}"
+        env:
+          VEDA_AUTH_GIT_REF: ${{ vars.VEDA_AUTH_GIT_REF }}
+          VEDA_BACKEND_GIT_REF: ${{ vars.VEDA_BACKEND_GIT_REF }}
+          VEDA_FEATURES_API_GIT_REF: ${{ vars.VEDA_FEATURES_API_GIT_REF }}
+          VEDA_ROUTES_GIT_REF: ${{ vars.VEDA_ROUTES_GIT_REF }}
+          VEDA_SM2A_DATA_AIRFLOW_GIT_REF: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF }}
+          VEDA_MONITORING_GIT_REF: ${{ vars.VEDA_MONITORING_GIT_REF }}
+          VEDA_TITILER_MULTIDIM_GIT_REF: ${{ vars.VEDA_TITILER_MULTIDIM_GIT_REF }}
+          VEDA_S3_DISASTER_RECOVERY_GIT_REF: ${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}
+          VEDA_TITILER_CMR_GIT_REF: ${{ vars.VEDA_TITILER_CMR_GIT_REF }}
+          DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
+          DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH }}
+          DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
+          DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
+          DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
+          DEPLOY_MONITORING: ${{ github.event.inputs.DEPLOY_MONITORING }}
+          DEPLOY_TITILER_MULTIDIM: ${{ github.event.inputs.DEPLOY_TITILER_MULTIDIM }}
+          DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
+          DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
+      - name: Commit and push updated deployment-status.md
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add deployment-status.md
+          git commit -m "Update deployment refs for ${{ inputs.environment }}"
+          git push origin deployment-state
