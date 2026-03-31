@@ -149,10 +149,10 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [mt-uma/pep-stac-endpoints](https://github.com/NASA-IMPACT/veda-backend/tree/mt-uma/pep-stac-endpoints) | 2026-03-11 23:26:11 |
+| BACKEND | [v14.0.0-rc.10](https://github.com/NASA-IMPACT/veda-backend/tree/v14.0.0-rc.10) | 2026-03-31 19:04:32 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [disasters/addSTACmetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/disasters/addSTACmetadata) | 2026-03-31 13:54:23 |
+| SM2A | [disasters/addSTACmetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/disasters/addSTACmetadata) | 2026-03-31 19:04:32 |
 | MONITORING | [fix/alb-logs](https://github.com/NASA-IMPACT/veda-monitoring/tree/fix/alb-logs) | 2026-03-16 19:36:46 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
