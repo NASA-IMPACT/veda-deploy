@@ -149,9 +149,9 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [chore/Remove-ingest-api-items-endpoint](https://github.com/NASA-IMPACT/veda-backend/tree/chore/Remove-ingest-api-items-endpoint) | 2026-04-01 21:49:42 |
+| BACKEND | [v14.0.0-rc.16](https://github.com/NASA-IMPACT/veda-backend/tree/v14.0.0-rc.16) | 2026-04-01 22:11:30 |
 | FEATURES_API |  |  |
-| ROUTES | [jt/amplify-poc](https://github.com/NASA-IMPACT/veda-routes/tree/jt/amplify-poc) | 2026-04-01 21:49:42 |
+| ROUTES | [jt/amplify-poc](https://github.com/NASA-IMPACT/veda-routes/tree/jt/amplify-poc) | 2026-04-01 22:11:30 |
 | SM2A | [disasters/addSTACmetadata](https://github.com/NASA-IMPACT/veda-sm2a/tree/disasters/addSTACmetadata) | 2026-03-31 19:04:32 |
 | MONITORING | [fix/alb-logs](https://github.com/NASA-IMPACT/veda-monitoring/tree/fix/alb-logs) | 2026-03-16 19:36:46 |
 | TITILER_MULTIDIM |  |  |
