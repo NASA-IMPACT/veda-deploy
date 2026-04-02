@@ -1,10 +1,9 @@
 name: Diff Infrastructure Changes
-description: View IaC changes against current state, not applied/deployed
 
 permissions:
   id-token: write
-  contents: write
-  issues: write
+  contents: read
+  issues: read
 
 on:
   workflow_dispatch:
