@@ -110,9 +110,9 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [develop](https://github.com/NASA-IMPACT/veda-backend/tree/develop) | 2026-03-30 23:17:33 |
+| BACKEND | [develop](https://github.com/NASA-IMPACT/veda-backend/tree/develop) | 2026-04-14 23:42:51 |
 | FEATURES_API |  |  |
-| ROUTES | [jt/amplify-poc](https://github.com/NASA-IMPACT/veda-routes/tree/jt/amplify-poc) | 2026-03-30 23:17:33 |
+| ROUTES | [v1.0.0-rc.20](https://github.com/NASA-IMPACT/veda-routes/tree/v1.0.0-rc.20) | 2026-04-14 23:42:51 |
 | SM2A |  |  |
 | MONITORING | [v0.3.0](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.0) | 2025-09-08 18:07:44 |
 | TITILER_MULTIDIM |  |  |
