@@ -561,10 +561,10 @@ jobs:
           repository: NASA-IMPACT/veda-config
           ref: add-playwright
 
-      - name: Use Node.js 16
-        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 #v3.8.2
+      - name: Use Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 16
+          node-version: 22
 
       - name: Run veda setup
         run: ./.veda/setup
