@@ -15,14 +15,13 @@ Adding new deployment environments requires admin permissions for this veda-depl
 ## GitHub Environment
 Each veda-deploy Github Environment needs Environment Secrets and Variables configured in the GitHub UI Settings for this veda-deploy project as well as detailed key-value AWS Secrets Manager secret(s) with configuration for the deployment of all components.
 
-### GitHub Environment Secrets
-GitHub Environment secret(s) configured in the GitHub UI settings for this veda-deploy repo:
-`DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
-
 ### GitHub Environment Variables
 GitHub Environment variables need to be set in the GitHub UI project settings. There should be one variable for each AWS Secrets Manager secret name. There should be one variable for each component indicating which GitHub reference to use to deploy that component via checking out that Github reference in the git submodule.
 
 More instructions on these Github environment variables is provided below.
+
+#### Roles with Permissions
+`DEPLOYMENT_ROLE_ARN` - oidc role with permissions to deploy
 
 #### AWS Secrets Manager Secret Name(s)
 

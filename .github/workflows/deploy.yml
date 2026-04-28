@@ -93,7 +93,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-auth-deployment"
           aws-region: "us-west-2"
 
@@ -140,7 +140,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-backend-deployment"
           aws-region: "us-west-2"
 
@@ -205,7 +205,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-sm2a-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
@@ -254,7 +254,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-features-deployment"
           aws-region: "us-west-2"
 
@@ -308,7 +308,7 @@ jobs:
         if: ${{ env.GH_PAT_CHECK != '' }}
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-monitoring-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
@@ -346,7 +346,7 @@ jobs:
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
           with:
-            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
             role-session-name: "gh-${{ env.ENVIRONMENT }}-titiler-multidim-deployment"
             aws-region: "us-west-2"
 
@@ -384,7 +384,7 @@ jobs:
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
           with:
-            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
             role-session-name: "gh-${{ env.ENVIRONMENT }}-s3-disaster-recovery-deployment"
             aws-region: "us-west-2"
 
@@ -428,7 +428,7 @@ jobs:
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
           with:
-            role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+            role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
             role-session-name: "gh-${{ env.ENVIRONMENT }}-titiler-cmr-deployment"
             aws-region: "us-west-2"
 
@@ -469,7 +469,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-routes-deployment"
           aws-region: "${{ env.AWS_REGION }}"
 
@@ -532,7 +532,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
         with:
-          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE_ARN }}
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-integration-test"
           aws-region: "${{ env.AWS_DEFAULT_REGION }}"
 
