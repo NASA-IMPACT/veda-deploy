@@ -88,7 +88,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_AUTH_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_AUTH_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -135,7 +135,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_BACKEND_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_BACKEND_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -200,7 +200,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -249,7 +249,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF || 'main'}}
+          ref: ${{ vars.VEDA_FEATURES_API_GIT_REF }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -301,7 +301,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_MONITORING_GIT_REF || 'main' }}
+          ref: ${{ vars.VEDA_MONITORING_GIT_REF }}
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
@@ -341,7 +341,7 @@ jobs:
           with:
             repository: "developmentseed/${{ env.DIRECTORY }}"
             path: ${{ env.DIRECTORY }}
-            ref: ${{ vars.TITILER_MULTIDIM_GIT_REF || 'main'}}
+            ref: ${{ vars.TITILER_MULTIDIM_GIT_REF }}
 
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -379,7 +379,7 @@ jobs:
           with:
             repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
             path: ${{ env.DIRECTORY }}
-            ref: ${{ vars.S3_DISASTER_RECOVERY_GIT_REF || 'main'}}
+            ref: ${{ vars.S3_DISASTER_RECOVERY_GIT_REF }}
 
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -423,7 +423,7 @@ jobs:
           with:
             repository: "developmentseed/${{ env.DIRECTORY }}"
             path: ${{ env.DIRECTORY }}
-            ref: ${{ vars.TITILER_CMR_GIT_REF || 'develop'}}
+            ref: ${{ vars.TITILER_CMR_GIT_REF }}
 
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
@@ -463,7 +463,7 @@ jobs:
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
-          ref: ${{ vars.VEDA_ROUTES_GIT_REF || 'dev' }}
+          ref: ${{ vars.VEDA_ROUTES_GIT_REF }}
           token: ${{ secrets.GH_PAT }}
 
       - name: Configure AWS Credentials
