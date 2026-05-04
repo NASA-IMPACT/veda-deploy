@@ -72,7 +72,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND |  |  |
-| FEATURES_API | [fix/remove-broken-stratup-code](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/remove-broken-stratup-code) | 2026-05-04 19:22:19 |
+| FEATURES_API | [fix/remove-broken-stratup-code](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/remove-broken-stratup-code) | 2026-05-04 19:26:45 |
 | ROUTES |  |  |
 | SM2A | [v0.21.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.21.1-dev.0) | 2026-04-17 00:33:45 |
 | MONITORING |  |  |
