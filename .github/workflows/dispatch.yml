@@ -12,11 +12,6 @@ on:
         type: environment
         required: true
         description: Environment to deploy to
-      DEPLOY_AUTH:
-        type: boolean
-        required: true
-        default: false
-        description: DEPLOY_AUTH
       DEPLOY_BACKEND:
         type: boolean
         required: true
@@ -60,7 +55,6 @@ on:
 
 run-name: |
   Dispatch to ${{ inputs.environment }} 
-  AUTH=${{ inputs.DEPLOY_AUTH }} 
   BACKEND=${{ inputs.DEPLOY_BACKEND }} 
   FEATURES=${{ inputs.DEPLOY_FEATURES_API }} 
   ROUTES=${{ inputs.DEPLOY_ROUTES }} 
@@ -70,7 +64,6 @@ run-name: |
   TITILER_CMR=${{ inputs.DEPLOY_TITILER_CMR }} ⛟
 
 env:
-  DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
   DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
   DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
   DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
@@ -104,7 +97,6 @@ jobs:
     needs: check-environment
     with:
       environment: ${{ github.event.inputs.environment }}
-      DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH}}
       DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
       DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
       DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
