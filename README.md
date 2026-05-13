@@ -35,7 +35,6 @@ More instructions on these Github environment variables is provided below.
 Git Ref for each project to use to deploy. Can be branch name, release tag or commit hash. Anything that works with `git checkout`. Below are some examples of the components that may be configured in a GitHub Environment.
 
 ```bash
-VEDA_AUTH_GIT_REF=<target branch name or tag default to main>
 VEDA_BACKEND_GIT_REF=<target branch name or tag default to main>
 VEDA_FEATURES_API_GIT_REF=<target branch name or tag default to main>
 VEDA_SM2A_DATA_AIRFLOW_GIT_REF=<target branch name or tag default to main>
@@ -113,7 +112,7 @@ To keep the components modular, each action should include all necessary steps f
 > Most deployments require [custom environment configuration](#store-env-configuration-in-aws-secrets-manager) that can be retrieved from the AWS Secrets Manager for the deployment. See [veda-backend/scripts/get-env.sh](https://github.com/NASA-IMPACT/veda-backend/blob/develop/scripts/get-env.sh) for an example environment configuration utility.
 
 ### Examples
-- Veda-auth [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-auth/blob/main/.github/actions/cdk-deploy/action.yml) provides a simple example of adding configuration from an AWS Secrets Manager secret and running `cdk deploy` for an imported submodule.
+- Veda-features-api-cdk [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-features-api-cdk/blob/main/.github/actions/cdk-deploy/action.yml) provides a simple example of adding configuration from an AWS Secrets Manager secret and running `cdk deploy` for an imported submodule.
 - Veda-backend [cdk-deploy/action.yml](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/actions/cdk-deploy/action.yml) contains logic to run tests before deploying components.
 - This [CICD workflow in veda-backend](https://github.com/NASA-IMPACT/veda-backend/blob/develop/.github/workflows/cicd.yml) demonstrates importing the cdk-deploy/action on a merge event to test the deployment in a dev enviornment.
 

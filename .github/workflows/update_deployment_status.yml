@@ -32,7 +32,6 @@ jobs:
           python scripts/update_deployment_status.py \
             --env "${{ inputs.environment }}"
         env:
-          VEDA_AUTH_GIT_REF: ${{ vars.VEDA_AUTH_GIT_REF }}
           VEDA_BACKEND_GIT_REF: ${{ vars.VEDA_BACKEND_GIT_REF }}
           VEDA_FEATURES_API_GIT_REF: ${{ vars.VEDA_FEATURES_API_GIT_REF }}
           VEDA_ROUTES_GIT_REF: ${{ vars.VEDA_ROUTES_GIT_REF }}
@@ -42,7 +41,6 @@ jobs:
           VEDA_S3_DISASTER_RECOVERY_GIT_REF: ${{ vars.VEDA_S3_DISASTER_RECOVERY_GIT_REF }}
           VEDA_TITILER_CMR_GIT_REF: ${{ vars.VEDA_TITILER_CMR_GIT_REF }}
           DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
-          DEPLOY_AUTH: ${{ github.event.inputs.DEPLOY_AUTH }}
           DEPLOY_FEATURES_API: ${{ github.event.inputs.DEPLOY_FEATURES_API }}
           DEPLOY_ROUTES: ${{ github.event.inputs.DEPLOY_ROUTES }}
           DEPLOY_SM2A: ${{ github.event.inputs.DEPLOY_SM2A }}
