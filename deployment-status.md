@@ -152,7 +152,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [3d892ffbf52f13f73bc1f4fa9d49b861e0907022](https://github.com/NASA-IMPACT/veda-backend/tree/3d892ffbf52f13f73bc1f4fa9d49b861e0907022) | 2026-05-14 20:24:23 |
 | FEATURES_API |  |  |
 | ROUTES | [v1.0.0-rc.20](https://github.com/NASA-IMPACT/veda-routes/tree/v1.0.0-rc.20) | 2026-04-14 23:28:04 |
-| SM2A | [feat/airflow-3-upgrade](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/airflow-3-upgrade) | 2026-05-14 21:09:41 |
+| SM2A | [feat/airflow-3-upgrade](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/airflow-3-upgrade) | 2026-05-14 23:08:45 |
 | MONITORING | [fix/alb-logs](https://github.com/NASA-IMPACT/veda-monitoring/tree/fix/alb-logs) | 2026-03-16 19:36:46 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
