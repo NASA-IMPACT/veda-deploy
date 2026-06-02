@@ -149,7 +149,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [a44bcb928b0ed63d16bf0250d76acf9b682c0ecc](https://github.com/NASA-IMPACT/veda-backend/tree/a44bcb928b0ed63d16bf0250d76acf9b682c0ecc) | 2026-05-29 21:12:05 |
+| BACKEND | [v15.0.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.0.1) | 2026-06-02 23:03:44 |
 | FEATURES_API |  |  |
 | ROUTES | [v1.0.0-rc.20](https://github.com/NASA-IMPACT/veda-routes/tree/v1.0.0-rc.20) | 2026-04-14 23:28:04 |
 | SM2A | [feat/airflow-3-upgrade](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/airflow-3-upgrade) | 2026-06-02 22:48:37 |
