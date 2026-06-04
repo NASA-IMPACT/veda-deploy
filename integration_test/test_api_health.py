@@ -9,12 +9,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def _env_bool(name: str, default: bool = False) -> bool:
-    """Parse a boolean env var. Treats false/0/ and empty string as False"""
+def _env_bool(name: str) -> bool:
     raw = os.getenv(name)
     if raw is None:
-        return default
-    return raw.strip().lower() in ("1", "true", "yes", "on")
+        return False
+    return raw.strip().lower() in ("1", "true")
 
 
 def _get_link(obj: dict, rel: str) -> str:
