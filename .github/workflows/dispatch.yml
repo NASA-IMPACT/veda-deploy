@@ -79,11 +79,12 @@ jobs:
     name: Got ${{ github.event.inputs.environment }}
     steps:
       # Production deploys require manual approval and each prod environment has its own approver list (submit PR to change).
-      # Approvers have 1h because GitHub App tokens expire after 1 hour
       - name: Manual deployment approval (ghgc-mcp-production-blue)
         if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' }}
         uses: trstringer/manual-approval@v1
-        timeout-minutes: 60
+        timeout-minutes: 60 # The approver will have 1 hour to approve this request
+        # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
+        # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,botanical,ividito,sandrahoang686,aliziel
