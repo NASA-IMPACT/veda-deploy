@@ -137,7 +137,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND |  |  |
-| FEATURES_API | [f185dd1aec95178613997aa3e31f35fcd6fe8e5e](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/f185dd1aec95178613997aa3e31f35fcd6fe8e5e) | 2026-05-04 20:49:49 |
+| FEATURES_API | [fix-remove-deprecated-custom-view](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix-remove-deprecated-custom-view) | 2026-06-16 16:55:32 |
 | ROUTES |  |  |
 | SM2A | [feat/proxy-fix](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/proxy-fix) | 2026-06-15 17:03:29 |
 | MONITORING |  |  |
