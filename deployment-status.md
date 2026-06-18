@@ -130,7 +130,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
-| TITILER_CMR |  |  |
+| TITILER_CMR | [v1.1.2](https://github.com/developmentseed/titiler-cmr/tree/v1.1.2) | 2026-06-18 13:06:48 |
 
 ## uah-dev
 | Component | Git Ref | Updated (UTC) |
