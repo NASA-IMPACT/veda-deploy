@@ -81,7 +81,7 @@ jobs:
       # Production deploys require manual approval and each prod environment has its own approver list (submit PR to change).
       - name: Manual deployment approval (ghgc-mcp-production-blue)
         if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' }}
-        uses: trstringer/manual-approval@v1
+        uses: trstringer/manual-approval@74d99dff7380e3e4b122d4ededcbca2b6ce59367 #v1.12.0
         timeout-minutes: 60 # The approver will have 1 hour to approve this request
         # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
         # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
@@ -94,7 +94,7 @@ jobs:
 
       - name: Manual deployment approval (mcp-prod)
         if: ${{ github.event.inputs.environment == 'mcp-prod' }}
-        uses: trstringer/manual-approval@v1
+        uses: trstringer/manual-approval@74d99dff7380e3e4b122d4ededcbca2b6ce59367 #v1.12.0
         timeout-minutes: 60
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
@@ -105,7 +105,7 @@ jobs:
 
       - name: Manual deployment approval (eic-prod)
         if: ${{ github.event.inputs.environment == 'eic-prod' }}
-        uses: trstringer/manual-approval@v1
+        uses: trstringer/manual-approval@74d99dff7380e3e4b122d4ededcbca2b6ce59367 #v1.12.0
         timeout-minutes: 60
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
@@ -116,7 +116,7 @@ jobs:
 
       - name: Manual deployment approval (disasters-prod)
         if: ${{ github.event.inputs.environment == 'disasters-prod' }}
-        uses: trstringer/manual-approval@v1
+        uses: trstringer/manual-approval@74d99dff7380e3e4b122d4ededcbca2b6ce59367 #v1.12.0
         timeout-minutes: 60
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
