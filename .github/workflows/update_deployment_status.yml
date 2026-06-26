@@ -7,13 +7,12 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
-
 jobs:
   update-status-md:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout deployment-state branch

@@ -1,10 +1,5 @@
 name: Diff Infrastructure Changes
 
-permissions:
-  id-token: write
-  contents: read
-  issues: read
-
 on:
   workflow_dispatch:
     inputs:
@@ -28,6 +23,8 @@ jobs:
       ENVIRONMENT: ${{ inputs.environment }}
     if: ${{ inputs.IaC == 'SM2A' }}
     environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write # Required to request OIDC token for use with AWS
 
     steps:
       - name: Checkout

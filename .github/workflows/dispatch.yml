@@ -1,10 +1,5 @@
 name: Dispatch ⛟
 
-permissions:
-  id-token: write
-  contents: write
-  issues: write
-
 on:
   workflow_dispatch:
     inputs:
@@ -77,6 +72,8 @@ jobs:
   check-environment:
     runs-on: ubuntu-latest
     name: Got ${{ github.event.inputs.environment }}
+    permissions:
+      issues: write
     steps:
       # Production deploys require manual approval and each prod environment has its own approver list (submit PR to change).
       - name: Manual deployment approval (ghgc-mcp-production-blue)
@@ -140,11 +137,15 @@ jobs:
       DEPLOY_S3_DISASTER_RECOVERY: ${{ github.event.inputs.DEPLOY_S3_DISASTER_RECOVERY }}
       DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
     secrets: inherit
+    permissions:
+      id-token: write
 
   update-deployment-status:
     name: Update Deployment Status
     uses: "./.github/workflows/update_deployment_status.yml"
     needs: deploy-veda-components
+    permissions:
+      contents: write
     with:
       environment: ${{ github.event.inputs.environment }}
     secrets: inherit
