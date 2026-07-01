@@ -139,7 +139,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND |  |  |
 | FEATURES_API | [fix-remove-deprecated-custom-view](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix-remove-deprecated-custom-view) | 2026-06-16 16:55:32 |
 | ROUTES |  |  |
-| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-01 18:58:30 |
+| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-01 19:41:47 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
