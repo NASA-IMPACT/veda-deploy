@@ -74,7 +74,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND |  |  |
 | FEATURES_API | [fix/remove-broken-stratup-code](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/remove-broken-stratup-code) | 2026-05-04 19:26:45 |
 | ROUTES |  |  |
-| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-08 22:14:52 |
+| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-10 17:56:52 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
