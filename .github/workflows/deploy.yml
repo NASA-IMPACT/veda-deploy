@@ -75,8 +75,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          lfs: "true"
+
           submodules: "false"
+          persist-credentials: false
 
       - name: Checkout veda-backend submodule
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -140,8 +141,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          lfs: "true"
+
           submodules: "false"
+          persist-credentials: false
 
       - name: Checkout veda-data-airflow submodule
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -189,8 +191,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          lfs: "true"
+
           submodules: "false"
+          persist-credentials: false
 
       - name: Checkout veda-features-api submodule
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -240,8 +243,9 @@ jobs:
         if: ${{ env.GH_PAT_CHECK != '' }}
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          lfs: "true"
+
           submodules: "false"
+          persist-credentials: false
 
       - name: Checkout veda-monitoring "submodule"
         if: ${{ env.GH_PAT_CHECK != '' }}
@@ -281,8 +285,9 @@ jobs:
         - name: Checkout
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
           with:
-            lfs: "true"
+  
             submodules: "false"
+            persist-credentials: false
 
         - name: Checkout titiler-multidim submodule
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -319,8 +324,9 @@ jobs:
         - name: Checkout
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
           with:
-            lfs: "true"
+  
             submodules: "false"
+            persist-credentials: false
 
         - name: Checkout s3-disaster-recovery submodule
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -362,9 +368,8 @@ jobs:
         - name: Checkout
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
           with:
-            # curious why this is needed
-            lfs: "true"
             submodules: "false"
+            persist-credentials: false
 
         - name: Checkout titiler-cmr submodule
           uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -403,8 +408,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          lfs: "true"
           submodules: "false"
+          persist-credentials: false
 
       - name: Checkout veda-routes "submodule"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -493,6 +498,7 @@ jobs:
         with:
           repository: NASA-IMPACT/veda-config
           ref: add-playwright
+          persist-credentials: false
 
       - name: Use Node.js 22
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
