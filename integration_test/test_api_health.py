@@ -29,7 +29,7 @@ def test_stac_url_returns_200():
     health_endpoint = "_mgmt/ping"
 
     if not disable_default_apigw:
-        url = f"{base_url}{health_endpoint}" # APIGW base url includes trailing /
+        url = f"{base_url}{stac_root_path}/{health_endpoint}"
         print(f"Checking APIGW stac-api {url=}")
         response = requests.get(url)
         assert response.status_code == 200
@@ -49,7 +49,7 @@ def test_raster_url_returns_200():
     health_endpoint = "healthz"
 
     if not disable_default_apigw:
-        url = os.path.join(base_url, health_endpoint)
+        url = f"{base_url}{raster_root_path}/{health_endpoint}"
         print(f"Checking APIGW raster-api {url=}")
         response = requests.get(url)
         assert response.status_code == 200
@@ -69,7 +69,7 @@ def test_stac_item_next_link_returns_200():
     collections_endpoint = "collections"
 
     if not disable_default_apigw:
-        url = f"{base_url}/{collections_endpoint}"
+        url = f"{base_url}{stac_root_path}/{collections_endpoint}"
         print(f"Checking APIGW stac-api {url=}")
         response = requests.get(url)
         assert response.status_code == 200
