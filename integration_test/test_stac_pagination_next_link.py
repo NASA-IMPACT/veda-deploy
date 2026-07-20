@@ -24,10 +24,12 @@ def test_collection_pagination_next_link_is_valid():
     dynamically generated links are used by end-users.
     """
     custom_host = os.getenv("VEDA_CUSTOM_HOST")
-    stac_root_path = os.getenv("VEDA_STAC_ROOT_PATH", "")
+    stac_root_path = os.getenv("VEDA_STAC_ROOT_PATH")
 
     if not custom_host:
         pytest.skip("VEDA_CUSTOM_HOST environment variable not set. Skipping pagination test.")
+
+    assert stac_root_path, "VEDA_STAC_ROOT_PATH must be set"
 
     #  Construct the URL to the main collections endpoint
     collections_url = f"https://{custom_host}/{stac_root_path.strip('/')}/collections"
