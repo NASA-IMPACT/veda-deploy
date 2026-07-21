@@ -45,10 +45,10 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [v15.0.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.0.1) | 2026-06-05 19:46:13 |
+| BACKEND | [v15.1.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.1.1) | 2026-07-21 21:49:15 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [issue-677/tenant-tagging-dag](https://github.com/NASA-IMPACT/veda-sm2a/tree/issue-677/tenant-tagging-dag) | 2025-12-18 21:33:25 |
+| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-21 21:49:15 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
