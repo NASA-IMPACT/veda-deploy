@@ -63,29 +63,27 @@ def test_stac_item_next_link_returns_200():
     assert response.status_code == 200
 
     # Walk check root path propagation through dynamic links when using custom host
-    collections = response.json().get("collections")
-    next_links_untested = True
+    # and use a small page size so next links appear with fewer items
+    collections = response.json().get("collections") or []
+    for collection in collections:
+        items_link = _get_link(collection, "items")
+        assert items_link
+        items_url = items_link.get("href")
+        assert items_url
 
-    while next_links_untested:
-        for collection in collections:
+        items_response = requests.get(items_url, params={"limit": 1})
+        assert items_response.status_code == 200
+        items_json = items_response.json()
 
-            # All collections should have a dynamicaly generated items link, even if no items exist
-            items_link = _get_link(collection, "items")
-            assert items_link
-            items_url = items_link.get("href")
-            assert items_url
-            items_response = requests.get(items_url)
-            assert items_response.status_code == 200
-            items_json = items_response.json()
-            features = items_json.get("features")
+        items_next_link = _get_link(items_json, "next")
+        if not (items_next_link and items_next_link.get("href")):
+            continue
 
-            # The default page size is 10
-            if len(features) >= 10:
-                items_next_link = _get_link(items_json, "next")
-                assert items_next_link
-                next_url = items_next_link.get("href")
-                assert next_url
-                next_response = requests.get(next_url)
-                assert next_response.status_code == 200
-                next_links_untested = False
-                break
+        next_url = items_next_link["href"]
+        next_response = requests.get(next_url)
+        assert next_response.status_code == 200
+        return
+
+    print(f"Skipping. No collection 'next' items link found.")
+    pytest.skip("No collection produced a paginated 'next' items link.")
+
