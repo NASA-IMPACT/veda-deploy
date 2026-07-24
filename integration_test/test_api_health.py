@@ -65,6 +65,10 @@ def test_stac_item_next_link_returns_200():
     # Walk check root path propagation through dynamic links when using custom host
     # and use a small page size so next links appear with fewer items
     collections = response.json().get("collections") or []
+
+    if not collections:
+        pytest.skip("No collections found in STAC catalog.")
+
     for collection in collections:
         items_link = _get_link(collection, "items")
         assert items_link
