@@ -43,6 +43,9 @@ def test_collection_pagination_next_link_is_valid():
     except (requests.exceptions.RequestException, ValueError) as e:
         pytest.fail(f"Could not fetch or parse collections from {collections_url}. Error: {e}")
 
+    if not collections:
+        pytest.skip("No collections found in STAC catalog.")
+
     # Iterate through each collection to find one with pagination
     for collection_summary in collections:
         collection_id = collection_summary.get("id")
@@ -79,7 +82,7 @@ def test_collection_pagination_next_link_is_valid():
             # Make a GET request to the 'next' URL
             try:
                 next_page_response = requests.get(next_url)
-                
+
                 # Assert that the link is valid and returns a 200 OK status
                 assert next_page_response.status_code == 200, f"'next' link for {collection_id} failed with status {next_page_response.status_code}"
                 print(f"  - Success! 'next' link returned status {next_page_response.status_code}.")
