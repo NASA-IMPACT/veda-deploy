@@ -46,7 +46,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND | [v15.1.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.1.1) | 2026-07-21 21:49:15 |
-| FEATURES_API |  |  |
+| FEATURES_API | [eic-deploy-snapshot-501-ghg-prod](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/eic-deploy-snapshot-501-ghg-prod) | 2026-07-28 21:09:05 |
 | ROUTES |  |  |
 | SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-21 21:49:15 |
 | MONITORING |  |  |
