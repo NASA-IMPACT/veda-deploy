@@ -48,7 +48,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [v15.1.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.1.1) | 2026-07-21 21:49:15 |
 | FEATURES_API | [fix/rds-bootstrap](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/rds-bootstrap) | 2026-07-30 02:21:17 |
 | ROUTES |  |  |
-| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-21 21:49:15 |
+| SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-30 18:26:20 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
