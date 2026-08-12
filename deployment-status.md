@@ -33,7 +33,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND |  |  |
-| FEATURES_API | [fix/rds-bootstrap](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/rds-bootstrap) | 2026-08-12 19:08:50 |
+| FEATURES_API | [fix/rds-bootstrap](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/rds-bootstrap) | 2026-08-12 20:25:56 |
 | ROUTES |  |  |
 | SM2A | [v0.20.2-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.20.2-dev.0) | 2026-08-12 19:49:39 |
 | MONITORING |  |  |
