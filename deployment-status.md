@@ -136,7 +136,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [disasters-custom-cmaps](https://github.com/NASA-IMPACT/veda-backend/tree/disasters-custom-cmaps) | 2026-08-05 20:28:12 |
+| BACKEND | [chore/raster-dedupe-proj-db](https://github.com/NASA-IMPACT/veda-backend/tree/chore/raster-dedupe-proj-db) | 2026-08-12 22:36:34 |
 | FEATURES_API | [fix-remove-deprecated-custom-view](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix-remove-deprecated-custom-view) | 2026-06-16 16:55:32 |
 | ROUTES |  |  |
 | SM2A | [feat/aws-request-payer](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/aws-request-payer) | 2026-07-01 20:40:57 |
