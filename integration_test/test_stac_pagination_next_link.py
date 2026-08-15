@@ -54,6 +54,9 @@ def test_collection_pagination_next_link_is_valid():
             f"Could not fetch or parse collections from {collections_url}. Error: {e}"
         )
 
+    if not collections:
+        pytest.skip("No collections found in STAC catalog.")
+
     # Iterate through each collection to find one with pagination
     for collection_summary in collections:
         collection_id = collection_summary.get("id")
