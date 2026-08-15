@@ -1,6 +1,7 @@
 """
 API health checks for deployed VEDA backends using custom host endpoints
 """
+
 import os
 
 import pytest
@@ -12,7 +13,7 @@ load_dotenv()
 
 def _get_link(obj: dict, rel: str) -> str:
     """get rel link from a stac object"""
-    return next((l for l in obj.get("links") if l["rel"] == rel), None)
+    return next((link for link in obj.get("links") if link["rel"] == rel), None)
 
 
 def test_stac_url_returns_200():
@@ -68,8 +69,8 @@ def test_stac_item_next_link_returns_200():
 
     while next_links_untested:
         for collection in collections:
-
-            # All collections should have a dynamicaly generated items link, even if no items exist
+            # All collections should have a dynamically generated items link
+            # even if no items exist
             items_link = _get_link(collection, "items")
             assert items_link
             items_url = items_link.get("href")
