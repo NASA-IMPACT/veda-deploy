@@ -50,7 +50,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | ROUTES |  |  |
 | SM2A | [v0.22.0-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.22.0-dev.0) | 2026-08-19 21:10:19 |
 | MONITORING |  |  |
-| TITILER_MULTIDIM |  |  |
+| TITILER_MULTIDIM | [6651e75682300db901f6f769d69e24acd1ba099e](https://github.com/developmentseed/titiler-multidim/tree/6651e75682300db901f6f769d69e24acd1ba099e) | 2026-09-02 23:17:12 |
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
 
