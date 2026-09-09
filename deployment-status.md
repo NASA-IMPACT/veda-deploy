@@ -137,7 +137,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND | [chore/raster-dedupe-proj-db](https://github.com/NASA-IMPACT/veda-backend/tree/chore/raster-dedupe-proj-db) | 2026-08-12 22:36:34 |
-| FEATURES_API | [fix-remove-deprecated-custom-view](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix-remove-deprecated-custom-view) | 2026-06-16 16:55:32 |
+| FEATURES_API | [chore/upgrade-tipg-1.6.1](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/chore/upgrade-tipg-1.6.1) | 2026-09-09 23:11:12 |
 | ROUTES |  |  |
 | SM2A | [v0.22.0-dev.2](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.22.0-dev.2) | 2026-09-02 16:42:17 |
 | MONITORING |  |  |
