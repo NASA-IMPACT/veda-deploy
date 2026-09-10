@@ -48,7 +48,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [v15.1.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.1.1) | 2026-07-21 21:49:15 |
 | FEATURES_API | [fix/rds-bootstrap](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/rds-bootstrap) | 2026-07-30 02:21:17 |
 | ROUTES |  |  |
-| SM2A | [v0.22.0-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.22.0-dev.0) | 2026-08-19 21:10:19 |
+| SM2A | [v0.22.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.22.1-dev.0) | 2026-09-10 11:32:19 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM | [v0.9.0](https://github.com/developmentseed/titiler-multidim/tree/v0.9.0) | 2026-09-04 02:15:49 |
 | S3_DR |  |  |
