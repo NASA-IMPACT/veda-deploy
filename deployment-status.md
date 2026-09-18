@@ -152,7 +152,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [chore/raster-dedupe-proj-db](https://github.com/NASA-IMPACT/veda-backend/tree/chore/raster-dedupe-proj-db) | 2026-08-12 22:36:34 |
 | FEATURES_API | [chore/upgrade-tipg-1.6.1](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/chore/upgrade-tipg-1.6.1) | 2026-09-09 23:11:12 |
 | ROUTES |  |  |
-| SM2A | [1acbeecd79a4f0906f8f767a2331d1467c107456](https://github.com/NASA-IMPACT/veda-sm2a/tree/1acbeecd79a4f0906f8f767a2331d1467c107456) | 2026-09-18 21:47:35 |
+| SM2A | [1acbeecd79a4f0906f8f767a2331d1467c107456](https://github.com/NASA-IMPACT/veda-sm2a/tree/1acbeecd79a4f0906f8f767a2331d1467c107456) | 2026-09-18 21:56:12 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
