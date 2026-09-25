@@ -58,7 +58,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [v15.1.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.1.1) | 2026-07-21 21:49:15 |
+| BACKEND | [v15.5.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.5.1) | 2026-09-25 18:15:30 |
 | FEATURES_API | [chore/upgrade-tipg-1.6.1](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/chore/upgrade-tipg-1.6.1) | 2026-09-10 22:38:09 |
 | ROUTES |  |  |
 | SM2A | [fix/vector-ingest-concurrency](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/vector-ingest-concurrency) | 2026-09-24 16:05:07 |
