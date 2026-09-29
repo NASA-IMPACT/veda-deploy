@@ -162,9 +162,9 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [cac9c3d080372f32d571e536aab0e337234ccba8](https://github.com/NASA-IMPACT/veda-backend/tree/cac9c3d080372f32d571e536aab0e337234ccba8) | 2026-09-29 00:18:48 |
+| BACKEND | [cac9c3d080372f32d571e536aab0e337234ccba8](https://github.com/NASA-IMPACT/veda-backend/tree/cac9c3d080372f32d571e536aab0e337234ccba8) | 2026-09-29 00:44:52 |
 | FEATURES_API |  |  |
-| ROUTES | [8bd799dc03a05bcfd95a650ac056735139a8e807](https://github.com/NASA-IMPACT/veda-routes/tree/8bd799dc03a05bcfd95a650ac056735139a8e807) | 2026-09-29 00:18:48 |
+| ROUTES | [8bd799dc03a05bcfd95a650ac056735139a8e807](https://github.com/NASA-IMPACT/veda-routes/tree/8bd799dc03a05bcfd95a650ac056735139a8e807) | 2026-09-29 00:44:52 |
 | SM2A | [feat/vector-table-config](https://github.com/NASA-IMPACT/veda-sm2a/tree/feat/vector-table-config) | 2026-09-22 21:32:20 |
 | MONITORING | [fix/alb-logs](https://github.com/NASA-IMPACT/veda-monitoring/tree/fix/alb-logs) | 2026-03-16 19:36:46 |
 | TITILER_MULTIDIM |  |  |
