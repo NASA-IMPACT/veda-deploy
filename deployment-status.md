@@ -45,8 +45,8 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND |  |  |
-| FEATURES_API | [fix/rds-bootstrap](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/fix/rds-bootstrap) | 2026-08-12 20:25:56 |
+| BACKEND | [v15.3.0](https://github.com/NASA-IMPACT/veda-backend/tree/v15.3.0) | 2026-09-29 21:16:05 |
+| FEATURES_API | [v6.0.0](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v6.0.0) | 2026-09-29 21:16:05 |
 | ROUTES |  |  |
 | SM2A | [fix/perms-workaround-airflow-commands](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/perms-workaround-airflow-commands) | 2026-09-25 17:48:31 |
 | MONITORING |  |  |
