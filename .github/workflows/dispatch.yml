@@ -1,10 +1,5 @@
 name: Dispatch ⛟
 
-permissions:
-  id-token: write
-  contents: write
-  issues: write
-
 on:
   workflow_dispatch:
     inputs:
@@ -74,61 +69,12 @@ env:
   DEPLOY_TITILER_CMR: ${{ github.event.inputs.DEPLOY_TITILER_CMR }}
 
 jobs:
-  check-environment:
-    runs-on: ubuntu-latest
-    name: Got ${{ github.event.inputs.environment }}
-    steps:
-      # Production deploys require manual approval and each prod environment has its own approver list (submit PR to change).
-      - name: Manual deployment approval (ghgc-mcp-production-blue)
-        if: ${{ github.event.inputs.environment == 'ghgc-mcp-production-blue' }}
-        uses: trstringer/manual-approval@v1
-        timeout-minutes: 60 # The approver will have 1 hour to approve this request
-        # Why 1h? Because GitHub App tokens expire after 1 hour which implies duration
-        # for the approval cannot exceed 60 minutes or the job will fail due to bad credentials
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,botanical,ividito,sandrahoang686,aliziel
-          minimum-approvals: 1
-          issue-title: "Deploying to ghgc-mcp-production-blue"
-          issue-body: "Please approve or deny the deployment"
-
-      - name: Manual deployment approval (mcp-prod)
-        if: ${{ github.event.inputs.environment == 'mcp-prod' }}
-        uses: trstringer/manual-approval@v1
-        timeout-minutes: 60
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,botanical,ividito,sandrahoang686,aliziel
-          minimum-approvals: 1
-          issue-title: "Deploying to mcp-prod"
-          issue-body: "Please approve or deny the deployment"
-
-      - name: Manual deployment approval (eic-prod)
-        if: ${{ github.event.inputs.environment == 'eic-prod' }}
-        uses: trstringer/manual-approval@v1
-        timeout-minutes: 60
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: amarouane-ABDELHAK,slesaad,anayeaye,smohiudd,botanical,ividito,sandrahoang686,aliziel
-          minimum-approvals: 1
-          issue-title: "Deploying to eic-prod"
-          issue-body: "Please approve or deny the deployment"
-
-      - name: Manual deployment approval (disasters-prod)
-        if: ${{ github.event.inputs.environment == 'disasters-prod' }}
-        uses: trstringer/manual-approval@v1
-        timeout-minutes: 60
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: anayeaye,smohiudd,botanical,ividito,sandrahoang686,aliziel
-          minimum-approvals: 1
-          issue-title: "Deploying to disasters-prod"
-          issue-body: "Please approve or deny the deployment"
-
   deploy-veda-components:
     name: Deploy VEDA Components
+    permissions:
+      id-token: write
+      contents: read
     uses: "./.github/workflows/deploy.yml"
-    needs: check-environment
     with:
       environment: ${{ github.event.inputs.environment }}
       DEPLOY_BACKEND: ${{ github.event.inputs.DEPLOY_BACKEND }}
@@ -143,6 +89,8 @@ jobs:
 
   update-deployment-status:
     name: Update Deployment Status
+    permissions:
+      contents: write
     uses: "./.github/workflows/update_deployment_status.yml"
     needs: deploy-veda-components
     with:

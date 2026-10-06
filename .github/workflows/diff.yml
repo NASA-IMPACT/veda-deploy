@@ -1,10 +1,5 @@
 name: Diff Infrastructure Changes
 
-permissions:
-  id-token: write
-  contents: read
-  issues: read
-
 on:
   workflow_dispatch:
     inputs:
@@ -22,6 +17,9 @@ jobs:
   plan-sm2a:
     name: '`terraform plan` sm2a'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     env:
       DIRECTORY: veda-data-airflow
       AWS_REGION: "us-west-2"
@@ -31,21 +29,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
 
           submodules: "false"
           persist-credentials: false
 
       - name: Checkout veda-data-airflow submodule
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: "NASA-IMPACT/${{ env.DIRECTORY }}"
           path: ${{ env.DIRECTORY }}
           ref: ${{ vars.VEDA_SM2A_DATA_AIRFLOW_GIT_REF || 'main'}}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 #v4.1.0
+        uses: aws-actions/configure-aws-credentials@e6de054238d6b7531b4efff3b6587d9aade6a06c #v6.2.3
         with:
           role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN || secrets.DEPLOYMENT_ROLE_ARN  }}
           role-session-name: "gh-${{ env.ENVIRONMENT }}-airflow-sm2a-deployment"

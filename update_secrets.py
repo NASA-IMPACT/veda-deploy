@@ -1,12 +1,15 @@
 import json
-import sys
 import re
+import sys
+from pathlib import Path
+
 import boto3
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(
-            "Provide command line args in the form of: python update_secrets.py cdk-outputs.json aws_secret_name"
+            "Provide command line args in the form of: "
+            "python update_secrets.py cdk-outputs.json aws_secret_name"
         )
         exit()
 
@@ -24,12 +27,13 @@ if __name__ == "__main__":
         "workflowssecretoutput": "COGNITO_APP_SECRET",
     }
 
-    new_secrets = dict()
-    secrets = json.load(open(cdk_output))
+    new_secrets = {}
+    with Path(cdk_output).open() as f:
+        secrets = json.load(f)
 
-    for stack_name, secrets in secrets.items():
-        for k, v in secrets.items():
-            for mapping_key in mapping.keys():
+    for _stack_name, stack_secrets in secrets.items():
+        for k, v in stack_secrets.items():
+            for mapping_key in mapping:
                 if re.compile(mapping_key).match(k):
                     new_secrets[mapping[mapping_key]] = v
 
@@ -41,4 +45,6 @@ if __name__ == "__main__":
 
     updated_secret = {**existing_secret, **new_secrets}
 
-    client.put_secret_value(SecretId=secret_name, SecretString=json.dumps(updated_secret))
+    client.put_secret_value(
+        SecretId=secret_name, SecretString=json.dumps(updated_secret)
+    )
