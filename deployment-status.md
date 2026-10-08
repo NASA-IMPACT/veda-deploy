@@ -63,7 +63,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | ROUTES |  |  |
 | SM2A | [fix/vector-ingest-concurrency](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/vector-ingest-concurrency) | 2026-09-24 16:05:07 |
 | MONITORING |  |  |
-| TITILER_MULTIDIM | [v0.10.0](https://github.com/developmentseed/titiler-multidim/tree/v0.10.0) | 2026-10-07 22:01:54 |
+| TITILER_MULTIDIM | [v0.10.1](https://github.com/developmentseed/titiler-multidim/tree/v0.10.1) | 2026-10-08 21:37:37 |
 | S3_DR |  |  |
 | TITILER_CMR |  |  |
 
