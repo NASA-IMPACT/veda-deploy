@@ -165,7 +165,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [a24d2552e8613429edd8cac1fe934bc3bacc9b4b](https://github.com/NASA-IMPACT/veda-backend/tree/a24d2552e8613429edd8cac1fe934bc3bacc9b4b) | 2026-09-30 18:55:54 |
 | FEATURES_API |  |  |
 | ROUTES | [8bd799dc03a05bcfd95a650ac056735139a8e807](https://github.com/NASA-IMPACT/veda-routes/tree/8bd799dc03a05bcfd95a650ac056735139a8e807) | 2026-09-29 00:44:52 |
-| SM2A | [v0.23.0-dev.6](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.0-dev.6) | 2026-10-08 21:41:08 |
+| SM2A | [v0.23.0-dev.1](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.0-dev.1) | 2026-10-09 00:14:14 |
 | MONITORING | [fix/alb-logs](https://github.com/NASA-IMPACT/veda-monitoring/tree/fix/alb-logs) | 2026-03-16 19:36:46 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
