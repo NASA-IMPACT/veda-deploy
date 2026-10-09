@@ -61,7 +61,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [v15.5.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.5.1) | 2026-09-25 18:15:30 |
 | FEATURES_API | [v6.0.0](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v6.0.0) | 2026-09-29 21:34:36 |
 | ROUTES |  |  |
-| SM2A | [fix/vector-ingest-concurrency](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/vector-ingest-concurrency) | 2026-09-24 16:05:07 |
+| SM2A | [v0.23.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.1-dev.0) | 2026-10-09 20:35:44 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM | [v0.10.1](https://github.com/developmentseed/titiler-multidim/tree/v0.10.1) | 2026-10-08 21:37:37 |
 | S3_DR |  |  |
