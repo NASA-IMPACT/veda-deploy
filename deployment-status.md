@@ -9,7 +9,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | BACKEND | [v15.6.0](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.0) | 2026-10-01 18:04:39 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
-| SM2A | [v0.21.0-dev.1](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.21.0-dev.1) | 2026-03-16 17:50:12 |
+| SM2A | [fix/perms-workaround-airflow-commands](https://github.com/NASA-IMPACT/veda-sm2a/tree/fix/perms-workaround-airflow-commands) | 2026-10-12 18:40:17 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
