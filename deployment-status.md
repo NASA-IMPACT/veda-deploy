@@ -110,7 +110,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND |  |  |
+| BACKEND | [v15.6.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.1) | 2026-10-27 22:24:28 |
 | FEATURES_API | [v5.0.3](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v5.0.3) | 2026-06-16 17:34:37 |
 | ROUTES |  |  |
 | SM2A | [v0.21.3-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.21.3-dev.0) | 2026-03-30 17:13:40 |
