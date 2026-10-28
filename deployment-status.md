@@ -137,7 +137,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 |-----------|---------|---------------|
 | AUTH |  |  |
 | BACKEND | [v15.6.2](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.2) | 2026-10-28 21:03:21 |
-| FEATURES_API | [v3.1.0](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v3.1.0) | 2025-08-27 00:16:56 |
+| FEATURES_API | [v6.0.0](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v6.0.0) | 2026-10-28 21:29:51 |
 | ROUTES | [v2.0.0](https://github.com/NASA-IMPACT/veda-routes/tree/v2.0.0) | 2026-06-17 15:40:10 |
 | SM2A | [v0.21.1-dev.1.1](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.21.1-dev.1.1) | 2026-10-08 21:16:41 |
 | MONITORING |  |  |
