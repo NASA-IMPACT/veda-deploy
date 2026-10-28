@@ -162,7 +162,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [v15.6.1](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.1) | 2026-10-27 17:13:55 |
+| BACKEND | [7954f4bcf0796c2703cd0be844fe9bf7ea473106](https://github.com/NASA-IMPACT/veda-backend/tree/7954f4bcf0796c2703cd0be844fe9bf7ea473106) | 2026-10-28 18:32:44 |
 | FEATURES_API |  |  |
 | ROUTES | [8bd799dc03a05bcfd95a650ac056735139a8e807](https://github.com/NASA-IMPACT/veda-routes/tree/8bd799dc03a05bcfd95a650ac056735139a8e807) | 2026-09-29 00:44:52 |
 | SM2A | [v0.23.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.1-dev.0) | 2026-10-09 19:46:58 |
