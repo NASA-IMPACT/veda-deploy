@@ -97,7 +97,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [feat/switch-to-monitoring-middleware](https://github.com/NASA-IMPACT/veda-backend/tree/feat/switch-to-monitoring-middleware) | 2025-09-25 15:40:06 |
+| BACKEND | [fix/cap-psycopg-binary-3.3.7](https://github.com/NASA-IMPACT/veda-backend/tree/fix/cap-psycopg-binary-3.3.7) | 2026-11-03 23:26:20 |
 | FEATURES_API |  |  |
 | ROUTES |  |  |
 | SM2A | [change-version/rio-stac](https://github.com/NASA-IMPACT/veda-sm2a/tree/change-version/rio-stac) | 2025-09-26 18:14:13 |
