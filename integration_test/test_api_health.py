@@ -1,6 +1,7 @@
 """
 API health checks for deployed VEDA backends using custom host endpoints
 """
+
 import os
 
 import pytest
@@ -12,7 +13,7 @@ load_dotenv()
 
 def _get_link(obj: dict, rel: str) -> str:
     """get rel link from a stac object"""
-    return next((l for l in obj.get("links") if l["rel"] == rel), None)
+    return next((link for link in obj.get("links") if link["rel"] == rel), None)
 
 
 def test_stac_url_returns_200():
@@ -66,6 +67,7 @@ def test_stac_item_next_link_returns_200():
     # and use a small page size so next links appear with fewer items
     collections = response.json().get("collections") or []
 
+<<<<<<< HEAD
     if not collections:
         pytest.skip("No collections found in STAC catalog.")
 
@@ -90,4 +92,18 @@ def test_stac_item_next_link_returns_200():
 
     print(f"Skipping. No collection 'next' items link found.")
     pytest.skip("No collection produced a paginated 'next' items link.")
+=======
+    while next_links_untested:
+        for collection in collections:
+            # All collections should have a dynamically generated items link
+            # even if no items exist
+            items_link = _get_link(collection, "items")
+            assert items_link
+            items_url = items_link.get("href")
+            assert items_url
+            items_response = requests.get(items_url)
+            assert items_response.status_code == 200
+            items_json = items_response.json()
+            features = items_json.get("features")
+>>>>>>> 7b38f71 (chore: address pre-commit issues)
 
