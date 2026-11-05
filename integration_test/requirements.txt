@@ -1,6 +1,0 @@
-requests
-pytest
-python-dotenv
-boto3
-pystac
-pystac[validation]
