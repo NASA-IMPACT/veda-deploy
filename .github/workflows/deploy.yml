@@ -492,13 +492,13 @@ jobs:
         working-directory: ${{ env.DIRECTORY }}
         run: |
           uv sync --locked
-          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          uv run "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
 
       - name: Integration test
         shell: bash
         working-directory: ${{ env.DIRECTORY }}
         run: |
-          pytest .
+          uv run pytest .
 
   run-playwright-checks:
     name: playwright end to end tests
@@ -540,7 +540,7 @@ jobs:
         working-directory: ${{ env.DIRECTORY }}
         run: |
           uv sync --locked
-          python "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
+          uv run "${{ github.workspace }}/scripts/generate_env_file.py" --secret-id ${{ vars.DEPLOYMENT_ENV_SECRET_NAME }} --stack-names "${{ needs.deploy-veda-backend.outputs.backend_stack_name }}"
 
       - name: Load .env file
         id: dotenv

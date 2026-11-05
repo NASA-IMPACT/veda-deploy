@@ -28,7 +28,7 @@ jobs:
 
       - name: Run update script
         run: |
-          python scripts/update_deployment_status.py \
+          uv run python scripts/update_deployment_status.py \
             --env "${{ inputs.environment }}"
         env:
           VEDA_BACKEND_GIT_REF: ${{ vars.VEDA_BACKEND_GIT_REF }}
