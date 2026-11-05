@@ -149,7 +149,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [chore/raster-dedupe-proj-db](https://github.com/NASA-IMPACT/veda-backend/tree/chore/raster-dedupe-proj-db) | 2026-08-12 22:36:34 |
+| BACKEND | [fix/preserve-collection-summaries](https://github.com/NASA-IMPACT/veda-backend/tree/fix/preserve-collection-summaries) | 2026-11-05 19:05:49 |
 | FEATURES_API | [chore/upgrade-tipg-1.6.1](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/chore/upgrade-tipg-1.6.1) | 2026-09-09 23:11:12 |
 | ROUTES |  |  |
 | SM2A | [update/ingest-vector-logging](https://github.com/NASA-IMPACT/veda-sm2a/tree/update/ingest-vector-logging) | 2026-10-20 13:25:58 |
