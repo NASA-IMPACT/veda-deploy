@@ -123,7 +123,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [fix/bootstrap-rerun-on-handler-change](https://github.com/NASA-IMPACT/veda-backend/tree/fix/bootstrap-rerun-on-handler-change) | 2026-11-12 16:37:12 |
+| BACKEND | [fix/bootstrap-rerun-on-handler-change](https://github.com/NASA-IMPACT/veda-backend/tree/fix/bootstrap-rerun-on-handler-change) | 2026-11-12 17:02:37 |
 | FEATURES_API |  |  |
 | ROUTES | [dd75e441d3035f63032056fed9036f3cbf29691f](https://github.com/NASA-IMPACT/veda-routes/tree/dd75e441d3035f63032056fed9036f3cbf29691f) | 2026-07-21 17:01:16 |
 | SM2A |  |  |
