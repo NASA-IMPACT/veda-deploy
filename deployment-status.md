@@ -149,7 +149,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [fix/preserve-collection-summaries](https://github.com/NASA-IMPACT/veda-backend/tree/fix/preserve-collection-summaries) | 2026-11-05 19:05:49 |
+| BACKEND | [issue-589/stac-browser-deployment-verison-change](https://github.com/NASA-IMPACT/veda-backend/tree/issue-589/stac-browser-deployment-verison-change) | 2026-11-16 18:22:34 |
 | FEATURES_API | [chore/upgrade-tipg-1.6.1](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/chore/upgrade-tipg-1.6.1) | 2026-09-09 23:11:12 |
 | ROUTES |  |  |
 | SM2A | [update/ingest-vector-logging](https://github.com/NASA-IMPACT/veda-sm2a/tree/update/ingest-vector-logging) | 2026-10-20 13:25:58 |
