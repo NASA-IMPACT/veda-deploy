@@ -162,7 +162,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [v15.6.2](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.2) | 2026-10-28 20:52:52 |
+| BACKEND | [issue-589/stac-browser-deployment-verison-change](https://github.com/NASA-IMPACT/veda-backend/tree/issue-589/stac-browser-deployment-verison-change) | 2026-11-16 19:25:09 |
 | FEATURES_API |  |  |
 | ROUTES | [8bd799dc03a05bcfd95a650ac056735139a8e807](https://github.com/NASA-IMPACT/veda-routes/tree/8bd799dc03a05bcfd95a650ac056735139a8e807) | 2026-09-29 00:44:52 |
 | SM2A | [v0.23.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.1-dev.0) | 2026-10-09 19:46:58 |
