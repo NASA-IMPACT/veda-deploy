@@ -130,7 +130,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | MONITORING | [v0.3.0](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.0) | 2025-09-08 18:07:44 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
-| TITILER_CMR | [v1.1.5](https://github.com/developmentseed/titiler-cmr/tree/v1.1.5) | 2026-11-11 06:39:09 |
+| TITILER_CMR | [v1.1.6](https://github.com/developmentseed/titiler-cmr/tree/v1.1.6) | 2026-11-18 16:49:23 |
 
 ## smce-staging
 | Component | Git Ref | Updated (UTC) |
