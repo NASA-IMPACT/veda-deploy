@@ -45,10 +45,10 @@ If a component or environment is not listed, it has not yet been deployed throug
 | Component | Git Ref | Updated (UTC) |
 |-----------|---------|---------------|
 | AUTH |  |  |
-| BACKEND | [v15.6.2](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.2) | 2026-10-28 23:11:52 |
+| BACKEND | [v15.6.6](https://github.com/NASA-IMPACT/veda-backend/tree/v15.6.6) | 2026-11-18 20:08:43 |
 | FEATURES_API | [v6.0.0](https://github.com/NASA-IMPACT/veda-features-api-cdk/tree/v6.0.0) | 2026-09-29 21:16:05 |
 | ROUTES |  |  |
-| SM2A | [v0.23.1-dev.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.23.1-dev.0) | 2026-10-09 20:55:04 |
+| SM2A | [v0.24.0](https://github.com/NASA-IMPACT/veda-sm2a/tree/v0.24.0) | 2026-11-18 20:08:43 |
 | MONITORING |  |  |
 | TITILER_MULTIDIM | [v0.11.0](https://github.com/developmentseed/titiler-multidim/tree/v0.11.0) | 2026-10-29 22:25:06 |
 | S3_DR |  |  |
