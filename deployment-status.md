@@ -117,7 +117,7 @@ If a component or environment is not listed, it has not yet been deployed throug
 | MONITORING | [v0.3.2](https://github.com/NASA-IMPACT/veda-monitoring/tree/v0.3.2) | 2026-03-30 17:13:40 |
 | TITILER_MULTIDIM |  |  |
 | S3_DR |  |  |
-| TITILER_CMR | [v1.1.5](https://github.com/developmentseed/titiler-cmr/tree/v1.1.5) | 2026-11-11 17:21:24 |
+| TITILER_CMR | [v1.1.6](https://github.com/developmentseed/titiler-cmr/tree/v1.1.6) | 2026-11-18 19:06:14 |
 
 ## mcp-test
 | Component | Git Ref | Updated (UTC) |
