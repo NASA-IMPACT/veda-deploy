@@ -93,6 +93,38 @@ TF_VAR_gh_app_client_secret=******
 TF_VAR_gh_team_name=******
 TF_VAR_subdomain=******
 ```
+##### AWS Secrets Requirements for titiler-multidim
+
+titiler-multidim reads keys from the same core secret. See the [titiler-multidim README](https://github.com/developmentseed/titiler-multidim#readme) for full details.
+
+```bash
+TITILER_MULTIDIM_READER_ROLE_ARN=******
+TITILER_MULTIDIM_AUTHORIZED_CHUNK_ACCESS=******
+TITILER_MULTIDIM_EARTHDATA_SECRET_ARN=******
+```
+
+- `TITILER_MULTIDIM_READER_ROLE_ARN` is required. It is the existing IAM role the Lambda runs as. The role must be able to read every Icechunk or Zarr store the environment serves. If `TITILER_MULTIDIM_EARTHDATA_SECRET_ARN` is set, the role also needs `secretsmanager:GetSecretValue` on that secret.
+- `TITILER_MULTIDIM_AUTHORIZED_CHUNK_ACCESS` is a JSON object listing the virtual chunk prefixes the service may read along with the auth method for each prefix. A virtual Icechunk store cannot be rendered until its prefix is listed. For example:
+
+  ```json
+  {
+    "s3://noaa-nws-naqfc-pds/": {"anonymous": true},
+    "s3://asdc-prod-protected/": {"earthdata": true}
+  }
+  ```
+
+  Each prefix must match the store's virtual chunk container exactly, including the trailing slash. Authorizing a prefix lets anyone who can reach the service read everything under it, so only list containers whose whole contents can be exposed. The current options for authentication include anonymous (unsigned) access (`anonymous`), Earthdata Login (`earthdata`), and the reader role's own credentials (`from_env`).
+- `TITILER_MULTIDIM_EARTHDATA_SECRET_ARN` is only needed when a prefix uses `"earthdata": true`. It names a separate secret holding the Earthdata Login credentials, stored as a `SecretString` in one of these forms:
+
+  ```json
+  {"EARTHDATA_TOKEN": "******"}
+  ```
+
+  ```json
+  {"EARTHDATA_USERNAME": "******", "EARTHDATA_PASSWORD": "******"}
+  ```
+
+  A plain token string, with no JSON around it, is also accepted. Earthdata Login tokens expire after about 60 days and must be updated in the AWS secret; the service picks up the new value without a redeploy. The Earthdata Login account must have accepted the EULAs of the data it reads.
 
 ---
 
